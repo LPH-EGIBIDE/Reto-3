@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('calificaciones', function (Blueprint $table) {
-            $table->foreignId('historico_id')->constrained('alumnos_historicos');
+            $table->foreignId('historico_id')->constrained('alumnos_historicos')->onDelete('cascade');
             //Calificaciones a insertar
             $table->json('calificaciones_practicas');
             $table->json('calificaciones_teoricas');

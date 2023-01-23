@@ -20,8 +20,6 @@ return new class extends Migration
             $table->string('telefono');
             $table->string('cif');
             $table->string('area');
-            //Si la empresa solo tiene 1 facilitador, se guarda su id en la tabla empresas
-            // $table->foreignId('facilitador_id')->constrained('facilitadores_empresa');
             $table->timestamps();
         });
     }

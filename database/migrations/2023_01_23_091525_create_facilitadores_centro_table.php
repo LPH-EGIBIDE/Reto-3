@@ -14,8 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('facilitadores_centro', function (Blueprint $table) {
-            $table->foreignId('persona_id')->constrained('personas');
-            $table->boolean('is_coordinador')->default(false);
+            $table->foreignId('persona_id')->constrained('personas')->onDelete('cascade');
         });
     }
 

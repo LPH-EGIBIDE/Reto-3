@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->string('descripcion');
-            $table->foreignId('persona_id')->constrained('personas');
+            $table->foreignId('persona_id')->constrained('personas')->onDelete('cascade');
             $table->integer('tipo');
             $table->string('url');
             $table->boolean('leido')->default(false);

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            //Assign a PERSONA to a USER
+            $table->foreignId('persona_id')->constrained('personas')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

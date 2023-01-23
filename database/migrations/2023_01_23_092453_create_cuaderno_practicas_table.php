@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('cuaderno_practicas', function (Blueprint $table) {
-            $table->foreignId('historico_id')->constrained('alumnos_historicos');
+            $table->foreignId('historico_id')->constrained('alumnos_historicos')->onDelete('cascade');
             $table->integer('semana');
             $table->integer('estado')->default(1);
             $table->string('observaciones')->nullable();

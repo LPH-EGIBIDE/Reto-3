@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('grados', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->foreignId('familia_id')->constrained('familias');
+            $table->foreignId('familia_id')->nullable()->constrained('familias')->onDelete('set null');
+            $table->bigInteger('coordinador_id', false, true)->nullable();
+            $table->foreign('coordinador_id')->references('persona_id')->on('facilitadores_empresa')->onDelete('set null');
             $table->timestamps();
         });
     }

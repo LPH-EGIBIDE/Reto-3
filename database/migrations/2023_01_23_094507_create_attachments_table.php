@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('file_path');
             $table->string('file_type');
             $table->boolean('is_public');
-            $table->foreignId('persona_id')->constrained('personas');
+            $table->foreignId('persona_id')->constrained('personas')->onDelete('cascade');
             $table->timestamps();
         });
     }
