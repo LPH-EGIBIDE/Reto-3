@@ -17,11 +17,13 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
-<body id="app-layout">
+<body id="app-layout" >
 
 <div id="page-wrapper">
-    <div class="container" id="main" style="margin-top:5%;">
-        @yield('content')
+    <div class="container" id="main">
+        <div>
+            @yield('content')
+        </div>
     </div>
 </div>
 <style>
