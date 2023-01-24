@@ -18,8 +18,6 @@ return new class extends Migration
             $table->string('nombre');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
-            //Semanas excluidas de la fecha de inicio a la fecha de fin en formato JSON
-            $table->json('semanas_excluidas');
             $table->timestamps();
         });
     }
