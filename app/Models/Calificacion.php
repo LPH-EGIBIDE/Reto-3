@@ -9,13 +9,13 @@ class Calificacion extends Model {
     use HasFactory;
 
     protected $table = 'calificaciones';
+    protected $primaryKey = 'historico_id';
     protected $fillable = [
-        'id_usuario',
-        'id_producto',
-        'calificacion',
-        'comentario',
-        'created_at',
-        'updated_at'
+        'calificaciones_practicas',
+        'calificaciones_teoricas'
     ];
 
+    public function alumnohistorico() {
+        return $this->belongsTo(AlumnoHistorico::class, 'historico_id');
+    }
 }
