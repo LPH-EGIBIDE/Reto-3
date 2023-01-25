@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-abstract class Persona extends Model {
+class Persona extends Model {
     use HasFactory;
     protected $table = 'personas';
     protected $fillable = [
@@ -15,22 +17,16 @@ abstract class Persona extends Model {
         'telefono',
     ];
 
-    public function user() {
-        return $this->hasMany(User::class);
+    public function user(): HasOne {
+        return $this->hasOne(User::class);
     }
-    public function alumno() {
-        return $this->hasMany(Alumno::class);
-    }
-    public function facilitadorcentro() {
-        return $this->hasMany(FacilitadorCentro::class);
-    }
-    public function facilitadorempresa() {
-        return $this->hasMany(FacilitadorEmpresa::class);
-    }
-    public function attachment() {
+    public function attachment(): HasMany {
         return $this->hasMany(Attachment::class);
     }
-    public function notificacion() {
+    public function notificacion(): HasMany {
         return $this->hasMany(Notificacion::class);
+    }
+    public function mensaje(): HasMany {
+        return $this->hasMany(Mensaje::class);
     }
 }

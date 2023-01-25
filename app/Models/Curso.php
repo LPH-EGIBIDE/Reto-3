@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Curso extends Model {
     use HasFactory;
@@ -15,7 +16,7 @@ class Curso extends Model {
         // 'fechas_excluidas'
     ];
 
-    public function alumnohistorico() {
+    public function alumnoHistorico(): HasMany {
         return $this->hasMany(AlumnoHistorico::class);
     }
 }

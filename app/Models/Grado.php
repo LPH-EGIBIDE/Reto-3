@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Grado extends Model {
     use HasFactory;
@@ -12,14 +14,14 @@ class Grado extends Model {
         'nombre'
     ];
 
-    public function familia() {
+    public function familia(): BelongsTo {
         return $this->belongsTo(Familia::class, 'familia_id');
     }
-    public function facilitadorempresa() {
-        return $this->belongsTo(FacilitadorEmpresa::class);
+    public function coordinador(): BelongsTo {
+        return $this->belongsTo(Persona::class, 'coordinador_id');
     }
 
-    public function alumnohistorico() {
-        return $this->hasMany(AlumnoHistorico::class);
+    public function alumnoHistorico(): HasMany {
+        return $this->hasMany(Persona::class);
     }
 }

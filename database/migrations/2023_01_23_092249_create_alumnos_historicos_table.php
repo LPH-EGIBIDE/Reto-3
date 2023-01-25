@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('alumnos_historicos', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('alumno_id', false, true);
-            $table->foreign('alumno_id')->references('persona_id')->on('alumnos')->onDelete('cascade');
+            $table->foreign('alumno_id')->references('id')->on('personas')->onDelete('cascade');
             $table->foreignId('curso_id')->constrained('cursos')->onDelete('cascade');
             $table->foreignId('grado_id')->constrained('grados')->onDelete('cascade');
             $table->bigInteger('facilitador_centro', false, true)->nullable();
-            $table->foreign('facilitador_centro')->references('persona_id')->on('facilitadores_centro')->onDelete('set null');
+            $table->foreign('facilitador_centro')->references('id')->on('personas')->onDelete('set null');
             $table->bigInteger('facilitador_empresa', false, true)->nullable();
-            $table->foreign('facilitador_empresa')->references('persona_id')->on('facilitadores_empresa')->onDelete('set null');
-            $table->integer('estado')->default(1);
+            $table->foreign('facilitador_empresa')->references('id')->on('personas')->onDelete('set null');
+            $table->enum('estado', ['cursando', 'finalizado', 'repetido']);
             $table->timestamps();
         });
     }

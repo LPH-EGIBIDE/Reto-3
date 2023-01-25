@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CuadernoPracticas extends Model {
     use HasFactory;
 
     protected $table = 'cuaderno_practicas';
-    protected $primaryKey = 'historico_id';
     protected $fillable = [
         'semana',
         'estado',
@@ -17,7 +17,7 @@ class CuadernoPracticas extends Model {
         'contenido'
     ];
 
-    public function alumnohistorico() {
+    public function alumnoHistorico(): BelongsTo {
         return $this->belongsTo(AlumnoHistorico::class, 'historico_id');
     }
 }

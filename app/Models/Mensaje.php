@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Mensaje extends Model {
     use HasFactory;
@@ -13,7 +14,13 @@ class Mensaje extends Model {
         'leido'
     ];
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function sender(): HasOne
+    {
+        return $this->hasOne(Persona::class, 'sender_id');
+    }
+
+    public function receiver(): HasOne
+    {
+        return $this->hasOne(Persona::class, 'receiver_id');
     }
 }

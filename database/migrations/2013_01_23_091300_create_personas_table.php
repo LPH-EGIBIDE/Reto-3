@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('apellido');
             $table->string('dni');
             $table->string('telefono');
+            $table->enum('tipo', ['alumno', 'facilitador_centro', 'facilitador_empresa']);
             $table->timestamps();
         });
     }

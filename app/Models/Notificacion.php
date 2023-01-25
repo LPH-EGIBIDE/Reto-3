@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Notificacion extends Persona {
     use HasFactory;
@@ -16,7 +17,7 @@ class Notificacion extends Persona {
         'leido'
     ];
 
-    public function persona() {
+    public function persona(): BelongsTo {
         return $this->belongsTo(Persona::class, 'persona_id');
     }
 }

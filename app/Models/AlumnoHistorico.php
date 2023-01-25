@@ -2,35 +2,35 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\CuadernoPracticasController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AlumnoHistorico extends Model {
     use HasFactory;
     protected $table = 'alumnos_historicos';
-    protected $primaryKey = 'persona_id' . 'curso_id' . 'grado_id';
     protected $fillable = 'estado';
 
-    public function alumno() {
-        return $this->belongsTo(Alumno::class, 'alumno_id');
+    public function alumno(): BelongsTo {
+        return $this->belongsTo(Persona::class, 'alumno_id');
     }
-    public function curso() {
+    public function curso(): BelongsTo {
         return $this->belongsTo(Curso::class, 'curso_id');
     }
-    public function grado() {
+    public function grado(): BelongsTo {
         return $this->belongsTo(Grado::class, 'grado_id');
     }
-    public function facilitadorcentro() {
-        return $this->belongsTo(FacilitadorCentro::class, 'facilitador_centro');
+    public function facilitadorCentro(): BelongsTo {
+        return $this->belongsTo(Persona::class, 'facilitador_centro');
     }
-    public function facilitadorempresa() {
-        return $this->belongsTo(FacilitadorEmpresa::class, 'facilitador_empresa');
+    public function facilitadorEmpresa(): BelongsTo {
+        return $this->belongsTo(Persona::class, 'facilitador_empresa');
     }
 
-    public function cuadernopractica() {
-        return $this->hasMany(CuadernoPractica::class);
+    public function cuadernosPracticas(): HasMany {
+        return $this->hasMany(CuadernoPracticas::class);
     }
-    public function calificacion() {
-        return $this->hasMany(Calificacion::class);
-    }
+
 }

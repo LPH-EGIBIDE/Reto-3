@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('mensajes', function (Blueprint $table) {
             $table->id();
             $table->string('mensaje');
-            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('sender_id')->constrained('personas')->onDelete('cascade');
+            $table->foreignId('receiver_id')->constrained('personas')->onDelete('cascade');
             $table->boolean('leido')->default(false);
 
 
