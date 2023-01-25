@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -17,8 +18,8 @@ class Persona extends Model {
         'telefono',
     ];
 
-    public function user(): HasOne {
-        return $this->hasOne(User::class);
+    public function user(): BelongsTo {
+        return $this->hasOne(User::class, 'id');
     }
     public function attachment(): HasMany {
         return $this->hasMany(Attachment::class);

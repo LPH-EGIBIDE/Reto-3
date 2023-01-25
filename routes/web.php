@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return current user
+    return view('dashboard');
 })->middleware('auth');
 
 Auth::routes(['register' => false]);

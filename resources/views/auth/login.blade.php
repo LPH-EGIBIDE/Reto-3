@@ -27,7 +27,7 @@
                         </div>
                         <div class="form-group mb-2">
                             <label for="password">Contraseña:</label>
-                            <input type="password" name="contra" class="form-control" id="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
                         </div>
                         <div class="form-group mb-2">
                             <div class="row">
