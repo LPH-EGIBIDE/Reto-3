@@ -21,3 +21,23 @@ Route::get('/', function () {
 Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth', 'can:facilitador_centro'])->group(function () {
+    Route::get('/facilitador-centro', function () {
+        return "Protected routes for facilitador_centro";
+    });
+});
+
+Route::middleware(['auth', 'can:facilitador_empresa'])->group(function () {
+    Route::get('/facilitador-empresa', function () {
+        return "Protected routes for facilitador_empresa";
+    });
+});
+
+Route::middleware(['auth', 'can:alumno'])->group(function () {
+    Route::get('/alumno', function () {
+        return "Protected routes for alumno";
+    });
+});
+
+

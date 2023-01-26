@@ -3,15 +3,19 @@
 @section('content')
 
     @can('alumno')
-            <h1>Alumno</h1>
+            @include('alumno.dashboard')
     @endcan
 
     @can('facilitador_empresa')
-            <h1>Facilitador empresa</h1>
+            @include('facilitador_empresa.dashboard')
     @endcan
 
     @can('facilitador_centro')
-            <h1>Admin</h1>
+            @can('is_coordinador')
+                @include('facilitador_centro.coordinador.dashboard')
+            @else
+                @include('facilitador_centro.dashboard')
+            @endcan
     @endcan
 
 @endsection

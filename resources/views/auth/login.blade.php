@@ -22,7 +22,7 @@
                     <form action="{{ route('login') }}" method="post">
                         @csrf
                         <div class="form-group mb-2">
-                            <label for="email">Correo de Egibide</label>
+                            <label for="email">Correo electronico</label>
                             <input type="text" autocomplete="off" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" id="mc-user" placeholder="Correo electronico">
                         </div>
                         <div class="form-group mb-2">

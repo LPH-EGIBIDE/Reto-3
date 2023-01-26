@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Grado;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -36,6 +37,12 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('facilitador_empresa', function ($user) {
             return $user->persona->tipo  === 'facilitador_empresa';
+        });
+
+        Gate::define('is_coordinador', function ($user) {
+            $grado = Grado::where('coordinador_id', $user->persona->id)->get()->first();
+            return $grado !== null;
+
         });
 
         //
