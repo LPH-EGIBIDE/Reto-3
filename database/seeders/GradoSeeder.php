@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Curso;
 use App\Models\Familia;
 use App\Models\Grado;
 use App\Models\Persona;
@@ -33,5 +34,14 @@ class GradoSeeder extends Seeder
         $grado->familia_id = $familia->id;
         $grado->coordinador_id = $admin->id;
         $grado->save();
+
+        //Create a curso
+        $curso = new Curso();
+        $curso->nombre = '2022-2023';
+        $curso->fecha_inicio = '2022-09-01';
+        $curso->fecha_fin = '2023-06-30';
+        $curso->save();
+
+
     }
 }

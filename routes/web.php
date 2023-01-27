@@ -40,4 +40,9 @@ Route::middleware(['auth', 'can:alumno'])->group(function () {
     });
 });
 
+Route::middleware(['auth', 'can:facilitador'])->group(function () {
+    Route::get('/mensajes', [App\Http\Controllers\MensajeController::class, 'index'])->name('mensaje.index');
+    Route::post('/mensaje/{id}', [App\Http\Controllers\MensajeController::class, 'store'])->name('mensaje.store')->whereNumber('id');
+});
+
 

@@ -38,16 +38,17 @@ class UserTableSeeder extends Seeder
         ]);
 
 
-        //Create 100 facilitadores_centro and link them to a user
-        $facilitadores_centro = Persona::factory()->count(100)->alumno()->create();
+        //Create 5 facilitadores_centro and link them to a user
+        $alumnos = Persona::factory()->count(5)->alumno()->create();
+        $facilitador_centro = Persona::factory()->count(5)->facilitadorCentro()->create();
+        $facilitador_empresa = Persona::factory()->count(5)->facilitadorEmpresa()->create();
 
-        //Get the last 100 personas created
-        $facilitadores_centro = Persona::orderBy('id', 'desc')->take(100)->get();
+        $personas = Persona::all();
 
-        foreach ($facilitadores_centro as $facilitador_centro) {
-            $user = \App\Models\User::factory()->create([
+        foreach ($personas as $persona) {
+            \App\Models\User::factory()->create([
                 'password' => bcrypt('admin'),
-                'persona_id' => $facilitador_centro->id,
+                'persona_id' => $persona->id,
                 'email_verified_at' => now()
             ]);
         }

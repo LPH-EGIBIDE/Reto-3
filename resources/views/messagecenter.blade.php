@@ -1,3 +1,10 @@
+@extends('layouts.app')
+
+@section('navbar')
+    @include('navbar')
+@endsection
+
+@section('content')
 <template id="chat-bubble-template">
     <div class="col-lg-6">
         <div class="chat-bubble chat-bubble--right">
@@ -54,6 +61,7 @@
                                 <chat-bubble position="left" content="Mensaje recibido"></chat-bubble>
                                 <chat-bubble position="right" content="Mensaje enviado"></chat-bubble>
                                 <chat-bubble position="right" content="Mensaje enviado muy lasadsadddddddd ddddddddddddasd as dasdsd sd asdasd asdsa asd asda"></chat-bubble>
+                                <chat-bubble position="left" content="Mensaje recibido 2"></chat-bubble>
                             </div>
                             <div class="row">
                                 <div class="col-12">
@@ -73,3 +81,4 @@
     </div>
 
 </div>
+@endsection

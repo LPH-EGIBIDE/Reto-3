@@ -39,10 +39,13 @@ class AuthServiceProvider extends ServiceProvider
             return $user->persona->tipo  === 'facilitador_empresa';
         });
 
+        Gate::define('facilitador', function ($user) {
+            return $user->persona->tipo  === 'facilitador_centro' || $user->persona->tipo  === 'facilitador_empresa';
+        });
+
         Gate::define('is_coordinador', function ($user) {
             $grado = Grado::where('coordinador_id', $user->persona->id)->get()->first();
             return $grado !== null;
-
         });
 
         //

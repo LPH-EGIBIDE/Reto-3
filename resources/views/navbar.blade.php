@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Navbar Pocho</a>
+        <a class="navbar-brand" href="#">
+            <img src="{{asset('images/logo-sm.png')}}" alt="Logo" class="logo" width="30px" height="44px">
+            {{ config('app.name', 'Laravel') }}
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -45,7 +48,9 @@
                         </li>
                     </ul>
                 </div>
-                <button class="btn text-bg-light mx-lg-2" type="submit"><i class="fa-solid fa-envelope"></i></button>
+                @can('facilitador')
+                    <a class="btn text-bg-light mx-lg-2" href="{{route('mensaje.index')}}"><i class="fa-solid fa-envelope"></i></a>
+                @endcan
                 <form class="d-flex" action="{{route('logout')}}" method="post">
                     @csrf
                     <button class="btn text-bg-danger" type="submit"><i class="fa-solid fa-right-from-bracket"></i>

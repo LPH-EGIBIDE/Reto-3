@@ -17,7 +17,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserTableSeeder::class,
-            GradoSeeder::class
+            GradoSeeder::class,
+            EmpresaSeeder::class,
+            AlumnoHistoricoSeeder::class
         ]);
     }
 }

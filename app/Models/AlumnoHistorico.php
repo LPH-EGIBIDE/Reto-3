@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class AlumnoHistorico extends Model {
     use HasFactory;
     protected $table = 'alumnos_historicos';
-    protected $fillable = 'estado';
+    protected $fillable = [
+        'estado'
+    ];
 
     public function alumno(): BelongsTo {
         return $this->belongsTo(Persona::class, 'alumno_id');
