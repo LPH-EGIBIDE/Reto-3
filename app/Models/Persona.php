@@ -30,4 +30,17 @@ class Persona extends Model {
     public function mensaje(): HasMany {
         return $this->hasMany(Mensaje::class);
     }
+
+    public function informacion(): ?HasOne {
+        switch ($this->tipo) {
+            case 'alumno':
+                return $this->hasOne(Alumno::class);
+            case 'facilitador_centro':
+                return $this->hasOne(FacilitadorCentro::class);
+            case 'facilitador_empresa':
+                return $this->hasOne(FacilitadorEmpresa::class);
+            default:
+                return null;
+        }
+    }
 }
