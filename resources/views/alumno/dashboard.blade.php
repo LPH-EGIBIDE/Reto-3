@@ -1,1 +1,1 @@
-<h1>Usuario alumno</h1>
+<h1>TODO: Dashboard alumno</h1>

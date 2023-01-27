@@ -31,7 +31,7 @@ class UserTableSeeder extends Seeder
 
 
         $user = \App\Models\User::factory()->create([
-            'email' => 'admin@admin.com',
+            'email' => 'alex.cortes@ikasle.egibide.org',
             'password' => bcrypt('admin'),
             'persona_id' => $admin->id,
             'email_verified_at' => now()

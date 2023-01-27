@@ -1,1 +1,1 @@
-<h1>Usuario coordinador</h1>
+<h1>TODO: Dashboard coordinador</h1>
