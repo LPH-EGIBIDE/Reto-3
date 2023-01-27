@@ -10,29 +10,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Item pocho</a>
+                    <a class="nav-link" href="#"><i class="fa-regular fa-house"></i> Inicio</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link pocho</a>
+                    <a class="nav-link" href="#"><i class="fa-regular fa-user-graduate"></i> Calificaciones</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown pocho
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Bolas</a></li>
-                        <li><a class="dropdown-item" href="#">de</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Mono</a></li>
-                    </ul>
-                </li>
+
+                @can('alumno')
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Deshabilitado pocho</a>
+                    <a class="nav-link" href="#"><i class="fa-regular fa-notebook"></i> Cuaderno Equipo</a>
                 </li>
+                @endcan
+
+                @can('facilitador')
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa-regular fa-screen-users"></i> Alumnos</a>
+                </li>
+                @endcan
+
             </ul>
             <div class="d-flex justify-content-evenly justify-content-lg-start">
                 <div class="dropdown">
@@ -48,8 +46,10 @@
                         </li>
                     </ul>
                 </div>
+                <div class="mx-lg-2"></div>
                 @can('facilitador')
-                    <a class="btn text-bg-light mx-lg-2" href="{{route('mensaje.index')}}"><i class="fa-solid fa-envelope"></i></a>
+                    <a class="btn text-bg-light " href="{{route('mensaje.index')}}"><i class="fa-solid fa-envelope"></i></a>
+                    <div class="mx-lg-2"></div>
                 @endcan
                 <form class="d-flex" action="{{route('logout')}}" method="post">
                     @csrf

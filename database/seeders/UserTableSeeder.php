@@ -16,26 +16,7 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        //Create 1  and link it to a user
-        $admin = new Persona();
-        $admin->nombre = 'admin';
-        $admin->apellido = 'admin';
-        $admin->dni = '12345678A';
-        $admin->telefono = '123456789';
-        $admin->tipo = 'facilitador_centro';
-        $admin->save();
 
-        $facilitador_centro = new FacilitadorCentro();
-        $facilitador_centro->persona_id = $admin->id;
-        $facilitador_centro->save();
-
-
-        $user = \App\Models\User::factory()->create([
-            'email' => 'alex.cortes@ikasle.egibide.org',
-            'password' => bcrypt('admin'),
-            'persona_id' => $admin->id,
-            'email_verified_at' => now()
-        ]);
 
 
         //Create 5 facilitadores_centro and link them to a user
@@ -52,6 +33,27 @@ class UserTableSeeder extends Seeder
                 'email_verified_at' => now()
             ]);
         }
+
+                //Create 1  and link it to a user
+                $admin = new Persona();
+                $admin->nombre = 'admin';
+                $admin->apellido = 'admin';
+                $admin->dni = '12345678A';
+                $admin->telefono = '123456789';
+                $admin->tipo = 'facilitador_centro';
+                $admin->save();
+        
+                $facilitador_centro = new FacilitadorCentro();
+                $facilitador_centro->persona_id = $admin->id;
+                $facilitador_centro->save();
+        
+        
+                $user = \App\Models\User::factory()->create([
+                    'email' => 'alex.cortes@ikasle.egibide.org',
+                    'password' => bcrypt('admin'),
+                    'persona_id' => $admin->id,
+                    'email_verified_at' => now()
+                ]);
 
 
 
