@@ -67,7 +67,7 @@
                                 <div class="col-12">
                                     <div class="chat-box-tray">
                                         <div class="input-group">
-                                            <textarea class="form-control" aria-label="Mensaje" placeholder="Escribe tu mensaje aqui" ></textarea>
+                                            <textarea class="form-control lh-lg" aria-label="Mensaje" placeholder="Escribe tu mensaje aqui" ></textarea>
                                             <button class="btn btn-primary" type="button"><i class="fa-solid fa-paper-plane-top"></i></button>
                                         </div>
                                     </div>
