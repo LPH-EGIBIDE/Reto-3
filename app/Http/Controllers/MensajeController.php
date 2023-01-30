@@ -9,6 +9,8 @@ use App\Models\Persona;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class MensajeController extends Controller
 {
@@ -36,56 +38,28 @@ class MensajeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
             'mensaje' => 'required|max:255',
             'receiver_id' => 'required|numeric',
         ]);
+        $receiver = Persona::findOrFail($request->receiver_id);
 
-
-        // Check if the receiver is a facilitaddr not of the same type
-        $receiver = Persona::find($request->receiver_id);
-        //TODO: Implement active curso in database
-        $lastCurso = Curso::all()->sortBy('id')->last();
-            // Depending on the type of the receiver, we need to check that both are related
-            if ($receiver->tipo_facilitador == 'facilitador_centro') {
-                // Check if the receiver is related to the sender
-                //Check if receiver has a entry in alumnohistorico with the last curso ant the sender is the facilitador
-                $alumnoHistorico = AlumnoHistorico::where('facilitador_empresa', $receiver->id)
-                    ->where('curso_id', $lastCurso->id)
-                    ->where('facilitador_centro', auth()->user()->persona->id)
-                    ->first();
-
-                if ($alumnoHistorico) {
-                    // Create the message
-                    $mensaje = new Mensaje();
-                    $mensaje->mensaje = $request->mensaje;
-                    $mensaje->sender_id = auth()->user()->persona->id;
-                    $mensaje->receiver_id = $request->receiver_id;
-                    $mensaje->save();
-                }
-
-            } else if ($receiver->tipo_facilitador == 'facilitador_empresa') {
-                // Check if the receiver is related to the sender
-                //Check if receiver has a entry in alumnohistorico with the last curso ant the sender is the facilitador
-                $alumnoHistorico = AlumnoHistorico::where('facilitador_empresa', auth()->user()->persona->id)
-                    ->where('curso_id', $lastCurso->id)
-                    ->where('facilitador_centro', $receiver->id)
-                    ->first();
-                if ($alumnoHistorico) {
-                    // Create the message
-                    $mensaje = new Mensaje();
-                    $mensaje->mensaje = $request->mensaje;
-                    $mensaje->sender_id = auth()->user()->persona->id;
-                    $mensaje->receiver_id = $request->receiver_id;
-                    $mensaje->save();
-                }
-            }
-        return redirect()->route('mensaje.index');
+        if (Gate::allows('can_message', [$receiver])) {
+            $mensaje = new Mensaje();
+            $mensaje->mensaje = $request->mensaje;
+            $mensaje->sender_id = auth()->user()->persona->id;
+            $mensaje->receiver_id = $request->receiver_id;
+            $mensaje->save();
+            return ['success' => true, 'mensaje' => $mensaje->mensaje];
+        } else {
+            return ['error' => 'No se pudo enviar el mensaje'];
+        }
     }
+
+
 
     /**
      * Display the specified resource.
@@ -96,6 +70,55 @@ class MensajeController extends Controller
     public function show(Mensaje $mensaje)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Mensaje  $mensaje
+     * @return \Illuminate\Http\Response
+     */
+    public function chat($id, $page = 1)
+    {
+
+        $limit = 30; //messages per page
+        $offset = ($page - 1) * $limit;
+        $receiver = Persona::findOrFail($id);
+        $chat = Mensaje::where('sender_id', auth()->user()->persona->id)->where('receiver_id', $receiver->id)->orWhere('sender_id', $receiver->id)->where('receiver_id', auth()->user()->persona->id)->orderBy('created_at', 'desc')->offset($offset)->limit($limit)->get();
+        //Separate messages by sender
+        // Show only sender id , message and date
+        $chat = $chat->map(function ($item, $key) {
+            return [
+                'mensaje' => $item->mensaje,
+                'created_at' => $item->created_at->format('d/m/Y H:i:s'),
+                'is_sender' => $item->sender_id == auth()->user()->persona->id,
+            ];
+        });
+
+
+        return response(['success' => true, 'chat' => $chat, 'messages' => $chat->count()], 200, [], JSON_NUMERIC_CHECK);
+    }
+
+    public function chatters(){
+        //get all users that have sent a message to the current user and the ones that could be messaged
+        $lastCurso = Curso::all()->sortBy('id')->last();
+
+        $sentMessagePersonas = auth()->user()->persona->mensajeEnviado->pluck('receiver_id')->unique();
+        $receivedMessagePersonas = auth()->user()->persona->mensajeRecibido->pluck('sender_id')->unique();
+        switch (auth()->user()->persona->tipo){
+            case 'facilitador_centro':
+                $availableChatters = auth()->user()->persona->informacion->alumnoHistorico->where('curso_id', $lastCurso->id)->pluck('facilitador_empresa')->unique();
+                break;
+            case 'facilitador_empresa':
+                $availableChatters = auth()->user()->persona->informacion->alumnoHistorico->where('curso_id', $lastCurso->id)->pluck('facilitador_centro')->unique();
+                break;
+            default:
+                $availableChatters = [];
+
+        }
+        $chatters = $sentMessagePersonas->merge($receivedMessagePersonas)->merge($availableChatters)->unique();
+        $chatters = Persona::whereIn('id', $chatters)->get();
+        return response(['success' => true, 'chatters' => $chatters], 200, [], JSON_NUMERIC_CHECK);
     }
 
     /**

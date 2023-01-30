@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\FacilitadorCentro;
+use App\Models\FacilitadorEmpresa;
 use App\Models\Persona;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -32,6 +33,24 @@ class UserTableSeeder extends Seeder
                 'persona_id' => $persona->id,
                 'email_verified_at' => now()
             ]);
+            switch ($persona->tipo) {
+                case 'alumno':
+                    $alumno = new \App\Models\Alumno();
+                    $alumno->persona_id = $persona->id;
+                    $alumno->save();
+                    break;
+                case 'facilitador_centro':
+                    $facilitador_centro = new FacilitadorCentro();
+                    $facilitador_centro->persona_id = $persona->id;
+                    $facilitador_centro->save();
+                    break;
+                case 'facilitador_empresa':
+                    $facilitador_empresa = new FacilitadorEmpresa();
+                    $facilitador_empresa->persona_id = $persona->id;
+                    $facilitador_empresa->empresa_id = \App\Models\Empresa::all()->random()->id;
+                    $facilitador_empresa->save();
+                    break;
+            }
         }
 
                 //Create 1  and link it to a user
@@ -42,12 +61,12 @@ class UserTableSeeder extends Seeder
                 $admin->telefono = '123456789';
                 $admin->tipo = 'facilitador_centro';
                 $admin->save();
-        
+
                 $facilitador_centro = new FacilitadorCentro();
                 $facilitador_centro->persona_id = $admin->id;
                 $facilitador_centro->save();
-        
-        
+
+
                 $user = \App\Models\User::factory()->create([
                     'email' => 'alex.cortes@ikasle.egibide.org',
                     'password' => bcrypt('admin'),
