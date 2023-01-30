@@ -27,8 +27,11 @@ class Persona extends Model {
     public function notificacion(): HasMany {
         return $this->hasMany(Notificacion::class);
     }
-    public function mensaje(): HasMany {
-        return $this->hasMany(Mensaje::class);
+    public function mensajeEnviado(): HasMany {
+        return $this->hasMany(Mensaje::class, 'sender_id');
+    }
+    public function mensajeRecibido(): HasMany {
+        return $this->hasMany(Mensaje::class, 'receiver_id');
     }
 
     public function informacion(): ?HasOne {

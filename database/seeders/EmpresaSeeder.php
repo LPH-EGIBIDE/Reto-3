@@ -17,17 +17,6 @@ class EmpresaSeeder extends Seeder
      */
     public function run()
     {
-
         $empresas = Empresa::factory()->count(10)->create();
-        $facilitadores_empresa = Persona::where('tipo', 'facilitador_empresa')->get();
-
-        foreach ($facilitadores_empresa as $facilitador) {
-            $facilitador_empresa = new FacilitadorEmpresa();
-            $facilitador_empresa->persona_id = $facilitador->id;
-            $facilitador_empresa->empresa_id = $empresas->random()->id;
-            $facilitador_empresa->save();
-        }
-
-
     }
 }
