@@ -29,6 +29,7 @@ Route::middleware(['auth', 'can:facilitador_centro'])->group(function () {
     Route::get('/facilitador-centro', function () {
         return "Protected routes for facilitador_centro";
     });
+    Route::get('/alumnos', [App\Http\Controllers\AlumnoController::class, 'filterAlumnos'])->name('alumno.index');
 });
 
 Route::middleware(['auth', 'can:facilitador_empresa'])->group(function () {
