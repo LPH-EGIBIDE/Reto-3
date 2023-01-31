@@ -12,9 +12,32 @@ class GradoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return view('grados.index');
+    }
+
+    public function listado(Request $request)
+    {
+        $request->validate([
+            'page' => 'nullable|integer',
+        ]);
+
+        $page = $request->input('page', 1);
+        $perPage = 10;
+        $offset = ($page - 1) * $perPage;
+
+        $grados = Grado::offset($offset)->limit($perPage)->select('id', 'nombre')->get();
+        $total = Grado::count();
+
+        return response([
+            'data' => $grados,
+            'total' => $total,
+            'page' => $page,
+            'per_page' => $perPage,
+        ], 200, [
+            'Content-Type' => 'application/json',
+        ], JSON_PRETTY_PRINT);
     }
 
     /**

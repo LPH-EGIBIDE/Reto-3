@@ -14,8 +14,38 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        //
+        return view('empresa.index');
     }
+
+    public function listado(Request $request)
+    {
+        $request->validate([
+            'page' => 'nullable|integer',
+            'filter' => 'nullable|string',
+        ]);
+
+        $page = $request->input('page', 1);
+        $perPage = 10;
+        $offset = ($page - 1) * $perPage;
+
+        $empresas = Empresa::where('nombre', 'like', "%{$request->input('filter')}%")
+            ->offset($offset)->limit($perPage)
+            ->select('id', 'nombre', 'direccion', 'telefono', 'cif', 'area')
+            ->get();
+
+        $total = Empresa::where('nombre', 'like', "%{$request->input('filter')}%")->count();
+
+        return response([
+            'data' => $empresas,
+            'total' => $total,
+            'page' => $page,
+            'per_page' => $perPage,
+        ], 200, [
+            'Content-Type' => 'application/json',
+        ], JSON_PRETTY_PRINT);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.

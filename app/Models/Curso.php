@@ -12,8 +12,8 @@ class Curso extends Model {
     protected $fillable = [
         'nombre',
         'fecha_inicio',
-        'fecha_fin'
-        // 'fechas_excluidas'
+        'fecha_fin',
+        'active'
     ];
 
     public function alumnoHistorico(): HasMany {

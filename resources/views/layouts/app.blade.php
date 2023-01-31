@@ -19,7 +19,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css', 'resources/sass/chat.scss'])
 </head>
-<body class="d-flex flex-column h-100vh">
+<body class="d-flex flex-column vh-100">
     <div id="app">
         @yield('navbar')
         <main class="py-4">

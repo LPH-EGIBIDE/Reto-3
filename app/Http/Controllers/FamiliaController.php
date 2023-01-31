@@ -14,7 +14,30 @@ class FamiliaController extends Controller
      */
     public function index()
     {
-        //
+        return view('familias.index');
+    }
+
+    public function listado(Request $request)
+    {
+        $request->validate([
+            'page' => 'nullable|integer',
+        ]);
+
+        $page = $request->input('page', 1);
+        $perPage = 10;
+        $offset = ($page - 1) * $perPage;
+
+        $familias = Familia::offset($offset)->limit($perPage)->select('id', 'nombre')->get();
+        $total = Familia::count();
+
+        return response([
+            'data' => $familias,
+            'total' => $total,
+            'page' => $page,
+            'per_page' => $perPage,
+        ], 200, [
+            'Content-Type' => 'application/json',
+        ], JSON_PRETTY_PRINT);
     }
 
     /**
