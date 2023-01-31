@@ -2,5 +2,5 @@
 
 @include('facilitador_centro/graphics');
 
-@include('facilitador_centro/myAlumns');
+@include('alumno.index');
 
