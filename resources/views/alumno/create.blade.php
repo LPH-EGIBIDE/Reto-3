@@ -1,4 +1,4 @@
-<div class="container d-flex align-items-center justify-content-center flex-row">
+<div class="container d-flex align-items-center justify-content-center">
     <div class="card col-12 col-lg-8 p-0">
         <div class="card-header text-primary text-center fs-3">Crear alumno</div>
         <div class="card-body d-flex">
