@@ -89,7 +89,8 @@ class AlumnoController extends Controller
         $request->validate([
             'grado' => 'numeric',
             'empresa' => 'string|max:255',
-            'filtro' => 'string|max:255'
+            'filtro' => 'string|max:255',
+            'page' => 'numeric|nullable'
         ]);
 
         //Check if grado is empty and set it to %
@@ -101,6 +102,11 @@ class AlumnoController extends Controller
         if($request->empresa == null || $request->empresa == 0){
             $request->empresa = '%';
         }
+
+        $page = $request->input('page', 1);
+        $perPage = 10;
+        $offset = ($page - 1) * $perPage;
+
         $lastCurso = DB::table('cursos')->orderBy('id', 'desc')->first();
         $alumnos = DB::table('alumnos')
             ->join('alumnos_historicos', 'alumnos.persona_id', '=', 'alumnos_historicos.alumno_id')
@@ -109,14 +115,22 @@ class AlumnoController extends Controller
             ->join('empresas', 'facilitadores_empresa.empresa_id', '=', 'empresas.id')
             ->where('alumnos_historicos.curso_id', '=', $lastCurso->id)
             ->where('alumnos_historicos.grado_id', 'like', $request->grado)
-            ->where([
-                ['personas.nombre', 'like', '%'.$request->filtro.'%', 'or'],
-                ['personas.apellido', 'like', '%'.$request->filtro.'%', 'or'],
-                ['personas.dni', 'like', '%'.$request->filtro.'%', 'or']
-            ])
+            ->where(function($query) use ($request){
+                $query->whereRaw('CONCAT(personas.nombre, " ", personas.apellido) like "%'.$request->filtro.'%"')
+                    ->orWhere('personas.dni', 'like', '%'.$request->filtro.'%');
+            })
             ->where('empresas.id', 'like', $request->empresa)
-            ->select('personas.nombre', 'personas.apellido', 'personas.dni', 'empresas.nombre as empresa', 'alumnos_historicos.grado_id')
-            ->get();
-        return $alumnos;
+            ->select('personas.nombre', 'personas.apellido', 'personas.dni', 'empresas.nombre as empresa', 'alumnos_historicos.grado_id');
+
+        $total = $alumnos->count();
+        $paginated = $alumnos->offset($offset)->limit($perPage)->get();
+        return response([
+            'data' => $paginated,
+            'total' => $total,
+            'page' => intval($page),
+            'per_page' => $perPage,
+        ], 200, [
+            'Content-Type' => 'application/json',
+        ], JSON_PRETTY_PRINT);
     }
 }

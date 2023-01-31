@@ -21,9 +21,9 @@ class UserTableSeeder extends Seeder
 
 
         //Create 5 facilitadores_centro and link them to a user
-        $alumnos = Persona::factory()->count(5)->alumno()->create();
-        $facilitador_centro = Persona::factory()->count(5)->facilitadorCentro()->create();
-        $facilitador_empresa = Persona::factory()->count(5)->facilitadorEmpresa()->create();
+        $alumnos = Persona::factory()->count(25)->alumno()->create();
+        $facilitador_centro = Persona::factory()->count(25)->facilitadorCentro()->create();
+        $facilitador_empresa = Persona::factory()->count(25)->facilitadorEmpresa()->create();
 
         $personas = Persona::all();
 

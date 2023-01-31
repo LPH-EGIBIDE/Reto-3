@@ -8,11 +8,10 @@
                 <input type="button" class="btn btn-primary" value="Cambiar foto" onclick="document.getElementById('selectedFile').click();">
             </div>
             <div class="col-8">
-              
             <label class="fw-bold text-decoration-underline">Cambiar la contraseña</label>
               <p class="fw-ligt">Cambiar la contraseña  actual del perfil</p>
             <button type="submit" class="btn btn-success mx-auto">Cambiar contraseña</button>
-               
         </div>
+    </div>
     </div>
 </div>

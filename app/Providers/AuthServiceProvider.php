@@ -40,6 +40,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->persona->tipo  === 'facilitador_centro';
         });
 
+
         Gate::define('facilitador_empresa', function ($user) {
             return $user->persona->tipo  === 'facilitador_empresa';
         });
