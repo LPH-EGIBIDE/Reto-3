@@ -2,4 +2,4 @@
 
 @include('facilitador_centro/coordinador/graphicsCoordinator');
 
-@include('facilitador_centro/myAlumns');
+@include('alumno.index');

@@ -1,26 +1,33 @@
-<div class="container d-flex align-items-center justify-content-center flex-row">
+<div class="container d-flex align-items-center justify-content-center">
     <div class="card col-12 col-lg-8 p-0">
         <div class="card-header text-primary text-center fs-3">Crear alumno</div>
-        <div class="card-body d-flex">
-            <div class="col-3 d-flex align-items-center justify-content-be m-0">
+        <div class="card-body d-flex flex-row">
+            <div class="col-3 d-flex flex-column align-items-center justify-content-be m-0 me-4 p-3 gap-3">
                 <img class="img-fluid" src="https://img.freepik.com/free-icon/user_318-875902.jpg" alt="Foto Default">
+                <input type="file" id="profpic" class="d-none">
+                <input type="button" class="btn btn-primary" value="Cambiar foto" onclick="document.getElementById('profpic').click();">
             </div>
-            <div class="col-9">
+            <div class="col-8">
                 <form>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
+                        <label for="apellido" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="apellido">
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    <div class="mb-3">
+                        <label for="dni" class="form-label">DNI</label>
+                        <input type="text" class="form-control" id="dni">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="telefono">
+                    </div>
+                    <div class="offset-10">
+                        <button type="submit" class="btn btn-success">Crear</button>
+                    </div>
                 </form>
             </div>
         </div>
