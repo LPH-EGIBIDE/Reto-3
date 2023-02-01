@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5 class="my-auto">Empresas</h5>
-          
+
           <div class="input-group ml-auto w-auto">
                 <div class="form-outline">
                     <input type="search" id="form1" class="form-control" placeholder="Buscar"/>
@@ -11,9 +11,9 @@
                     <i class="fas fa-search"></i>
                 </button>
             </div>
-          
+
         </div>
- 
+
         <div class="card-body bg-light">
             <table class="table">
                 <thead>
@@ -21,8 +21,8 @@
                     <th scope="col">Cif</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Area</th>
-                </tr>     
-                </thead>    
+                </tr>
+                </thead>
                 <tbody>
                 <tr>
                     <th scope="row">754123S</th>

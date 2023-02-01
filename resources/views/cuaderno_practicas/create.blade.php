@@ -6,17 +6,17 @@
         <form class="ceForm">
         <div class="card-body p-4">
                 <div class="form-outline">
-                    <label class="form-label fw-bold text-decoration-underline" for="textAreaExample1">Actividades desarrolladas</label>
+                    <label class="form-label fw-bold text-primary" for="textAreaExample1">Actividades desarrolladas</label>
                     <textarea class="form-control" id="textAreaExample1" rows="3" placeholder="Actividades realizadas en la empresa, tareas relacionadas con la asignatura dual, formaciones."></textarea>
                 </div>
                 <hr>
                 <div class="form-outline">
-                    <label class="form-label fw-bold text-decoration-underline" for="textAreaExample1">Reflexión sobre el aprendizaje y progreso realizado en la empresa</label>
+                    <label class="form-label fw-bold text-primary" for="textAreaExample1">Reflexión sobre el aprendizaje y progreso realizado en la empresa</label>
                     <textarea class="form-control" id="textAreaExample1" rows="3" placeholder="¿Qué competencias he trabajado? ¿Qué he aprendido? ¿Cuáles son los aspectos en los que he progresado?"></textarea>
                 </div>
                 <hr>
                 <div class="form-outline">
-                    <label class="form-label fw-bold text-decoration-underline" for="textAreaExample1">Identificación de problemas o dificultades y acciones de mejora a poner en marcha</label>
+                    <label class="form-label fw-bold text-primary" for="textAreaExample1">Identificación de problemas o dificultades y acciones de mejora a poner en marcha</label>
                     <textarea class="form-control" id="textAreaExample1" rows="3"></textarea>
                 </div>
         </div>

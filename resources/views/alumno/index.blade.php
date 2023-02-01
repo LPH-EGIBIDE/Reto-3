@@ -1,7 +1,7 @@
 <div class="container">
     <div class="card">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="my-auto">Mis alumnos</h5>
+        <div class="card-header d-flex align-items-center justify-content-between p-3">
+            <h5 class="my-auto text-primary fs-3">Lista de alumnos</h5>
             <div class="input-group ml-auto w-auto">
                 <div class="form-outline">
                     <input type="search" id="form1" class="form-control" placeholder="Buscar"/>
@@ -11,16 +11,15 @@
                 </button>
             </div>
         </div>
-
-        <div class="card-body bg-light">
-            <table class="table">
-                <thead>
+        <div class="card-body bg-light overflow-hidden">
+            <table class="table table-responsive">
+                <thead class="text-primary">
                 <tr>
-                    <th data-field="dni" data-sortable="true" scope="col">DNI</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Correo</th>
-                    <th scope="col">Grado</th>
-                    <th scope="col">Dual</th>
+                    <th scope="col" class="border-dark">DNI</th>
+                    <th scope="col" class="border-dark">Nombre</th>
+                    <th scope="col" class="border-dark">Correo</th>
+                    <th scope="col" class="border-dark">Grado</th>
+                    <th scope="col" class="border-dark">Dual</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,13 +47,20 @@
                 </tbody>
             </table>
         </div>
-
         <div class="card-footer">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end my-auto">
                     <li class="page-item">
-                        <a class="page-link" href="#">
-                            Ver todos...
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 </ul>

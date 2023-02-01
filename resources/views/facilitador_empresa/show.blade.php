@@ -1,7 +1,7 @@
 <div class="container d-flex align-items-center justify-content-center">
     <div class="card col-12 col-lg-8 p-0">
         <div class="card-header d-flex align-items-center justify-content-between px-4">
-            <span class="text-primary fw-bold fs-3">Vista del alumno</span>
+            <span class="text-primary fw-bold fs-5">Vista del facilitador de empresa</span>
             <div class="d-flex gap-3">
                 <button type="button" class="btn btn-primary p-2 px-3">
                     <span class="d-none d-md-block">Editar</span>

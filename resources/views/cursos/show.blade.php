@@ -1,7 +1,7 @@
 <div class="container d-flex align-items-center justify-content-center">
     <div class="card col-12 col-lg-8 p-0">
         <div class="card-header d-flex align-items-center justify-content-between px-4">
-            <span class="text-primary fw-bold fs-3">Vista del alumno</span>
+            <span class="text-primary fw-bold fs-3">Vista de curso</span>
             <div class="d-flex gap-3">
                 <button type="button" class="btn btn-primary p-2 px-3">
                     <span class="d-none d-md-block">Editar</span>
@@ -13,29 +13,27 @@
                 </button>
             </div>
         </div>
-        <div class="card-body d-flex flex-row justify-content-around gap-2">
-            <div class="col-4 d-flex flex-column align-items-center justify-content-be m-0 me-4 p-3 gap-3">
-                <img class="img-fluid" src="https://img.freepik.com/free-icon/user_318-875902.jpg" alt="Foto Default">
-                <input type="file" id="profpic" class="d-none">
-                <input type="button" class="btn btn-primary" value="Cambiar foto" onclick="document.getElementById('profpic').click();">
-            </div>
-            <div class="col-md-7 col-6">
+        <div class="card-body d-flex flex-row justify-content-center">
+            <div class="col-12 col-md-8">
                 <form>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" disabled class="form-control" id="nombre">
                     </div>
                     <div class="mb-3">
-                        <label for="apellido" class="form-label">Apellidos</label>
-                        <input type="text" disabled class="form-control" id="apellido">
+                        <label for="fecha-inicio" class="form-label">Fecha de inicio</label>
+                        <input type="text" disabled class="form-control" id="fecha-inicio">
                     </div>
                     <div class="mb-3">
-                        <label for="dni" class="form-label">DNI</label>
-                        <input type="text" disabled class="form-control" id="dni">
+                        <label for="fecha-fin" class="form-label">Fecha de fin</label>
+                        <input type="text" disabled class="form-control" id="fecha-fin">
                     </div>
                     <div class="mb-4">
-                        <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" disabled class="form-control" id="telefono">
+                        <label for="active" class="form-label">Activo</label>
+                        <select disabled class="form-select">
+                            <option>Si</option>
+                            <option>No</option>
+                        </select>
                     </div>
                     <div class="d-flex justify-content-end col-12">
                         <button type="submit" disabled class="btn btn-success p-2 px-3">Confirmar</button>
