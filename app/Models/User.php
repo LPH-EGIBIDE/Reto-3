@@ -45,5 +45,9 @@ class User extends Authenticatable {
         return $this->belongsTo(Persona::class);
     }
 
+    public function setGoogle2faSecret($value){
+        $this->attributes['google2fa_secret'] = $value;
+    }
+
 
 }
