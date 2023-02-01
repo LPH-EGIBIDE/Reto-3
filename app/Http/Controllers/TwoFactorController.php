@@ -47,35 +47,43 @@ public function __construct()
 
     public function enable(Request $request)
     {
-        $request->validate([
-            '2fa' => 'required|numeric|digits:6',
-        ]);
-
         //Check if the user has 2fa enabled and the session has the secret
         if ($request->user()->google2fa_secret || !$request->session()->has('google2fa_secret')) {
-            return redirect()->route('home');
+            return redirect()->route('index');
         }
+        //Gets  the secret from session, and sets it again to the session for validation
         $token = $request->session()->get('google2fa_secret');
+        $QR_Image = app('pragmarx.google2fa')->getQRCodeInline(
+            config('app.name'),
+            $request->user()->email,
+            $token
+        );
+        //Validate the input manually without using validate() method
+        //Check if the input is empty or is not a 6 digit number
+        if (!$request->filled('2fa') || !preg_match('/^[0-9]{6}$/', $request->input('2fa'))) {
+            //Set the session again
+            $request->session()->flash('google2fa_secret', $token);
+            return view('auth.2fa.step2', compact('QR_Image'))->withErrors([
+                '2fa' => 'El codigo es requerido'
+            ]);
+        }
+
         //Check if the code is valid
         $google2fa = app('pragmarx.google2fa');
         $valid = $google2fa->verifyKey($token, $request->input('2fa'));
         //Show error if the code is not valid
         if (!$valid) {
-            return response([
-                'message' => 'Codigo invalido'
-            ], 422, [
-                'Content-Type' => 'application/json',
-            ], JSON_PRETTY_PRINT);
+            //Set the session again
+            $request->session()->flash('google2fa_secret', $token);
+            return view('auth.2fa.step2',  compact('QR_Image'))->withErrors([
+                '2fa' => 'El codigo introducido no es valido'
+            ]);
         }
-        $request->user()->setGoogle2faSecret($request->input('google2fa_secret'));
+        $request->user()->setGoogle2faSecret($token);
         $request->user()->save();
-        //Cerrar sesion
         auth()->logout();
-        return response([
-            'message' => 'Autenticacion en 2 pasos habilitada, se va a cerrar tu sesion'
-        ], 200, [
-            'Content-Type' => 'application/json',
-        ], JSON_PRETTY_PRINT);
+        $request->session()->flash('status', 'Verificacion de dos pasos habilitada. Se ha cerrado la sesion. Por favor inicie sesion de nuevo.');
+        return view('auth.login');
     }
 
     public function disable(Request $request)
@@ -85,14 +93,14 @@ public function __construct()
         ]);
         //Check if the user has 2fa enabled
         if (!$request->user()->google2fa_secret) {
-            return redirect()->route('home');
+            return redirect()->route('index');
         }
         //check valid password
         if (!\Hash::check($request->input('password'), $request->user()->password)) {
-            return redirect()->route('home');
+            return redirect()->route('index');
         }
         $request->user()->setGoogle2faSecret(null);
         $request->user()->save();
-        return redirect()->route('home');
+        return redirect()->route('index')->with('status', 'Verificacion de dos pasos deshabilitada.');
     }
 }

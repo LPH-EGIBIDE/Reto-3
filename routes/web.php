@@ -22,6 +22,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
 
     //Rutas de la doble autenticación
     //Route::get('/2fa', [App\Http\Controllers\TwoFactorController::class, 'setup'])->name('2fa');
+    Route::post('/2fa', function (){ return redirect(route('index')); })->name('auth.2fa');
     Route::get('/2fa/enable', [App\Http\Controllers\TwoFactorController::class, 'show'])->name('2fa.enable.step-1');
     Route::post('/2fa/enable', [App\Http\Controllers\TwoFactorController::class, 'setup'])->name('2fa.enable.step-1.post');
     //Route::get('/2fa/enable/step-2', [App\Http\Controllers\TwoFactorController::class, 'setup'])->name('2fa.enable.step-2');

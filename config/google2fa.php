@@ -37,7 +37,7 @@ return [
     /*
      * One Time Password request input name.
      */
-    'otp_input' => 'one_time_password',
+    'otp_input' => '2fa',
 
     /*
      * One Time Password Window.
@@ -57,15 +57,15 @@ return [
     /*
      * One Time Password View.
      */
-    'view' => 'google2fa.index',
+    'view' => 'auth.2fa.login',
 
     /*
      * One Time Password error message.
      */
     'error_messages' => [
-        'wrong_otp'       => "The 'One Time Password' typed was wrong.",
-        'cannot_be_empty' => 'One Time Password cannot be empty.',
-        'unknown'         => 'An unknown error has occurred. Please try again.',
+        'wrong_otp'       => "El código de verificación es incorrecto.",
+        'cannot_be_empty' => 'El código de verificación no puede estar vacío.',
+        'unknown'         => 'Ha ocurrido un error desconocido.',
     ],
 
     /*
