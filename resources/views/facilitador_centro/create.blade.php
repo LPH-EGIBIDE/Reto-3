@@ -25,13 +25,23 @@
                         <label for="telefono" class="form-label">Teléfono</label>
                         <input type="text" class="form-control" id="telefono">
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label for="empresa" class="form-label">Empresa</label>
                         <select class="form-select" aria-label="empresa">
                             <option>Empresa 1</option>
                             <option>Empresa 2</option>
                         </select>
                     </div>
+                    @if($coordinador)
+                        <div class="mb-4">
+                            <label for="curso" class="form-label">Curso</label>
+                            <select class="form-select" aria-label="curso">
+                                <option>Curso 1</option>
+                                <option>Curso 2</option>
+                            </select>
+                        </div>
+                    @endif
+
                     <div class="d-flex justify-content-end w-100">
                         <button type="submit" class="btn btn-success p-2 px-3">Crear</button>
                     </div>

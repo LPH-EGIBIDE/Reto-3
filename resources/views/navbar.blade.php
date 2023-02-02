@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="{{asset('images/logo-sm.png')}}" alt="Logo" class="logo" width="30px" height="44px">
+            <img src="{{Vite::asset('resources/images/logo-sm.png')}}" alt="Logo" class="logo" width="30px" height="44px">
             {{ config('app.name', 'Laravel') }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
