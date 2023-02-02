@@ -20,7 +20,7 @@
                     @endif
             </div>
             <div class="text-center mb-5">
-                <img class="logo" src="{{asset('images/logo.png')}}" alt="Logo" srcset="/img/logo.png 2x">
+                <img class="logo" src="{{Vite::asset('resources/images/logo.png')}}" alt="Logo">
             </div>
             <div class="card">
                 <div class="card-header">Iniciar sesión</div>
