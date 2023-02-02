@@ -1,3 +1,10 @@
+@extends('layouts.app')
+
+@section('navbar')
+    @include('navbar')
+@endsection
+
+@section('content')
 <div class="container d-flex align-items-center justify-content-center">
     <div class="card col-12 col-lg-8 p-0">
         <div class="card-header d-flex align-items-center justify-content-between px-4">
@@ -18,21 +25,21 @@
                 <form>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" disabled class="form-control" id="nombre">
+                        <input type="text" value="{{$curso->nombre}}" disabled class="form-control" id="nombre">
                     </div>
                     <div class="mb-3">
                         <label for="fecha-inicio" class="form-label">Fecha de inicio</label>
-                        <input type="text" disabled class="form-control" id="fecha-inicio">
+                        <input type="date" value="{{$curso->fecha_inicio}}" disabled class="form-control" id="fecha-inicio">
                     </div>
                     <div class="mb-3">
                         <label for="fecha-fin" class="form-label">Fecha de fin</label>
-                        <input type="text" disabled class="form-control" id="fecha-fin">
+                        <input type="date" value="{{$curso->fecha_fin}}" disabled class="form-control" id="fecha-fin">
                     </div>
                     <div class="mb-4">
-                        <label for="active" class="form-label">Activo</label>
+                        <label for="active"  class="form-label">Activo</label>
                         <select disabled class="form-select">
-                            <option>Si</option>
-                            <option>No</option>
+                            <option @if($curso->active) selected  @endif >Si</option>
+                            <option @if(!$curso->active) selected @endif>No</option>
                         </select>
                     </div>
                     <div class="d-flex justify-content-end col-12">
@@ -43,3 +50,4 @@
         </div>
     </div>
 </div>
+@endsection

@@ -17,7 +17,7 @@ class FacilitadorCentro extends Persona {
         return $this->belongsTo(Persona::class, 'persona_id');
     }
     public function grado(): HasMany {
-        return $this->hasMany(Grado::class);
+        return $this->hasMany(Grado::class, 'coordinador_id');
     }
     public function alumnoHistorico(): HasMany {
         return $this->hasMany(AlumnoHistorico::class, 'facilitador_centro');

@@ -84,6 +84,14 @@ class AuthServiceProvider extends ServiceProvider
             }
             return $alumnoHistorico !== null;
         });
+        Gate::define('can_view_alumno', function ($user, $alumno) {
+            $alumnoHistorico = $alumno->alumnoHistorico->last();
+            return $alumnoHistorico->facilitador_centro == $user->persona->id || $alumnoHistorico->facilitador_empresa == $user->persona->id || $alumnoHistorico->grado->coordinador_id == $user->persona->id;
+        });
+
+        Gate::define('can_view_grado', function ($user, $grado) {
+            return $grado->coordinador_id == $user->persona->id;
+        });
 
         //
     }

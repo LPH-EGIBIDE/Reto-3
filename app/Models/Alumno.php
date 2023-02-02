@@ -17,6 +17,6 @@ class Alumno extends Persona {
     }
 
     public function alumnoHistorico(): HasMany {
-        return $this->hasMany(AlumnoHistorico::class);
+        return $this->hasMany(AlumnoHistorico::class, 'alumno_id');
     }
 }

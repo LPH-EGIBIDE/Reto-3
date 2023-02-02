@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
+use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -45,9 +46,13 @@ class AlumnoController extends Controller
      * @param  \App\Models\Alumno  $alumno
      * @return \Illuminate\Http\Response
      */
-    public function show(Alumno $alumno)
+    public function show($id)
     {
-        //
+        $alumno = Alumno::findOrFail($id);
+        if (Gate::denies('can_view_alumno', [$alumno])) {
+            abort(403);
+        }
+        return view('alumno.show', ['alumno' => $alumno]);
     }
 
     /**

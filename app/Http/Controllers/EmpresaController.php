@@ -74,11 +74,12 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function show(Empresa $empresa)
+    public function show($id)
     {
-        //
-    }
+        $empresa = Empresa::findOrFail($id);
 
+        return view('empresas.show', compact('empresa'));
+    }
     /**
      * Show the form for editing the specified resource.
      *
