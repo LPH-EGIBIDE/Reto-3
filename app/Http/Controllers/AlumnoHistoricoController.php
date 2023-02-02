@@ -9,12 +9,19 @@ class AlumnoHistoricoController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+
+        if ($user->persona->tipo === 'alumno') {
+            $alumno = $user->persona->alumno;
+            $historico = $alumno->historico;
+            return view('alumno.historico', compact('historico'));
+        } else {
+            return redirect()->route('home');
+        }
+
     }
 
     /**
