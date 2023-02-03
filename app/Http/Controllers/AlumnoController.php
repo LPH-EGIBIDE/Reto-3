@@ -33,7 +33,7 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-        //
+        return view('alumno.create');
     }
 
     /**
@@ -47,7 +47,7 @@ class AlumnoController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
-            'dni' => 'required|string|email|max:255',
+            'dni' => 'required|string|min:9|max:9',
             'telefono' => 'required|string|max:255'
         ]);
 
@@ -67,8 +67,6 @@ class AlumnoController extends Controller
 
         session()->flash('message', 'Alumno creado correctamente');
         return redirect()->route('alumnos.show', compact('alumno'));
-
-
     }
 
     /**
@@ -109,7 +107,7 @@ class AlumnoController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
-            'dni' => 'required|string|email|max:255',
+            'dni' => 'required|string|min:9|max:9',
             'telefono' => 'required|string|max:255'
         ]);
 
@@ -141,7 +139,7 @@ class AlumnoController extends Controller
         }
         $alumno->persona->delete();
         session()->flash('message', 'Alumno eliminado correctamente');
-        return view('alumno.index');
+        return redirect()->route('alumnos.index');
     }
 
 

@@ -62,19 +62,18 @@ Route::middleware(['auth', '2fa'])->group(function () {
 
 //Rutas de los coordinadores
     Route::middleware(['can:is_coordinador'])->group(function () {
-        Route::get('/facilitador-empresa/{id}', [App\Http\Controllers\EmpresaController::class, 'show'])->name('facilitador_empresa.show')->whereNumber('id');
+        Route::put('/facilitadores-centro/{id}', [App\Http\Controllers\CursoController::class, 'update'])->name('facilitadorCentro.update')->whereNumber('id');
+        Route::post('/facilitadores-centro', [App\Http\Controllers\CursoController::class, 'store'])->name('facilitadorCentro.store');
 
-        Route::delete('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'destroy'])->name('curso.destroy')->whereNumber('id');
         Route::put('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'update'])->name('curso.update')->whereNumber('id');
         Route::post('/cursos', [App\Http\Controllers\CursoController::class, 'store'])->name('curso.store');
 
-        Route::delete('/grados/{id}', [App\Http\Controllers\GradoController::class, 'destroy'])->name('grado.destroy')->whereNumber('id');
         Route::put('/grados/{id}', [App\Http\Controllers\GradoController::class, 'update'])->name('grado.update')->whereNumber('id');
         Route::post('/grados', [App\Http\Controllers\GradoController::class, 'store'])->name('grado.store');
 
-        Route::delete('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'destroy'])->name('alumno.destroy')->whereNumber('id');
-        Route::put('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'update'])->name('alumno.update')->whereNumber('id');
+        Route::get('/alumnos/create', [App\Http\Controllers\AlumnoController::class, 'create'])->name('alumno.create');
         Route::post('/alumnos', [App\Http\Controllers\AlumnoController::class, 'store'])->name('alumno.store');
+        Route::put('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'update'])->name('alumno.update')->whereNumber('id');
     });
 
 //Rutas de cualquier tipo de facilitador

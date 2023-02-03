@@ -24,7 +24,7 @@
             </div>
             <div class="card-body d-flex flex-row justify-content-center">
                 <div class="col-12 col-md-8">
-                    <form>
+                    <form action="{{route('emp')}}">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
                             <input type="text" value="{{$empresa->nombre}}" disabled class="form-control" id="nombre">
