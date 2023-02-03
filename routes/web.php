@@ -64,6 +64,18 @@ Route::middleware(['auth', '2fa'])->group(function () {
 //Rutas de los coordinadores
     Route::middleware(['can:is_coordinador'])->group(function () {
         Route::get('/facilitador-empresa/{id}', [App\Http\Controllers\EmpresaController::class, 'show'])->name('facilitador_empresa.show')->whereNumber('id');
+
+        Route::delete('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'destroy'])->name('curso.destroy')->whereNumber('id');
+        Route::put('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'update'])->name('curso.update')->whereNumber('id');
+        Route::post('/cursos', [App\Http\Controllers\CursoController::class, 'store'])->name('curso.store');
+
+        Route::delete('/grados/{id}', [App\Http\Controllers\GradoController::class, 'destroy'])->name('grado.destroy')->whereNumber('id');
+        Route::put('/grados/{id}', [App\Http\Controllers\GradoController::class, 'update'])->name('grado.update')->whereNumber('id');
+        Route::post('/grados', [App\Http\Controllers\GradoController::class, 'store'])->name('grado.store');
+
+        Route::delete('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'destroy'])->name('alumno.destroy')->whereNumber('id');
+        Route::put('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'update'])->name('alumno.update')->whereNumber('id');
+        Route::post('/alumnos', [App\Http\Controllers\AlumnoController::class, 'store'])->name('alumno.store');
     });
 
 //Rutas de cualquier tipo de facilitador
@@ -76,12 +88,8 @@ Route::middleware(['auth', '2fa'])->group(function () {
 
         //Rutas de vista de alumnos
         Route::get('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'show'])->name('alumno.show')->whereNumber('id');
-
         //Rutas de vista de cursos
         Route::get('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'show'])->name('curso.show')->whereNumber('id');
-
-        //Rutas de vista de empresas
-        Route::get('/empresas/{id}', [App\Http\Controllers\EmpresaController::class, 'show'])->name('empresa.show')->whereNumber('id');
 
     });
 
