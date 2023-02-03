@@ -57,6 +57,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/alumno', function () {
             return "Protected routes for alumno";
         });
+        Route::get('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'show'])->name('cuaderno.show');
     });
 
 
