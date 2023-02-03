@@ -1,10 +1,8 @@
 
 //Estilos para el formulario de cuaderno de practicas
-.ceForm > textarea{
+.ceForm, .evaCS> textarea{
     resize:none;
 }
-
-
 
 //Notificaciones
 
@@ -56,4 +54,19 @@ $color_2: #999;
 }
 .card-facilitador {
     width: 100%;
+}
+
+//Estilos para el formulario de historico
+.form-historico > .row {
+    margin: 0.5rem
+}
+
+//Estilos para el formulario de cuaderno de practicas show
+.row-separation .row{
+    margin: 1rem;
+}
+  
+.evaCSFormFooter {
+    display: flex;
+    justify-content: end;
 }

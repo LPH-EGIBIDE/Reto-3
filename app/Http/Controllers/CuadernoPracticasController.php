@@ -48,8 +48,6 @@ class CuadernoPracticasController extends Controller
     {
         return auth()->user()->persona->informacion;
          
-        
-
     }
 
     /**
