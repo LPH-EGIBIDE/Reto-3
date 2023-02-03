@@ -21,7 +21,7 @@
 
                 @can('alumno')
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-regular fa-notebook"></i> Cuaderno Equipo</a>
+                    <a class="nav-link" href="{{route('cuaderno.show')}}"><i class="fa-regular fa-notebook"></i> Cuaderno Equipo</a>
                 </li>
                 @endcan
 
