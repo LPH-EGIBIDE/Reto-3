@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
+use App\Models\Persona;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +38,31 @@ class AlumnoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'dni' => 'required|string|email|max:255',
+            'telefono' => 'required|string|max:255'
+        ]);
+
+        // Crear persona
+        $persona = new Persona();
+        $persona->nombre = $request->nombre;
+        $persona->apellido = $request->apellido;
+        $persona->dni = $request->dni;
+        $persona->telefono = $request->telefono;
+        $persona->tipo = 'alumno';
+        $persona->save();
+
+        // Crear alumno
+        $alumno = new Alumno();
+        $alumno->persona_id = $persona->id;
+        $alumno->save();
+
+        session()->flash('message', 'Alumno creado correctamente');
+        return redirect()->route('alumnos.show', compact('alumno'));
+
+
     }
 
     /**
@@ -73,9 +98,27 @@ class AlumnoController extends Controller
      * @param  \App\Models\Alumno  $alumno
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Alumno $alumno)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'dni' => 'required|string|email|max:255',
+            'telefono' => 'required|string|max:255'
+        ]);
+
+        $alumno = Alumno::findOrFail($id);
+        if (Gate::denies('can_view_alumno', [$alumno])) {
+            abort(403);
+        }
+        $alumno->persona->nombre = $request->nombre;
+        $alumno->persona->apellido = $request->apellido;
+        $alumno->persona->dni = $request->dni;
+        $alumno->persona->telefono = $request->telefono;
+        $alumno->persona->save();
+        session()->flash('message', 'Alumno actualizado correctamente');
+        return view('alumno.show', ['alumno' => $alumno]);
+
     }
 
     /**
@@ -84,9 +127,15 @@ class AlumnoController extends Controller
      * @param  \App\Models\Alumno  $alumno
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Alumno $alumno)
+    public function destroy($id)
     {
-        //
+        $alumno = Alumno::findOrFail($id);
+        if (Gate::denies('can_view_alumno', [$alumno])) {
+            abort(403);
+        }
+        $alumno->persona->delete();
+        session()->flash('message', 'Alumno eliminado correctamente');
+        return view('alumno.index');
     }
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grado;
+use App\Models\Persona;
 use Illuminate\Http\Request;
 
 class GradoController extends Controller
@@ -58,7 +59,24 @@ class GradoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'familia' => 'required|string|max:255',
+            'coordinador' => 'integer',
+        ]);
+        $grado = new Grado();
+        $grado->nombre = $request->nombre;
+        $grado->familia = $request->familia;
+        if ($request->coordinador) {
+            $coordinador = Persona::findOrFail($request->coordinador);
+            if ($coordinador->tipo != 'facilitador_centro') {
+                return redirect()->route('grados.index')->withErrors('El coordinador debe ser un facilitador del centro');
+            }
+            $grado->coordinador = $coordinador->id;
+        }
+        $grado->save();
+        session()->flash('success', 'Grado creado correctamente');
+        return redirect()->route('grados.index');
     }
 
     /**
@@ -90,9 +108,28 @@ class GradoController extends Controller
      * @param  \App\Models\Grado  $grado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Grado $grado)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'familia' => 'required|string|max:255',
+            'coordinador' => 'integer|max:255',
+        ]);
+        $grado = Grado::findOrFail($id);
+        $grado->nombre = $request->nombre;
+        $grado->familia = $request->familia;
+
+        if($request->coordinador) {
+            $coordinador = Persona::findOrFail($request->coordinador);
+            if ($coordinador->tipo != 'facilitador_centro') {
+                return redirect()->route('grados.index')->withErrors('El coordinador debe ser un facilitador del centro');
+            }
+            $grado->coordinador = $coordinador->id;
+        }
+        $grado->save();
+        session()->flash('success', 'Grado actualizado correctamente');
+        return redirect()->route('grados.index');
+
     }
 
     /**
@@ -101,8 +138,11 @@ class GradoController extends Controller
      * @param  \App\Models\Grado  $grado
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Grado $grado)
+    public function destroy($id)
     {
-        //
+        $grado = Grado::findOrFail($id);
+        $grado->delete();
+        session()->flash('success', 'Grado eliminado correctamente');
+        return redirect()->route('grados.index');
     }
 }
