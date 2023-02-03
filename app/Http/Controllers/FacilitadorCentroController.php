@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FacilitadorCentro;
+use Gate;
 use Illuminate\Http\Request;
 
 class FacilitadorCentroController extends Controller
@@ -44,9 +45,10 @@ class FacilitadorCentroController extends Controller
      * @param  \App\Models\FacilitadorCentro  $facilitadorCentro
      * @return \Illuminate\Http\Response
      */
-    public function show(FacilitadorCentro $facilitadorCentro)
+    public function show(int $id)
     {
-        //
+        $facilitadorCentro = FacilitadorCentro::findOrFail($id);
+        return view('facilitador_centro.show', compact('facilitadorCentro'));
     }
 
     /**
