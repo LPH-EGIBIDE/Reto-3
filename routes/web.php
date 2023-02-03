@@ -19,7 +19,7 @@ Auth::routes(['register' => false]);
 Route::middleware(['auth', '2fa'])->group(function () {
 
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('index');
-
+    Route::get('/index', [App\Http\Controllers\DashboardController::class, 'index'])->name('index');
     //Rutas de la doble autenticación
     //Route::get('/2fa', [App\Http\Controllers\TwoFactorController::class, 'setup'])->name('2fa');
     Route::post('/2fa', function (){ return redirect(route('index')); })->name('auth.2fa');
@@ -28,7 +28,6 @@ Route::middleware(['auth', '2fa'])->group(function () {
     //Route::get('/2fa/enable/step-2', [App\Http\Controllers\TwoFactorController::class, 'setup'])->name('2fa.enable.step-2');
     Route::post('/2fa/enable/step-2', [App\Http\Controllers\TwoFactorController::class, 'enable'])->name('2fa.enable.step-2');
     Route::post('/2fa/disable', [App\Http\Controllers\TwoFactorController::class, 'disable'])->name('2fa');
-
     Route::get('/cursos/listado', [App\Http\Controllers\CursoController::class, 'listado'])->name('cursos.listado');
     Route::get('/grados/listado', [App\Http\Controllers\GradoController::class, 'listado'])->name('grados.listado');
     Route::get('/familias/listado', [App\Http\Controllers\FamiliaController::class, 'listado'])->name('familias.listado');

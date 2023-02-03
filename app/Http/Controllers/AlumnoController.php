@@ -13,11 +13,17 @@ class AlumnoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+        if ($user->persona->tipo === 'alumno') {
+            $alumno = $user->persona->alumno;
+            $cursos = $alumno->cursos;
+            return view('alumno.index', compact('cursos'));
+        } else {
+            return redirect()->route('home');
+        }
     }
 
     /**
