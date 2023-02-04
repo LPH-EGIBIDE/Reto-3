@@ -31,9 +31,13 @@
                                 <label for="dni" class="form-label">DNI</label>
                                 <input name="dni" type="text" class="form-control" id="dni">
                             </div>
-                            <div class="mb-4">
+                            <div class="mb-3">
                                 <label for="telefono" class="form-label">Teléfono</label>
                                 <input name="telefono" type="text" class="form-control" id="telefono">
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="form-label">Correo</label>
+                                <input name="email" type="email" class="form-control" id="email">
                             </div>
                             <div class="d-flex justify-content-end w-100">
                                 <button type="submit" class="btn btn-success p-2 px-3">Crear</button>

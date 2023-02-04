@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewUserMail;
 use App\Models\Alumno;
 use App\Models\Persona;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AlumnoController extends Controller
 {
@@ -47,8 +50,9 @@ class AlumnoController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
-            'dni' => 'required|string|min:9|max:9',
-            'telefono' => 'required|string|max:255'
+            'dni' => 'required|string|min:9|max:9|unique:personas',
+            'telefono' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users'
         ]);
 
         // Crear persona
@@ -65,8 +69,30 @@ class AlumnoController extends Controller
         $alumno->persona_id = $persona->id;
         $alumno->save();
 
+        // Random password
+        $password = substr(md5(microtime()),rand(0,26),8);
+
+        // Crear usuario
+        $user = new User();
+        $user->email = $request->email;
+        $user->password = bcrypt($password);
+        $user->persona_id = $persona->id;
+        $user->email_verified_at = now();
+        $user->save();
+
+        // Enviar email
+        $data = (object)array(
+            'nombre' => $persona->nombre,
+            'apellido' => $persona->apellido,
+            'email' => $user->email,
+            'password' => $password
+        );
+
+        (new PersonaController)->newPersonaEmail($persona, 'Creación de cuenta', $data);
+
         session()->flash('message', 'Alumno creado correctamente');
-        return redirect()->route('alumnos.show', compact('alumno'));
+        return redirect()->route('alumno.show', ['id' => $persona->id]);
+
     }
 
     /**

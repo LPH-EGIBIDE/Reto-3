@@ -24,29 +24,31 @@
         </div>
         <div class="card-body d-flex flex-row justify-content-center">
             <div class="col-12 col-md-8">
-                <form>
+                <form action="{{route('curso.update',['id'=> $curso->id])}}" method="post">
+                    @method('PUT')
+                    @csrf
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" value="{{$curso->nombre}}" disabled class="form-control" id="nombre">
+                        <input name="nombre" type="text" value="{{$curso->nombre}}"  class="form-control" id="nombre">
                     </div>
                     <div class="mb-3">
                         <label for="fecha-inicio" class="form-label">Fecha de inicio</label>
-                        <input type="date" value="{{$curso->fecha_inicio}}" disabled class="form-control" id="fecha-inicio">
+                        <input name="fecha_inicio" type="date" value="{{$curso->fecha_inicio}}"  class="form-control" id="fecha-inicio">
                     </div>
                     <div class="mb-3">
                         <label for="fecha-fin" class="form-label">Fecha de fin</label>
-                        <input type="date" value="{{$curso->fecha_fin}}" disabled class="form-control" id="fecha-fin">
+                        <input name="fecha_fin" type="date" value="{{$curso->fecha_fin}}"  class="form-control" id="fecha-fin">
                     </div>
                     <div class="mb-4">
                         <label for="active"  class="form-label">Activo</label>
-                        <select disabled class="form-select">
+                        <select name="active" class="form-select">
                             <option @if($curso->active) selected  @endif >Si</option>
                             <option @if(!$curso->active) selected @endif>No</option>
                         </select>
                     </div>
                     @can('is_coordinador')
                         <div class="d-flex justify-content-end col-12">
-                            <button type="submit" disabled class="btn btn-success p-2 px-3">Confirmar</button>
+                            <button type="submit" class="btn btn-success p-2 px-3">Confirmar</button>
                         </div>
                     @endcan
                 </form>

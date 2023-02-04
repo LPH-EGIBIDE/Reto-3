@@ -18,8 +18,8 @@ class Persona extends Model {
         'telefono',
     ];
 
-    public function user(): BelongsTo {
-        return $this->hasOne(User::class, 'id');
+    public function user(): hasOne {
+        return $this->hasOne(User::class, 'persona_id');
     }
     public function attachment(): HasMany {
         return $this->hasMany(Attachment::class);

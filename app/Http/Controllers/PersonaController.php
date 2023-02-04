@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewUserMail;
 use App\Models\Persona;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PersonaController extends Controller
 {
@@ -81,5 +83,9 @@ class PersonaController extends Controller
     public function destroy(Persona $persona)
     {
         //
+    }
+
+    public function newPersonaEmail(Persona $persona, string $subject, \stdClass $data) {
+        Mail::to($persona->user->email)->send(new NewUserMail($subject, $data));
     }
 }

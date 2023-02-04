@@ -117,7 +117,7 @@ class CursoController extends Controller
         $curso->save();
         //Set flash data with success message
         session()->flash('success', 'El curso fue actualizado correctamente');
-        return redirect()->route('cursos.index');
+        return redirect()->route('curso.show', $curso->id);
     }
 
     /**
