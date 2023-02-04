@@ -17,7 +17,7 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        //
+        return view('alumno.index');
     }
 
     /**
@@ -143,19 +143,16 @@ class AlumnoController extends Controller
         $request->validate([
             'grado' => 'numeric',
             'empresa' => 'string|max:255',
-            'filtro' => 'string|max:255',
+            'filtro' => 'string|nullable|max:255',
             'page' => 'numeric|nullable'
         ]);
 
+
         //Check if grado is empty and set it to %
-        if($request->grado == null || $request->grado == 0){
-            $request->grado = '%';
-        }
+        $request->grado = empty($request->grado) ? '%' : $request->grado;
 
         //Check if empresa is empty and set it to %
-        if($request->empresa == null || $request->empresa == 0){
-            $request->empresa = '%';
-        }
+        $request->empresa = empty($request->empresa) ? '%' : $request->empresa;
 
         $page = $request->input('page', 1);
         $perPage = 10;
@@ -163,10 +160,11 @@ class AlumnoController extends Controller
 
         $lastCurso = DB::table('cursos')->orderBy('id', 'desc')->first();
         $alumnos = DB::table('alumnos')
-            ->join('alumnos_historicos', 'alumnos.persona_id', '=', 'alumnos_historicos.alumno_id')
+            ->leftJoin('alumnos_historicos', 'alumnos.persona_id', '=', 'alumnos_historicos.alumno_id')
             ->join('personas', 'alumnos.persona_id', '=', 'personas.id')
-            ->join('facilitadores_empresa', 'alumnos_historicos.facilitador_empresa', '=', 'facilitadores_empresa.persona_id')
-            ->join('empresas', 'facilitadores_empresa.empresa_id', '=', 'empresas.id')
+            ->join('users', 'alumnos.persona_id', '=', 'users.persona_id')
+            ->leftJoin('facilitadores_empresa', 'alumnos_historicos.facilitador_empresa', '=', 'facilitadores_empresa.persona_id')
+            ->leftJoin('empresas', 'facilitadores_empresa.empresa_id', '=', 'empresas.id')
             ->where('alumnos_historicos.curso_id', '=', $lastCurso->id)
             ->where('alumnos_historicos.grado_id', 'like', $request->grado)
             ->where(function($query) use ($request){
@@ -174,14 +172,20 @@ class AlumnoController extends Controller
                     ->orWhere('personas.dni', 'like', '%'.$request->filtro.'%');
             })
             ->where('empresas.id', 'like', $request->empresa)
-            ->select('personas.nombre', 'personas.apellido', 'personas.dni', 'empresas.nombre as empresa', 'alumnos_historicos.grado_id');
+            ->select('personas.nombre', 'personas.apellido', 'personas.dni', 'empresas.nombre as empresa', 'users.email', 'personas.id as url');
 
         $total = $alumnos->count();
         $paginated = $alumnos->offset($offset)->limit($perPage)->get();
+        //Replace persona_id with the route to the show view without using foreach
+
+        array_map(function($alumno){
+            $alumno->url = route('alumno.show', $alumno->url, false);
+        }, $paginated->all());
+        $page = intval($page) > ceil($total / $perPage) ? ceil($total / $perPage) : $page;
         return response([
             'data' => $paginated,
             'total' => $total,
-            'page' => intval($page),
+            'page' => $page,
             'per_page' => $perPage,
         ], 200, [
             'Content-Type' => 'application/json',

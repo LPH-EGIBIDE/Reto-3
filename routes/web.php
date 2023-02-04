@@ -41,7 +41,9 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/facilitador-centro', function () {
             return "Protected routes for facilitador_centro";
         });
-        Route::get('/alumnos', [App\Http\Controllers\AlumnoController::class, 'filterAlumnos'])->name('alumno.index');
+        Route::get('/alumnos', [App\Http\Controllers\AlumnoController::class, 'index'])->name('alumno.index');
+        Route::get('/alumnos/api/filter', [App\Http\Controllers\AlumnoController::class, 'filterAlumnos'])->name('alumno.api.filterAlumnos');
+        Route::get('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'show'])->name('alumno.show')->where('id', '[0-9]+');
     });
 
 

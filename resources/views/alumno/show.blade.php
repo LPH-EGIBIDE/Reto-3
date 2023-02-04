@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('scripts')
+    @vite('resources/js/editElement.ts')
+@endsection
+
 @section('navbar')
     @include('navbar')
 @endsection
@@ -10,13 +15,9 @@
         <div class="card-header d-flex align-items-center justify-content-between px-4">
             <span class="text-primary fw-bold fs-3">Vista del alumno</span>
             <div class="d-flex gap-3">
-                <button type="button" class="btn btn-primary p-2 px-3">
+                <button type="button" id="editButton" class="btn btn-primary p-2 px-3">
                     <span class="d-none d-md-block">Editar</span>
                     <i class="fa-solid fa-pencil d-block d-md-none"></i>
-                </button>
-                <button type="button" class="btn btn-danger p-2 px-3">
-                    <span class="d-none d-md-block">Borrar</span>
-                    <i class="fa-solid fa-trash d-block d-md-none"></i>
                 </button>
             </div>
         </div>
@@ -29,7 +30,7 @@
                 @endcan
             </div>
             <div class="col-md-7 col-6">
-                <form>
+                <form id="editForm">
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" value="{{$alumno->persona->nombre}}" disabled class="form-control" id="nombre">

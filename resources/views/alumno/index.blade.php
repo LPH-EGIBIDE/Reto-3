@@ -1,65 +1,68 @@
+@extends('layouts.app')
+
+@section('scripts')
+    @vite('resources/js/filterElement.ts')
+@endsection
+
+@section('navbar')
+    @include('navbar')
+@endsection
+
+@section('content')
 <div class="container">
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between p-3">
             <h5 class="my-auto text-primary fs-3">Lista de alumnos</h5>
+            <form action="{{ route('alumno.api.filterAlumnos') }}" method="get" id="filterForm">
+                <input type="hidden" name="page" id="pageForm" value="1">
             <div class="input-group ml-auto w-auto">
                 <div class="form-outline">
-                    <input type="search" id="form1" class="form-control" placeholder="Buscar"/>
+                    <input type="search" id="form1" name="filtro" class="form-control" placeholder="Buscar"/>
                 </div>
-                <button type="button" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
+            </form>
         </div>
         <div class="card-body bg-light overflow-hidden">
             <table class="table table-responsive">
                 <thead class="text-primary">
                 <tr>
-                    <th scope="col" class="border-dark">DNI</th>
                     <th scope="col" class="border-dark">Nombre</th>
+                    <th scope="col" class="border-dark">Apellido</th>
+                    <th scope="col" class="border-dark">DNI</th>
+                    <th scope="col" class="border-dark">Empresa</th>
                     <th scope="col" class="border-dark">Correo</th>
-                    <th scope="col" class="border-dark">Grado</th>
-                    <th scope="col" class="border-dark">Dual</th>
+                    <th scope="col" class="border-dark">Acciones</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">05947386F</th>
-                    <td>Manolo del Bombo</td>
-                    <td>manolo.bombo@deusto.com</td>
-                    <td>3º SKERE</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <th scope="row">05947386F</th>
-                    <td>Manolo del Bombo</td>
-                    <td>manolo.bombo@deusto.com</td>
-                    <td>3º SKERE</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <th scope="row">05947386F</th>
-                    <td>Manolo del Bombo</td>
-                    <td>manolo.bombo@deusto.com</td>
-                    <td>3º SKERE</td>
-                    <td>No</td>
-                </tr>
+                <tbody id="itemTable">
+                    @for($i = 0; $i < 10; $i++)
+                        <tr class="loading-skeleton">
+                            <td><p>Mireille</p></td>
+                            <td><p>Marvin</p></td>
+                            <td><p>12345678A/p></td>
+                            <td><p>Deckow, Runolfsson and Jaskolski</p></td>
+                            <td><p>hershel.heidenreich@example.net</p></td>
+                            <td><p>Hola mama</p></td>
+                        </tr>
+                    @endfor
                 </tbody>
             </table>
+            <p id="noItems"  class="text-center d-none">No hay alumnos que coincidan</p>
         </div>
         <div class="card-footer">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end my-auto">
                     <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
+                        <a class="page-link" id="previousPage"  href="#" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item" ><a class="page-link disabled" disabled id="page" href="#">1</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
+                        <a class="page-link" href="#" id="nextPage" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -68,3 +71,4 @@
         </div>
     </div>
 </div>
+@endsection
