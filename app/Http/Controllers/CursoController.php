@@ -21,14 +21,22 @@ class CursoController extends Controller
     {
         $request->validate([
             'page' => 'nullable|integer',
+            'filter' => 'nullable|string|max:255',
         ]);
 
         $page = $request->input('page', 1);
         $perPage = 10;
         $offset = ($page - 1) * $perPage;
 
-        $cursos = Curso::offset($offset)->limit($perPage)->select('id', 'nombre', 'fecha_inicio', 'fecha_fin')->get();
-        $total = Curso::count();
+        $cursos = Curso::where('nombre', "like", "%".$request->filter."%")->offset($offset)->limit($perPage)->select( 'nombre', 'fecha_inicio', 'fecha_fin', "id as url");
+        $total = $cursos->count();
+        $cursos = $cursos->get();
+
+        $cursos->map(function($curso){
+            $curso->url = route('curso.show', $curso->url, false);
+        });
+
+        $page = intval($page) > ceil($total / $perPage) ? ceil($total / $perPage) : $page;
 
         return response([
             'data' => $cursos,
