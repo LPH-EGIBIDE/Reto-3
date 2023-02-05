@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('scripts')
+    @vite('resources/js/editElement.ts')
+@endsection
+
 @section('navbar')
     @include('navbar')
 @endsection

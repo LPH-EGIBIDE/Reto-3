@@ -46,7 +46,10 @@ class CuadernoPracticasController extends Controller
      */
     public function show(CuadernoPracticas $cuadernoPracticas)
     {
-        //
+        return auth()->user()->persona->informacion;
+         
+        
+
     }
 
     /**

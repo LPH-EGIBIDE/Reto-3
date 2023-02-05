@@ -28,7 +28,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
     //Route::get('/2fa/enable/step-2', [App\Http\Controllers\TwoFactorController::class, 'setup'])->name('2fa.enable.step-2');
     Route::post('/2fa/enable/step-2', [App\Http\Controllers\TwoFactorController::class, 'enable'])->name('2fa.enable.step-2');
     Route::post('/2fa/disable', [App\Http\Controllers\TwoFactorController::class, 'disable'])->name('2fa');
-    Route::get('/cursos/listado', [App\Http\Controllers\CursoController::class, 'listado'])->name('cursos.listado');
+
     Route::get('/grados/listado', [App\Http\Controllers\GradoController::class, 'listado'])->name('grados.listado');
     Route::get('/familias/listado', [App\Http\Controllers\FamiliaController::class, 'listado'])->name('familias.listado');
     Route::get('/empresas/listado', [App\Http\Controllers\EmpresaController::class, 'listado'])->name('empresas.listado');
@@ -40,8 +40,10 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/facilitador-centro', function () {
             return "Protected routes for facilitador_centro";
         });
-        Route::get('/alumnos', [App\Http\Controllers\AlumnoController::class, 'filterAlumnos'])->name('alumno.index');
         Route::get('/empresas/{id}', [App\Http\Controllers\EmpresaController::class, 'show'])->name('empresa.show')->whereNumber('id');
+        Route::get('/alumnos', [App\Http\Controllers\AlumnoController::class, 'index'])->name('alumno.index');
+        Route::get('/alumnos/api/filter', [App\Http\Controllers\AlumnoController::class, 'filterAlumnos'])->name('alumno.api.filterAlumnos');
+        Route::get('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'show'])->name('alumno.show')->where('id', '[0-9]+');
     });
 
 
@@ -57,6 +59,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/alumno', function () {
             return "Protected routes for alumno";
         });
+        Route::get('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'show'])->name('cuaderno.show');
     });
 
 
@@ -65,6 +68,9 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::put('/facilitadores-centro/{id}', [App\Http\Controllers\CursoController::class, 'update'])->name('facilitadorCentro.update')->whereNumber('id');
         Route::post('/facilitadores-centro', [App\Http\Controllers\CursoController::class, 'store'])->name('facilitadorCentro.store');
 
+        Route::get('/cursos/api/listado', [App\Http\Controllers\CursoController::class, 'listado'])->name('cursos.api.listado');
+        Route::get('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'show'])->name('curso.show')->whereNumber('id');
+        Route::delete('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'destroy'])->name('curso.destroy')->whereNumber('id');
         Route::put('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'update'])->name('curso.update')->whereNumber('id');
         Route::post('/cursos', [App\Http\Controllers\CursoController::class, 'store'])->name('curso.store');
 
