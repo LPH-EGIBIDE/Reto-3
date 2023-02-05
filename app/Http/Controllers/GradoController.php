@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FacilitadorCentro;
+use App\Models\Familia;
 use App\Models\Grado;
 use App\Models\Persona;
 use Illuminate\Http\Request;
@@ -29,12 +31,17 @@ class GradoController extends Controller
         $perPage = 10;
         $offset = ($page - 1) * $perPage;
 
-        $grados = Grado::where('nombre', 'like', '%'.$request->filter.'%')->offset($offset)->limit($perPage)->select( 'nombre', 'id as url');
+        $grados = Grado::where('grados.nombre', 'like', '%'.$request->filter.'%')
+            ->leftJoin('familias', 'familias.id', '=', 'grados.familia_id')
+            ->leftJoin('personas', 'personas.id', '=', 'grados.coordinador_id')
+            ->offset($offset)->limit($perPage)->select( 'grados.nombre as nombre', 'familias.nombre as familia', 'personas.nombre as coordinador', 'grados.id as url');
         $total = $grados->count();
         $grados = $grados->get();
 
         $grados->map(function($grado){
             $grado->url = route('grado.show', $grado->url, false);
+            $grado->familia = $grado->familia ? $grado->familia : 'Sin familia';
+            $grado->coordinador = $grado->coordinador ? $grado->coordinador : 'Sin coordinador';
         });
 
         return response([
@@ -67,8 +74,8 @@ class GradoController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'familia' => 'required|string|max:255',
-            'coordinador' => 'integer',
+            'familia' => 'required|numeric|nullable',
+            'coordinador' => 'required|numeric|nullable',
         ]);
         $grado = new Grado();
         $grado->nombre = $request->nombre;
@@ -91,9 +98,13 @@ class GradoController extends Controller
      * @param  \App\Models\Grado  $grado
      * @return \Illuminate\Http\Response
      */
-    public function show(Grado $grado)
+    public function show($id)
     {
-        //
+        $grado = Grado::findOrFail($id);
+        $facilitadores = FacilitadorCentro::all();
+        $familias = Familia::all();
+
+        return view('grados.show', compact('grado', 'facilitadores', 'familias'));
     }
 
     /**
@@ -118,23 +129,24 @@ class GradoController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'familia' => 'required|string|max:255',
-            'coordinador' => 'integer|max:255',
+            'familia' => 'integer|nullable',
+            'coordinador' => 'integer|nullable',
         ]);
         $grado = Grado::findOrFail($id);
         $grado->nombre = $request->nombre;
-        $grado->familia = $request->familia;
+        $grado->familia_id = empty($request->familia) ? null : $request->familia;
+        $request->coordinador = empty($request->coordinador) ? null : $request->coordinador;
 
         if($request->coordinador) {
             $coordinador = Persona::findOrFail($request->coordinador);
             if ($coordinador->tipo != 'facilitador_centro') {
                 return redirect()->route('grados.index')->withErrors('El coordinador debe ser un facilitador del centro');
             }
-            $grado->coordinador = $coordinador->id;
+            $grado->coordinador_id = $coordinador->id;
         }
         $grado->save();
         session()->flash('success', 'Grado actualizado correctamente');
-        return redirect()->route('grados.index');
+        return redirect()->route('grado.show', $grado->id);
 
     }
 

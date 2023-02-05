@@ -117,11 +117,13 @@ class CursoController extends Controller
             'nombre' => 'required|string|max:255',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date',
+            'active' => 'required|numeric',
         ]);
         $curso = Curso::findOrFail($id);
         $curso->nombre = $request->nombre;
         $curso->fecha_inicio = $request->fecha_inicio;
         $curso->fecha_fin = $request->fecha_fin;
+        $curso->active = $request->active;
         $curso->save();
         //Set flash data with success message
         session()->flash('success', 'El curso fue actualizado correctamente');

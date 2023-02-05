@@ -39,7 +39,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
         });
         Route::get('/empresas/{id}', [App\Http\Controllers\EmpresaController::class, 'show'])->name('empresa.show')->whereNumber('id');
         Route::get('/alumnos', [App\Http\Controllers\AlumnoController::class, 'index'])->name('alumno.index');
-        Route::get('/alumnos/api/filter', [App\Http\Controllers\AlumnoController::class, 'filterAlumnos'])->name('alumno.api.filterAlumnos');
+        Route::get('/alumnos/api/listado', [App\Http\Controllers\AlumnoController::class, 'filterAlumnos'])->name('alumno.api.listado');
         Route::get('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'show'])->name('alumno.show')->where('id', '[0-9]+');
     });
 
@@ -80,11 +80,13 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::delete('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'destroy'])->name('curso.destroy')->whereNumber('id');
         Route::put('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'update'])->name('curso.update')->whereNumber('id');
         Route::post('/cursos', [App\Http\Controllers\CursoController::class, 'store'])->name('curso.store');
+        Route::get('/cursos', [App\Http\Controllers\CursoController::class, 'index'])->name('curso.index');
 
         Route::get('/grados/api/listado', [App\Http\Controllers\GradoController::class, 'listado'])->name('grado.api.listado');
         Route::get('/grados/{id}', [App\Http\Controllers\GradoController::class, 'show'])->name('grado.show')->whereNumber('id');
         Route::put('/grados/{id}', [App\Http\Controllers\GradoController::class, 'update'])->name('grado.update')->whereNumber('id');
         Route::post('/grados', [App\Http\Controllers\GradoController::class, 'store'])->name('grado.store');
+        Route::get('/grados', [App\Http\Controllers\GradoController::class, 'index'])->name('grado.index');
 
         Route::get('/alumnos/create', [App\Http\Controllers\AlumnoController::class, 'create'])->name('alumno.create');
         Route::post('/alumnos', [App\Http\Controllers\AlumnoController::class, 'store'])->name('alumno.store');

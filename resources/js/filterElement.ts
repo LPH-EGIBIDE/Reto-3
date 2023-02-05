@@ -38,6 +38,7 @@ function generateTableRows(items: object[]): string{
     for (let i = 0; i < items.length; i++) {
         let item = items[i];
         let row = document.createElement('tr');
+        row.classList.add('align-middle');
         for (let n = 0; n < Object.keys(item).length; n++) {
             let key = Object.keys(item)[n];
             if (n === 0) {
@@ -78,6 +79,10 @@ function initFilterElement() {
         onFilterChange(filterForm, itemTable);
     });
     filterForm.addEventListener('keyup', function () {
+        onFilterChange(filterForm, itemTable);
+    });
+    filterForm.addEventListener('submit', function (e) {
+        e.preventDefault();
         onFilterChange(filterForm, itemTable);
     });
     filterElement(filterForm, itemTable);
