@@ -18,7 +18,7 @@
                 <span class="text-primary fw-bold fs-3">Vista del alumno</span>
                 @can('is_coordinador')
                     <div class="d-flex gap-3">
-                        <button type="button" class="btn btn-primary p-2 px-3">
+                        <button type="button" id="editButton" class="btn btn-primary p-2 px-3">
                             <span class="d-none d-md-block">Editar</span>
                             <i class="fa-solid fa-pencil d-block d-md-none"></i>
                         </button>
@@ -34,28 +34,28 @@
                     @endcan
                 </div>
                 <div class="col-md-7 col-6">
-                    <form action="{{route('alumno.update',$alumno->persona_id)}}" method="post">
+                    <form action="{{route('alumno.update',$alumno->persona_id)}}" id="editForm" method="post">
                         @method('PUT')
                         @csrf
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input name="nombre" type="text" value="{{$alumno->persona->nombre}}" class="form-control" id="nombre">
+                            <input name="nombre" disabled type="text" value="{{$alumno->persona->nombre}}" class="form-control" id="nombre">
                         </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellidos</label>
-                            <input name="apellido" type="text" value="{{$alumno->persona->apellido}}" class="form-control" id="apellido">
+                            <input name="apellido" disabled type="text" value="{{$alumno->persona->apellido}}" class="form-control" id="apellido">
                         </div>
                         <div class="mb-3">
                             <label for="dni" class="form-label">DNI</label>
-                            <input name="dni" type="text" value="{{$alumno->persona->dni}}" class="form-control" id="dni">
+                            <input name="dni" disabled type="text" value="{{$alumno->persona->dni}}" class="form-control" id="dni">
                         </div>
                         <div class="mb-4">
                             <label for="telefono" class="form-label">Teléfono</label>
-                            <input name="telefono" type="text" value="{{$alumno->persona->telefono}}" class="form-control" id="telefono">
+                            <input name="telefono" disabled type="text" value="{{$alumno->persona->telefono}}" class="form-control" id="telefono">
                         </div>
                         @can('is_coordinador')
                             <div class="d-flex justify-content-end col-12">
-                                <button type="submit" class="btn btn-success p-2 px-3">Confirmar</button>
+                                <button type="submit" disabled class="btn btn-success p-2 px-3">Confirmar</button>
                             </div>
                         @endcan
                     </form>
