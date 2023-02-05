@@ -22,14 +22,20 @@ class GradoController extends Controller
     {
         $request->validate([
             'page' => 'nullable|integer',
+            'filter' => 'nullable|string|max:255',
         ]);
 
         $page = $request->input('page', 1);
         $perPage = 10;
         $offset = ($page - 1) * $perPage;
 
-        $grados = Grado::offset($offset)->limit($perPage)->select('id', 'nombre')->get();
-        $total = Grado::count();
+        $grados = Grado::where('nombre', 'like', '%'.$request->filter.'%')->offset($offset)->limit($perPage)->select( 'nombre', 'id as url');
+        $total = $grados->count();
+        $grados = $grados->get();
+
+        $grados->map(function($grado){
+            $grado->url = route('grado.show', $grado->url, false);
+        });
 
         return response([
             'data' => $grados,

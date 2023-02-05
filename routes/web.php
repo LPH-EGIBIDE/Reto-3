@@ -29,9 +29,6 @@ Route::middleware(['auth', '2fa'])->group(function () {
     Route::post('/2fa/enable/step-2', [App\Http\Controllers\TwoFactorController::class, 'enable'])->name('2fa.enable.step-2');
     Route::post('/2fa/disable', [App\Http\Controllers\TwoFactorController::class, 'disable'])->name('2fa');
 
-    Route::get('/grados/listado', [App\Http\Controllers\GradoController::class, 'listado'])->name('grados.listado');
-    Route::get('/familias/listado', [App\Http\Controllers\FamiliaController::class, 'listado'])->name('familias.listado');
-    Route::get('/empresas/listado', [App\Http\Controllers\EmpresaController::class, 'listado'])->name('empresas.listado');
 
 
 //Rutas de los facilitadores de centro
@@ -65,8 +62,18 @@ Route::middleware(['auth', '2fa'])->group(function () {
 
 //Rutas de los coordinadores
     Route::middleware(['can:is_coordinador'])->group(function () {
-        Route::put('/facilitadores-centro/{id}', [App\Http\Controllers\CursoController::class, 'update'])->name('facilitadorCentro.update')->whereNumber('id');
-        Route::post('/facilitadores-centro', [App\Http\Controllers\CursoController::class, 'store'])->name('facilitadorCentro.store');
+
+
+        Route::get('/facilitadores-centro/api/listado', [App\Http\Controllers\FacilitadorCentroController::class, 'listado'])->name('facilitador-centro.api.listado');
+        Route::get('/facilitadores-centro/{id}', [App\Http\Controllers\FacilitadorCentroController::class, 'show'])->name('facilitador-centro.show')->whereNumber('id');
+        Route::put('/facilitadores-centro/{id}', [App\Http\Controllers\FacilitadorCentroController::class, 'update'])->name('facilitador-centro.update')->whereNumber('id');
+        Route::post('/facilitadores-centro', [App\Http\Controllers\FacilitadorCentroController::class, 'store'])->name('facilitador-centro.store');
+
+        Route::get('/facilitadores-empresa/api/listado', [App\Http\Controllers\FacilitadorEmpresaController::class, 'listado'])->name('facilitador-empresa.api.listado');
+        Route::get('/facilitadores-empresa/{id}', [App\Http\Controllers\FacilitadorEmpresaController::class, 'show'])->name('facilitador-empresa.show')->whereNumber('id');
+        Route::put('/facilitadores-empresa/{id}', [App\Http\Controllers\FacilitadorEmpresaController::class, 'update'])->name('facilitador-empresa.update')->whereNumber('id');
+        Route::post('/facilitadores-empresa', [App\Http\Controllers\FacilitadorEmpresaController::class, 'store'])->name('facilitador-empresa.store');
+
 
         Route::get('/cursos/api/listado', [App\Http\Controllers\CursoController::class, 'listado'])->name('cursos.api.listado');
         Route::get('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'show'])->name('curso.show')->whereNumber('id');
@@ -74,12 +81,27 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::put('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'update'])->name('curso.update')->whereNumber('id');
         Route::post('/cursos', [App\Http\Controllers\CursoController::class, 'store'])->name('curso.store');
 
+        Route::get('/grados/api/listado', [App\Http\Controllers\GradoController::class, 'listado'])->name('grado.api.listado');
+        Route::get('/grados/{id}', [App\Http\Controllers\GradoController::class, 'show'])->name('grado.show')->whereNumber('id');
         Route::put('/grados/{id}', [App\Http\Controllers\GradoController::class, 'update'])->name('grado.update')->whereNumber('id');
         Route::post('/grados', [App\Http\Controllers\GradoController::class, 'store'])->name('grado.store');
 
         Route::get('/alumnos/create', [App\Http\Controllers\AlumnoController::class, 'create'])->name('alumno.create');
         Route::post('/alumnos', [App\Http\Controllers\AlumnoController::class, 'store'])->name('alumno.store');
         Route::put('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'update'])->name('alumno.update')->whereNumber('id');
+
+        Route::get('/familias/api/listado', [App\Http\Controllers\FamiliaController::class, 'listado'])->name('familia.api.listado');
+        Route::get('/familias', [App\Http\Controllers\FamiliaController::class, 'index'])->name('familia.index');
+        Route::get('/familias/{id}', [App\Http\Controllers\FamiliaController::class, 'show'])->name('familia.show')->whereNumber('id');
+        Route::put('/familias/{id}', [App\Http\Controllers\FamiliaController::class, 'update'])->name('familia.update')->whereNumber('id');
+        Route::post('/familias', [App\Http\Controllers\FamiliaController::class, 'store'])->name('familia.store');
+
+
+        Route::get('/empresas/api/listado', [App\Http\Controllers\EmpresaController::class, 'listado'])->name('empresa.api.listado');
+        Route::get('/empresas', [App\Http\Controllers\EmpresaController::class, 'index'])->name('empresa.index');
+        Route::get('/empresas/{id}', [App\Http\Controllers\EmpresaController::class, 'show'])->name('empresa.show')->whereNumber('id');
+        Route::put('/empresas/{id}', [App\Http\Controllers\EmpresaController::class, 'update'])->name('empresa.update')->whereNumber('id');
+        Route::post('/empresas', [App\Http\Controllers\EmpresaController::class, 'store'])->name('empresa.store');
     });
 
 //Rutas de cualquier tipo de facilitador

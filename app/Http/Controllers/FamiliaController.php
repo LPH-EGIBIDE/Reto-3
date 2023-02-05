@@ -21,14 +21,20 @@ class FamiliaController extends Controller
     {
         $request->validate([
             'page' => 'nullable|integer',
+            'filter' => 'nullable|string|max:255',
         ]);
 
         $page = $request->input('page', 1);
         $perPage = 10;
         $offset = ($page - 1) * $perPage;
 
-        $familias = Familia::offset($offset)->limit($perPage)->select('id', 'nombre')->get();
-        $total = Familia::count();
+        $familias = Familia::where('nombre', 'like', ''.$request->filter.'%')->offset($offset)->limit($perPage)->select('id', 'nombre')->select('nombre', 'id as url');
+        $total = $familias->count();
+        $familias = $familias->get();
+
+        $familias->map(function($familia){
+            $familia->url = route('familia.show', $familia->url, false);
+        });
 
         return response([
             'data' => $familias,

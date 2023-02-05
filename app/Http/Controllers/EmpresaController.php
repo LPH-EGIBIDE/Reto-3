@@ -30,11 +30,13 @@ class EmpresaController extends Controller
 
         $empresas = Empresa::where('nombre', 'like', "%{$request->input('filter')}%")
             ->offset($offset)->limit($perPage)
-            ->select('id', 'nombre', 'direccion', 'telefono', 'cif', 'area')
-            ->get();
+            ->select( 'nombre', 'direccion', 'telefono', 'cif', 'area', 'id as url');
+        $total = $empresas->count();
+        $empresas = $empresas->get();
 
-        $total = Empresa::where('nombre', 'like', "%{$request->input('filter')}%")->count();
-
+        $empresas->map(function($empresa){
+            $empresa->url = route('empresa.show', $empresa->url, false);
+        });
         return response([
             'data' => $empresas,
             'total' => $total,
