@@ -29,7 +29,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
     Route::post('/2fa/enable/step-2', [App\Http\Controllers\TwoFactorController::class, 'enable'])->name('2fa.enable.step-2');
     Route::post('/2fa/disable', [App\Http\Controllers\TwoFactorController::class, 'disable'])->name('2fa');
 
-    Route::get('/cursos/listado', [App\Http\Controllers\CursoController::class, 'listado'])->name('cursos.listado');
+
     Route::get('/grados/listado', [App\Http\Controllers\GradoController::class, 'listado'])->name('grados.listado');
     Route::get('/familias/listado', [App\Http\Controllers\FamiliaController::class, 'listado'])->name('familias.listado');
     Route::get('/empresas/listado', [App\Http\Controllers\EmpresaController::class, 'listado'])->name('empresas.listado');
@@ -65,6 +65,8 @@ Route::middleware(['auth', '2fa'])->group(function () {
 
 //Rutas de los coordinadores
     Route::middleware(['can:is_coordinador'])->group(function () {
+
+        Route::get('/cursos/api/listado', [App\Http\Controllers\CursoController::class, 'listado'])->name('cursos.api.listado');
         Route::get('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'show'])->name('curso.show')->whereNumber('id');
         Route::delete('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'destroy'])->name('curso.destroy')->whereNumber('id');
         Route::put('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'update'])->name('curso.update')->whereNumber('id');
