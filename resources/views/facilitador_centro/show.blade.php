@@ -47,5 +47,33 @@
                 </form>
             </div>
         </div>
+
+        @can('is_coordinador')
+        <div class="card-body bg-light overflow-hidden">
+            <table class="table table-responsive">
+                <thead class="text-primary">
+                <tr>
+                    <th scope="col" class="border-dark">Nombre</th>
+                    <th scope="col" class="border-dark">Familia</th>
+                    <th scope="col" class="border-dark">Coordinador</th>
+                    <th scope="col" class="border-dark">Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="itemTable">
+                @for($i = 0; $i < 10; $i++)
+                    <tr class="loading-skeleton">
+                        <td><p>84563255H</p></td>
+                        <td><p>Manolito</p></td>
+                        <td><p>Ingeniería xd</p></td>
+                        <td><p>Acciones</p></td>
+                    </tr>
+                @endfor
+                </tbody>
+            </table>
+            <p id="noItems"  class="text-center d-none">No hay grados que coincidan</p>
+        </div>
+        @endcan
+
     </div>
 </div>
+

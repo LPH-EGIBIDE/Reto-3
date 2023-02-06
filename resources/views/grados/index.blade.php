@@ -40,7 +40,7 @@
                         <tr class="loading-skeleton">
                             <td><p>84563255H</p></td>
                             <td><p>Manolito</p></td>
-                            <td><p>Ingeniería xd/p></td>
+                            <td><p>Ingeniería xd</p></td>
                             <td><p>Acciones</p></td>
                         </tr>
                     @endfor
