@@ -10,7 +10,7 @@
 
 
 @section('content')
-<div class="container d-flex flex-column align-items-center justify-content-center">
+<div class="container d-flex flex-column align-items-center justify-content-center gap-4">
     @include('alerts')
     <div class="row">
         <div class="card col-12 p-0">
@@ -63,5 +63,15 @@
             </div>
         </div>
     </div>
+
+    @can('is_coordinador')
+     @include('alumno_historicos.index')
+    @endcan
+
 </div>
+
+
+
+
 @endsection
+

@@ -1,71 +1,57 @@
-<div class="container d-flex align-items-center justify-content-center flex-row">
-    <div class="card col-12 col-lg-8 p-0">
-        <div class="card-header d-flex align-items-center justify-content-between px-4">
-            <span class="text-primary fw-bold fs-5">Historico alumno</span>
-            <div class="d-flex gap-3">
-                <button type="button" class="btn btn-primary p-2 px-3">
-                    <span class="d-none d-md-block">Editar</span>
-                    <i class="fa-solid fa-pencil d-block d-md-none"></i>
-                </button>
-            </div>
-        </div>
-        <div class="card-body">
-           
-         <div class="container ">
-           <form class="form-historico">
-           <div class="row">
-            <div class="col-6">
-              
-            <label class="fw-bold text-decoration-underline">Nombre alumno</label>
-              <input type="text" disabled class="form-control" id="nombre">
-       
-        </div>
-          
-          <div class="col-6">
-       
-            <label class="fw-bold text-decoration-underline">DNI</label>
-              <input type="text" disabled class="form-control" id="dni">
-        </div>
-       </div>
-           <div class="row">
-            <div class="col-6">
-              
-            <label class="fw-bold text-decoration-underline">Curso</label>
-              <input type="text" disabled class="form-control" id="curso">
-       
-        </div>
-          
-          <div class="col-6">
-       
-            <label class="fw-bold text-decoration-underline">Grado</label>
-              <input type="text" disabled class="form-control" id="grado">
-       
-        </div>
-       </div> 
-           <div class="row">
-            <div class="col-6">
-              
-            <label class="fw-bold text-decoration-underline">Facilitador centro</label>
-              <input type="text" disabled class="form-control" id="facilitador_curso">
-       
-        </div>
-          
-          <div class="col-6">
-       
-            <label class="fw-bold text-decoration-underline">Facilitador empresa</label>
-              <input type="text" disabled class="form-control" id="facilitador_empresa">
-       
-        </div>
-       </div> 
-           <div class="row">
-            <div class="col-6">
-              
-            <label class="fw-bold text-decoration-underline">Estado</label>
-              <input type="text" disabled class="form-control" id="estado">
-       
-             </div>
-       </div>
-       </form>
+<div class="container">
+  <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between">
+          <h5 class="my-auto">Lista historicos</h5>
       </div>
-    </div>
+
+      <div class="card-body bg-light">
+          <table class="table">
+              <thead>
+              <tr>
+                  <th scope="col">Cursado</th>
+                  <th scope="col">Grado</th>
+                  <th scope="col">Facilitador centro</th>
+                  <th scope="col">Facilitador empresa</th>
+                  <th scope="col">Empresa</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">accion</th>
+              </tr>     
+              </thead>    
+              <tbody>
+              <tr>
+                  <th scope="row">22-23</th>
+                 <td>Desarrolo de aplicaciones web</td>
+                <td>Alex</td>
+                <td>Felix</td>
+                <td>Marianito SA</td>
+                 <td c><p  class="badge bg-success">Cursando</p></td>
+                <td><a class="btn btn-primary">Editar</a></td> 
+              </tr>
+                 <tr>
+                  <th scope="row">21-22</th>
+                 <td>Desarrolo de aplicaciones web</td>
+                <td>Alex</td>
+                <td>Felix</td>
+                <td>Marianito SA</td>
+                 <td><label class="badge bg-danger">Finalizado</label></td>
+                <td><a class="btn btn-primary">Editar</a></td> 
+              </tr>
+                
+              
+              </tbody>
+          </table>
+      </div>
+
+      <div class="card-footer">
+          <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-end my-auto">
+                  <li class="page-item">
+                      <a class="page-link" href="#">
+                          Ver mas...
+                      </a>
+                  </li>
+              </ul>
+          </nav>
+      </div>
+  </div>
 </div>
