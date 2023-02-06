@@ -31,7 +31,7 @@ class AlumnoHistoricoController extends Controller
      */
     public function create()
     {
-        //
+        return view('alumno_historicos.create');
     }
 
     /**
