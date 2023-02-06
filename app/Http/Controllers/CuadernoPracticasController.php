@@ -25,6 +25,8 @@ class CuadernoPracticasController extends Controller
         }
         $historico = $persona->informacion->alumnoHistorico->last();
         $curso = $historico->curso;
+        if ($curso == null)
+            return redirect()->route('home')->withErrors(['No se ha encontrado un curso activo']);
         //Generate weeks array based on the start and end date of the course
         $weeks = [];
         $start = new \DateTime($curso->fecha_inicio);
@@ -72,6 +74,8 @@ class CuadernoPracticasController extends Controller
         $user = auth()->user();
         $historico = $user->persona->informacion->alumnoHistorico->last();
         $curso = $historico->curso;
+        if ($curso == null)
+            return redirect()->route('home')->withErrors(['No se ha encontrado un curso activo']);
         //Calculate the number of weeks based on the start and end date of the course
         $start = new \DateTime($curso->fecha_inicio);
         $end = new \DateTime($curso->fecha_fin);
@@ -117,6 +121,8 @@ class CuadernoPracticasController extends Controller
         }
         $historico = $persona->informacion->alumnoHistorico->last();
         $curso = $historico->curso;
+        if ($curso == null)
+            return redirect()->route('home')->withErrors(['No se ha encontrado un curso activo']);
         //Calculate the number of weeks based on the start and end date of the course
         $start = new \DateTime($curso->fecha_inicio);
         $end = new \DateTime($curso->fecha_fin);

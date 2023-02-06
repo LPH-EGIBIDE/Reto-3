@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\NewUserMail;
 use App\Models\Alumno;
+use App\Models\Curso;
 use App\Models\Persona;
 use App\Models\User;
 use Gate;
@@ -181,7 +182,7 @@ class AlumnoController extends Controller
         $perPage = 10;
         $offset = ($page - 1) * $perPage;
 
-        $lastCurso = DB::table('cursos')->orderBy('id', 'desc')->first();
+        $lastCurso = Curso::getActiveCurso();
         $alumnos = DB::table('alumnos')
             ->leftJoin('alumnos_historicos', 'alumnos.persona_id', '=', 'alumnos_historicos.alumno_id')
             ->join('personas', 'alumnos.persona_id', '=', 'personas.id')

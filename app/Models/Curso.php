@@ -19,4 +19,9 @@ class Curso extends Model {
     public function alumnoHistorico(): HasMany {
         return $this->hasMany(AlumnoHistorico::class);
     }
+
+
+    public static function getActiveCurso() : Curso{
+        return Curso::where('active', 1)->first();
+    }
 }
