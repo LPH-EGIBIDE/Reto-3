@@ -27,8 +27,11 @@ Route::middleware(['auth', '2fa'])->group(function () {
     Route::post('/2fa/enable', [App\Http\Controllers\TwoFactorController::class, 'setup'])->name('2fa.enable.step-1.post');
     //Route::get('/2fa/enable/step-2', [App\Http\Controllers\TwoFactorController::class, 'setup'])->name('2fa.enable.step-2');
     Route::post('/2fa/enable/step-2', [App\Http\Controllers\TwoFactorController::class, 'enable'])->name('2fa.enable.step-2');
-    Route::post('/2fa/disable', [App\Http\Controllers\TwoFactorController::class, 'disable'])->name('2fa');
+    Route::get('/2fa/disable', [App\Http\Controllers\TwoFactorController::class, 'delete'])->name('2fa.disable');
+    Route::post('/2fa/disable', [App\Http\Controllers\TwoFactorController::class, 'disable'])->name('2fa.disable');
 
+    Route::get('/profile', [App\Http\Controllers\PersonaController::class, 'showProfile'])->name('profile.show');
+    Route::put('/profile', [App\Http\Controllers\PersonaController::class, 'updateProfile'])->name('profile.update');
 
 
 //Rutas de los facilitadores de centro
@@ -37,10 +40,14 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/facilitador-centro', function () {
             return "Protected routes for facilitador_centro";
         });
-        Route::get('/empresas/{id}', [App\Http\Controllers\EmpresaController::class, 'show'])->name('empresa.show')->whereNumber('id');
+        Route::get('/empresas/{id}', [App\Http\Controllers\EmpresaController::class, 'show'])->name('empresa.show');
         Route::get('/alumnos', [App\Http\Controllers\AlumnoController::class, 'index'])->name('alumno.index');
         Route::get('/alumnos/api/listado', [App\Http\Controllers\AlumnoController::class, 'filterAlumnos'])->name('alumno.api.listado');
         Route::get('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'show'])->name('alumno.show')->where('id', '[0-9]+');
+
+        Route::get('/cuaderno/{user_id}', [App\Http\Controllers\CuadernoPracticasController::class, 'index'])->name('cuaderno.evaluar.index')->whereNumber('user_id');
+        Route::put('/cuaderno/{user_id}', [App\Http\Controllers\CuadernoPracticasController::class, 'evaluar'])->name('cuaderno.evaluar')->whereNumber('user_id');
+        Route::get('/cuaderno/{user_id}/api/semana', [App\Http\Controllers\CuadernoPracticasController::class, 'show'])->name('cuaderno.evaluar.api.semana')->whereNumber('user_id');
     });
 
 
@@ -56,7 +63,10 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/alumno', function () {
             return "Protected routes for alumno";
         });
-        Route::get('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'show'])->name('cuaderno.show');
+        Route::get('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'index'])->name('cuaderno.index');
+        Route::put('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'update'])->name('cuaderno.update');
+        Route::get('/cuaderno/api/semana', [App\Http\Controllers\CuadernoPracticasController::class, 'show'])->name('cuaderno.api.semana');
+        //Route::get('/cuaderno/api/semana2/{id}', [App\Http\Controllers\CuadernoPracticasController::class, 'store'])->name('cuaderno.api.semana')->whereNumber('id');
     });
 
 

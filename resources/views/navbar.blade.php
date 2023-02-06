@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="{{Vite::asset('resources/images/logo-sm.png')}}" alt="Logo" class="logo" width="30px" height="44px">
+            <img src="{{Vite::asset('resources/images/logo-sm.png')}}" alt="Logo" class="logo" width="30" height="44">
             {{ config('app.name', 'Laravel') }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -12,22 +12,26 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-regular fa-house"></i> Inicio</a>
+                    <a class="nav-link" href="{{route('index')}}"><i class="fa-regular fa-house pe-2"></i>Inicio</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-regular fa-user-graduate"></i> Calificaciones</a>
+                    <a class="nav-link" href="{{route("profile.show")}}"><i class="fa-regular fa-address-card pe-2"></i>Perfil</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa-regular fa-user-graduate pe-2"></i>Calificaciones</a>
                 </li>
 
                 @can('alumno')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('cuaderno.show')}}"><i class="fa-regular fa-notebook"></i> Cuaderno Equipo</a>
+                    <a class="nav-link" href="{{route('cuaderno.index')}}"><i class="fa-regular fa-notebook pe-2"></i>Cuaderno Equipo</a>
                 </li>
                 @endcan
 
                 @can('facilitador')
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-regular fa-screen-users"></i> Alumnos</a>
+                    <a class="nav-link" href="{{route('alumno.index')}}"><i class="fa-regular fa-screen-users pe-2"></i>Alumnos</a>
                 </li>
                 @endcan
 

@@ -101,8 +101,9 @@ class MensajeController extends Controller
 
     public function chatters(){
         //get all users that have sent a message to the current user and the ones that could be messaged
-        $lastCurso = Curso::all()->sortBy('id')->last();
-
+        $lastCurso = Curso::getActiveCurso();
+        if (empty($lastCurso))
+            return "Error: No hay curso activo";
         $sentMessagePersonas = auth()->user()->persona->mensajeEnviado->pluck('receiver_id')->unique();
         $receivedMessagePersonas = auth()->user()->persona->mensajeRecibido->pluck('sender_id')->unique();
         switch (auth()->user()->persona->tipo){

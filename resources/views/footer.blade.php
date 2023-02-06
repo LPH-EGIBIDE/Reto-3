@@ -1,4 +1,4 @@
-<footer class="footer mt-auto py-3 bg-dark">
+<footer class="footer mt-auto py-3 bg-primary">
     <div class="container">
         <div class="d-flex justify-content-center">
                 <span class="text-muted">&copy; {{date('Y')}} Los Pollos Hermanos</span>

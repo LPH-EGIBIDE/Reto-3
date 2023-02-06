@@ -57,12 +57,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('can_message', function ($user, $receptor) {
             // Check if the receiver is a facilitador not of the same type
             //TODO: Implement active curso in database
-            $lastCurso = Curso::all()->sortBy('id')->last();
+            $lastCurso = Curso::getActiveCurso();
             // Depending on the type of the receiver, we need to check that both are related
             $alumnoHistorico = null;
-            log::info('User: ' . $user->persona->id . ' Tipo: ' . $user->persona->tipo);
-            log::info('Receptor: ' . $receptor->id  . ' Tipo: ' . $receptor->tipo);
-            log::info('Last curso: ' . $lastCurso->id);
+
             if ($receptor->tipo == 'facilitador_centro') {
 
                 // Check if the receiver is related to the sender
