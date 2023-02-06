@@ -6,12 +6,15 @@
 @section('container')
     <div class="container d-flex flex-row align-items-center justify-content-center">
         <div class="card col-12 col-lg-8 p-0">
-            <div class="card-header text-primary fs-3">Calificaciones de {{$persona->name}}</div>
+            <div class="card-header text-primary my-auto">
+                <h3>Evaluación de trabajo en empresa</h3>
+                <p class="text-muted ts-6 my-0">{{$persona->nombre}} {{$persona->apellido}}</p>
+            </div>
             <form class="form">
                 <div class="card-body d-flex justify-content-center">
                     <div class="row">
                         <div class="col">
-                            <table class="table table-responsive">
+                            <table class="table">
                                 <tr>
                                     <td>Actitud y disposición para el trabajo</td>
                                     <td>

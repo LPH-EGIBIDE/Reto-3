@@ -6,19 +6,22 @@
 @section('content')
     <div class="container d-flex align-items-center justify-content-center flex-row">
         <div class="card col-12 col-lg-8 p-0">
-            <div class="card-header text-primary fs-3">Calificaciones de {{$persona->nombre}} {{$persona->apellido}}</div>
+            <div class="card-header text-primary my-auto">
+                <h3>Evaluación de diario de aprendizaje</h3>
+                <p class="text-muted ts-6 my-0">{{$persona->nombre}} {{$persona->apellido}}</p>
+            </div>
             <form class="form">
                 <div class="card-body">
-                    <table class="table table-responsive">
+                    <table class="table">
                         <tr>
                             <td>Esfuerzo y regularidad</td>
                             <td>
                                 <select class="form-select form-select-sm w-auto" name="nota1">
                                     <option value="insuficiente">Insuficiente</option>
                                     <option value="suficiente">Suficiente</option>
-                                    <option value="suficiente">Bien</option>
-                                    <option value="suficiente">Notable</option>
-                                    <option value="suficiente">Sobresaliente</option>
+                                    <option value="bien">Bien</option>
+                                    <option value="notable">Notable</option>
+                                    <option value="sobresaliente">Sobresaliente</option>
                                 </select>
                             </td>
                         </tr>
@@ -28,9 +31,9 @@
                                 <select class="form-select form-select-sm w-auto" name="nota2">
                                     <option value="insuficiente">Insuficiente</option>
                                     <option value="suficiente">Suficiente</option>
-                                    <option value="suficiente">Bien</option>
-                                    <option value="suficiente">Notable</option>
-                                    <option value="suficiente">Sobresaliente</option>
+                                    <option value="bien">Bien</option>
+                                    <option value="notable">Notable</option>
+                                    <option value="sobresaliente">Sobresaliente</option>
                                 </select>
                             </td>
                         </tr>
@@ -40,9 +43,9 @@
                                 <select class="form-select form-select-sm w-auto" name="nota3">
                                     <option value="insuficiente">Insuficiente</option>
                                     <option value="suficiente">Suficiente</option>
-                                    <option value="suficiente">Bien</option>
-                                    <option value="suficiente">Notable</option>
-                                    <option value="suficiente">Sobresaliente</option>
+                                    <option value="bien">Bien</option>
+                                    <option value="notable">Notable</option>
+                                    <option value="sobresaliente">Sobresaliente</option>
                                 </select>
                             </td>
                         </tr>
@@ -52,9 +55,9 @@
                                 <select class="form-select form-select-sm w-auto" name="nota4">
                                     <option value="insuficiente">Insuficiente</option>
                                     <option value="suficiente">Suficiente</option>
-                                    <option value="suficiente">Bien</option>
-                                    <option value="suficiente">Notable</option>
-                                    <option value="suficiente">Sobresaliente</option>
+                                    <option value="bien">Bien</option>
+                                    <option value="notable">Notable</option>
+                                    <option value="sobresaliente">Sobresaliente</option>
                                 </select>
                             </td>
                         </tr>
@@ -64,9 +67,9 @@
                                 <select class="form-select form-select-sm w-auto" name="nota5">
                                     <option value="insuficiente">Insuficiente</option>
                                     <option value="suficiente">Suficiente</option>
-                                    <option value="suficiente">Bien</option>
-                                    <option value="suficiente">Notable</option>
-                                    <option value="suficiente">Sobresaliente</option>
+                                    <option value="bien">Bien</option>
+                                    <option value="notable">Notable</option>
+                                    <option value="sobresaliente">Sobresaliente</option>
                                 </select>
                             </td>
                         </tr>
@@ -76,9 +79,9 @@
                                 <select class="form-select form-select-sm w-auto" name="nota6">
                                     <option value="insuficiente">Insuficiente</option>
                                     <option value="suficiente">Suficiente</option>
-                                    <option value="suficiente">Bien</option>
-                                    <option value="suficiente">Notable</option>
-                                    <option value="suficiente">Sobresaliente</option>
+                                    <option value="bien">Bien</option>
+                                    <option value="notable">Notable</option>
+                                    <option value="sobresaliente">Sobresaliente</option>
                                 </select>
                             </td>
                         </tr>
@@ -88,9 +91,9 @@
                                 <select class="form-select form-select-sm w-auto" name="nota7">
                                     <option value="insuficiente">Insuficiente</option>
                                     <option value="suficiente">Suficiente</option>
-                                    <option value="suficiente">Bien</option>
-                                    <option value="suficiente">Notable</option>
-                                    <option value="suficiente">Sobresaliente</option>
+                                    <option value="bien">Bien</option>
+                                    <option value="notable">Notable</option>
+                                    <option value="sobresaliente">Sobresaliente</option>
                                 </select>
                             </td>
                         </tr>
