@@ -17,13 +17,12 @@ function filterElement(filterForm: HTMLFormElement, itemTable: HTMLTableSectionE
             let data = JSON.parse(xhr.responseText);
             pageInput.innerText = data.page.toString();
             pageHidden.value = pageInput.innerText;
-
             if (data.page <= Math.ceil(data.total / data.per_page)) {
-                itemTable.innerHTML = "";
                 if (data.data.length > 0) {
                     itemTable.innerHTML = generateTableRows(data.data);
                     document.getElementById('noItems').classList.add('d-none');
-                } else {
+                } else if (data.page == 0) {
+                    itemTable.innerHTML = "";
                     document.getElementById('noItems').classList.remove('d-none');
                 }
             }
@@ -52,7 +51,7 @@ function generateTableRows(items: object[]): string{
                 let cell = document.createElement('td');
                 let button = document.createElement('a');
                 button.classList.add('btn', 'btn-primary');
-                button.innerHTML = '<i class="fa-solid fa-eye"></i>Ver';
+                button.innerHTML = '<i class="fa-solid fa-eye pe-2"></i>Ver';
                 button.href = item[key];
                 cell.appendChild(button);
                 row.appendChild(cell);

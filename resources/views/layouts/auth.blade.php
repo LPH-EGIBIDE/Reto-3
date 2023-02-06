@@ -15,6 +15,7 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/flatly/bootstrap.min.css" integrity="sha512-q+Sm01IL0q3keoeZkh7cHh6CcUGU0LVwFIf9Il4utcw0oC2MH9mpATEyvuh6dbzDiV8Pw4CXlsT7O1zXFc0LwQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 <body id="app-layout" >

@@ -83,7 +83,7 @@ public function __construct()
         $request->user()->save();
         auth()->logout();
         $request->session()->flash('status', 'Verificacion de dos pasos habilitada. Se ha cerrado la sesion. Por favor inicie sesion de nuevo.');
-        return view('auth.login');
+        return redirect()->route('login');
     }
 
     public function disable(Request $request)
@@ -97,10 +97,17 @@ public function __construct()
         }
         //check valid password
         if (!\Hash::check($request->input('password'), $request->user()->password)) {
-            return redirect()->route('index');
+            return redirect()->route('2fa.disable')->withErrors([
+                'password' => 'La contraseña no es valida'
+            ]);
         }
         $request->user()->setGoogle2faSecret(null);
         $request->user()->save();
-        return redirect()->route('index')->with('status', 'Verificacion de dos pasos deshabilitada.');
+        session()->flash('message', 'Verificacion de dos pasos deshabilitada.');
+        return redirect()->route('profile.show');
+    }
+
+    public function delete(){
+       return view('auth.2fa.disable');
     }
 }

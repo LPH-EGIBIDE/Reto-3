@@ -27,7 +27,8 @@ Route::middleware(['auth', '2fa'])->group(function () {
     Route::post('/2fa/enable', [App\Http\Controllers\TwoFactorController::class, 'setup'])->name('2fa.enable.step-1.post');
     //Route::get('/2fa/enable/step-2', [App\Http\Controllers\TwoFactorController::class, 'setup'])->name('2fa.enable.step-2');
     Route::post('/2fa/enable/step-2', [App\Http\Controllers\TwoFactorController::class, 'enable'])->name('2fa.enable.step-2');
-    Route::post('/2fa/disable', [App\Http\Controllers\TwoFactorController::class, 'disable'])->name('2fa');
+    Route::get('/2fa/disable', [App\Http\Controllers\TwoFactorController::class, 'delete'])->name('2fa.disable');
+    Route::post('/2fa/disable', [App\Http\Controllers\TwoFactorController::class, 'disable'])->name('2fa.disable');
 
     Route::get('/profile', [App\Http\Controllers\PersonaController::class, 'showProfile'])->name('profile.show');
     Route::put('/profile', [App\Http\Controllers\PersonaController::class, 'updateProfile'])->name('profile.update');
