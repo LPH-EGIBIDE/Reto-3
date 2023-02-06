@@ -27,7 +27,7 @@
                 </div>
                 <div class="card-body">
                     <div class="col-12">
-                        <form id="editForm" action="{{route('grado.update',['id'=> $grado->id])}}" method="post">
+                        <form class="form" id="editForm" action="{{route('grado.update',['id'=> $grado->id])}}" method="post">
                             @method('PUT')
                             @csrf
                             <div class="mb-3">

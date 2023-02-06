@@ -25,10 +25,10 @@ class AlumnoHistorico extends Model {
         return $this->belongsTo(Grado::class, 'grado_id');
     }
     public function facilitadorCentro(): BelongsTo {
-        return $this->belongsTo(Persona::class, 'facilitador_centro');
+        return $this->belongsTo(FacilitadorCentro::class, 'facilitador_centro');
     }
     public function facilitadorEmpresa(): BelongsTo {
-        return $this->belongsTo(Persona::class, 'facilitador_empresa');
+        return $this->belongsTo(FacilitadorEmpresa::class, 'facilitador_empresa');
     }
 
     public function cuadernosPracticas(): HasMany {
