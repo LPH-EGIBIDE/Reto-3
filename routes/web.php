@@ -87,7 +87,6 @@ Route::middleware(['auth', '2fa'])->group(function () {
 
         Route::get('/cursos/api/listado', [App\Http\Controllers\CursoController::class, 'listado'])->name('cursos.api.listado');
         Route::get('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'show'])->name('curso.show')->whereNumber('id');
-        Route::delete('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'destroy'])->name('curso.destroy')->whereNumber('id');
         Route::put('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'update'])->name('curso.update')->whereNumber('id');
         Route::post('/cursos', [App\Http\Controllers\CursoController::class, 'store'])->name('curso.store');
         Route::get('/cursos', [App\Http\Controllers\CursoController::class, 'index'])->name('curso.index');
@@ -111,6 +110,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
 
         Route::get('/empresas/api/listado', [App\Http\Controllers\EmpresaController::class, 'listado'])->name('empresa.api.listado');
         Route::get('/empresas', [App\Http\Controllers\EmpresaController::class, 'index'])->name('empresa.index');
+        Route::get('/empresas/create', [App\Http\Controllers\EmpresaController::class, 'create'])->name('empresa.create');
         Route::get('/empresas/{id}', [App\Http\Controllers\EmpresaController::class, 'show'])->name('empresa.show')->whereNumber('id');
         Route::put('/empresas/{id}', [App\Http\Controllers\EmpresaController::class, 'update'])->name('empresa.update')->whereNumber('id');
         Route::post('/empresas', [App\Http\Controllers\EmpresaController::class, 'store'])->name('empresa.store');

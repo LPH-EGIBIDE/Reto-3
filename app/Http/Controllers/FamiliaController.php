@@ -21,21 +21,22 @@ class FamiliaController extends Controller
     {
         $request->validate([
             'page' => 'nullable|integer',
-            'filter' => 'nullable|string|max:255',
+            'filtro' => 'nullable|string|max:255',
         ]);
 
-        $page = $request->input('page', 1);
+        $page = $request->page ?? 1;
         $perPage = 10;
         $offset = ($page - 1) * $perPage;
 
-        $familias = Familia::where('nombre', 'like', ''.$request->filter.'%')->offset($offset)->limit($perPage)->select('id', 'nombre')->select('nombre', 'id as url');
+        $familias = Familia::where('nombre', 'like', '%'.$request->filtro.'%');
         $total = $familias->count();
-        $familias = $familias->get();
+        $familias = $familias->offset($offset)->limit($perPage)->select('nombre', 'id as url')->get();
 
         $familias->map(function($familia){
             $familia->url = route('familia.show', $familia->url, false);
         });
 
+        $page = intval($page) > ceil($total / $perPage) ? ceil($total / $perPage) : $page;
         return response([
             'data' => $familias,
             'total' => $total,
@@ -73,9 +74,10 @@ class FamiliaController extends Controller
      * @param  \App\Models\Familia  $familia
      * @return \Illuminate\Http\Response
      */
-    public function show(Familia $familia)
+    public function show($id)
     {
-        //
+        $familia = Familia::findOrFail($id);
+        return view('familias.show', compact('familia'));
     }
 
     /**
@@ -96,9 +98,16 @@ class FamiliaController extends Controller
      * @param  \App\Models\Familia  $familia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Familia $familia)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+        ]);
+        $familia = Familia::findOrFail($id);
+        $familia->nombre = $request->nombre;
+        $familia->save();
+        session()->flash('message', 'Familia actualizada correctamente');
+        return redirect()->route('familia.show', $familia->id);
     }
 
     /**

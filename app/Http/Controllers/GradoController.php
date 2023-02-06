@@ -24,19 +24,18 @@ class GradoController extends Controller
     {
         $request->validate([
             'page' => 'nullable|integer',
-            'filter' => 'nullable|string|max:255',
+            'filtro' => 'nullable|string|max:255',
         ]);
 
         $page = $request->input('page', 1);
         $perPage = 10;
         $offset = ($page - 1) * $perPage;
 
-        $grados = Grado::where('grados.nombre', 'like', '%'.$request->filter.'%')
+        $grados = Grado::where('grados.nombre', 'like', '%'.$request->filtro.'%')
             ->leftJoin('familias', 'familias.id', '=', 'grados.familia_id')
-            ->leftJoin('personas', 'personas.id', '=', 'grados.coordinador_id')
-            ->offset($offset)->limit($perPage)->select( 'grados.nombre as nombre', 'familias.nombre as familia', 'personas.nombre as coordinador', 'grados.id as url');
+            ->leftJoin('personas', 'personas.id', '=', 'grados.coordinador_id');
         $total = $grados->count();
-        $grados = $grados->get();
+        $grados = $grados->offset($offset)->limit($perPage)->select( 'grados.nombre as nombre', 'familias.nombre as familia', 'personas.nombre as coordinador', 'grados.id as url')->get();
 
         $grados->map(function($grado){
             $grado->url = route('grado.show', $grado->url, false);
@@ -44,6 +43,7 @@ class GradoController extends Controller
             $grado->coordinador = $grado->coordinador ? $grado->coordinador : 'Sin coordinador';
         });
 
+        $page = intval($page) > ceil($total / $perPage) ? ceil($total / $perPage) : $page;
         return response([
             'data' => $grados,
             'total' => $total,

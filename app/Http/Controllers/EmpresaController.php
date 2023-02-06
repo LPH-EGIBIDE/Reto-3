@@ -21,22 +21,25 @@ class EmpresaController extends Controller
     {
         $request->validate([
             'page' => 'nullable|integer',
-            'filter' => 'nullable|string',
+            'filtro' => 'nullable|string',
         ]);
 
         $page = $request->input('page', 1);
         $perPage = 10;
         $offset = ($page - 1) * $perPage;
 
-        $empresas = Empresa::where('nombre', 'like', "%{$request->input('filter')}%")
-            ->offset($offset)->limit($perPage)
-            ->select( 'nombre', 'direccion', 'telefono', 'cif', 'area', 'id as url');
+        $empresas = Empresa::where('nombre', 'like', "%{$request->input('filtro')}%");
+
         $total = $empresas->count();
-        $empresas = $empresas->get();
+        $empresas = $empresas->offset($offset)->limit($perPage)
+            ->select( 'cif', 'nombre', 'area', 'id as url')
+            ->get();
 
         $empresas->map(function($empresa){
             $empresa->url = route('empresa.show', $empresa->url, false);
         });
+
+        $page = intval($page) > ceil($total / $perPage) ? ceil($total / $perPage) : $page;
         return response([
             'data' => $empresas,
             'total' => $total,
@@ -56,7 +59,7 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        //
+        return view('empresa.create');
     }
 
     /**
@@ -67,7 +70,23 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'direccion' => 'required|string|max:255',
+            'telefono' => 'required|string|min:9|max:9',
+            'cif' => 'required|string|min:9|max:9',
+            'area' => 'required|string|max:255',
+        ]);
+
+        $empresa = new Empresa();
+        $empresa->nombre = $request->nombre;
+        $empresa->direccion = $request->direccion;
+        $empresa->telefono = $request->telefono;
+        $empresa->cif = $request->cif;
+        $empresa->area = $request->area;
+        $empresa->save();
+
+        return redirect()->route('empresa.show', $empresa->id);
     }
 
     /**
@@ -80,7 +99,7 @@ class EmpresaController extends Controller
     {
         $empresa = Empresa::findOrFail($id);
 
-        return view('empresas.show', compact('empresa'));
+        return view('empresa.show', compact('empresa'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -100,9 +119,25 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empresa $empresa)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'direccion' => 'required|string|max:255',
+            'telefono' => 'required|string|min:9|max:9',
+            'cif' => 'required|string|min:9|max:9',
+            'area' => 'required|string|max:255',
+        ]);
+        $empresa = Empresa::findOrFail($id);
+        $empresa->nombre = $request->input('nombre');
+        $empresa->direccion = $request->input('direccion');
+        $empresa->telefono = $request->input('telefono');
+        $empresa->cif = $request->input('cif');
+        $empresa->area = $request->input('area');
+        $empresa->save();
+        session()->flash('message', 'Empresa actualizada correctamente');
+        return redirect()->route('empresa.show', $empresa->id);
+
     }
 
     /**

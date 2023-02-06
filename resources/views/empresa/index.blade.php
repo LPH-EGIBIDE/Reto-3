@@ -12,8 +12,8 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between p-3">
-                <h5 class="my-auto text-primary fs-3">Lista de cursos</h5>
-                <form action="{{ route('cursos.api.listado') }}" method="get" id="filterForm">
+                <h5 class="my-auto text-primary fs-3">Lista de empresas</h5>
+                <form action="{{ route('empresa.api.listado') }}" method="get" id="filterForm">
                     <input type="hidden" name="page" id="pageForm" value="1">
                     <div class="input-group ml-auto w-auto">
                         <div class="form-outline">
@@ -29,24 +29,24 @@
                 <table class="table table-responsive">
                     <thead class="text-primary">
                     <tr>
+                        <th scope="col" class="border-dark">CIF</th>
                         <th scope="col" class="border-dark">Nombre</th>
-                        <th scope="col" class="border-dark">Fecha de inicio</th>
-                        <th scope="col" class="border-dark">Fecha de fin</th>
+                        <th scope="col" class="border-dark">Area</th>
                         <th scope="col" class="border-dark">Acciones</th>
                     </tr>
                     </thead>
                     <tbody id="itemTable">
                     @for($i = 0; $i < 10; $i++)
                         <tr class="loading-skeleton">
-                            <td><p>84563255H</p></td>
-                            <td><p>Manolito</p></td>
-                            <td><p>Ingeniería xd/p></td>
+                            <td><p>12345678A</p></td>
+                            <td><p>Damian balls of mono sl</p></td>
+                            <td><p>Cuidado de animales</p></td>
                             <td><p>Acciones</p></td>
                         </tr>
                     @endfor
                     </tbody>
                 </table>
-                <p id="noItems"  class="text-center d-none">No hay cursos que coincidan</p>
+                <p id="noItems"  class="text-center d-none">No hay empresas que coincidan</p>
             </div>
             <div class="card-footer">
                 <nav aria-label="Page navigation example">

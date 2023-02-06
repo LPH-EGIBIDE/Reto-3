@@ -1,7 +1,13 @@
 @extends('layouts.app')
+
+@section('scripts')
+    @vite('resources/js/editElement.ts')
+@endsection
+
 @section('navbar')
     @include('navbar')
 @endsection
+
 
 @section('content')
 <div class="container d-flex align-items-center justify-content-center">
