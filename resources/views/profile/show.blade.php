@@ -62,7 +62,7 @@
                                     <button type="submit" class="btn btn-success fw-bold">Actualizar</button>
                                 </div>
                                 <div class="d-flex align-items-bottom justify-content-end">
-                                    <button class="btn btn-primary fw-bold" id="2faButton">Activar 2FA</button>
+                                    <a href="{{route("2fa.enable.step-1")}}" class="btn btn-primary fw-bold" id="2faButton">Activar 2FA</a>
                                 </div>
                             </div>
                         </div>
