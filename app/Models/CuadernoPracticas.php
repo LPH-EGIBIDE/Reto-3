@@ -10,6 +10,7 @@ class CuadernoPracticas extends Model {
     use HasFactory;
 
     protected $table = 'cuaderno_practicas';
+
     protected $fillable = [
         'semana',
         'estado',
@@ -20,4 +21,6 @@ class CuadernoPracticas extends Model {
     public function alumnoHistorico(): BelongsTo {
         return $this->belongsTo(AlumnoHistorico::class, 'historico_id');
     }
+
+
 }

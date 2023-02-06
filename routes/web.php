@@ -41,6 +41,10 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/alumnos', [App\Http\Controllers\AlumnoController::class, 'index'])->name('alumno.index');
         Route::get('/alumnos/api/listado', [App\Http\Controllers\AlumnoController::class, 'filterAlumnos'])->name('alumno.api.listado');
         Route::get('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'show'])->name('alumno.show')->where('id', '[0-9]+');
+
+        Route::get('/cuaderno/{user_id}', [App\Http\Controllers\CuadernoPracticasController::class, 'index'])->name('cuaderno.evaluar.index')->whereNumber('user_id');
+        Route::put('/cuaderno/{user_id}', [App\Http\Controllers\CuadernoPracticasController::class, 'evaluar'])->name('cuaderno.evaluar')->whereNumber('user_id');
+        Route::get('/cuaderno/{user_id}/api/semana', [App\Http\Controllers\CuadernoPracticasController::class, 'show'])->name('cuaderno.evaluar.api.semana')->whereNumber('user_id');
     });
 
 
@@ -56,7 +60,10 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/alumno', function () {
             return "Protected routes for alumno";
         });
-        Route::get('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'show'])->name('cuaderno.show');
+        Route::get('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'index'])->name('cuaderno.index');
+        Route::put('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'update'])->name('cuaderno.update');
+        Route::get('/cuaderno/api/semana', [App\Http\Controllers\CuadernoPracticasController::class, 'show'])->name('cuaderno.api.semana');
+        //Route::get('/cuaderno/api/semana2/{id}', [App\Http\Controllers\CuadernoPracticasController::class, 'store'])->name('cuaderno.api.semana')->whereNumber('id');
     });
 
 

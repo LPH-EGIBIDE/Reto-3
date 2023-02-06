@@ -32,7 +32,7 @@ class AlumnoHistorico extends Model {
     }
 
     public function cuadernosPracticas(): HasMany {
-        return $this->hasMany(CuadernoPracticas::class);
+        return $this->hasMany(CuadernoPracticas::class, 'historico_id');
     }
 
 }

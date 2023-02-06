@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="{{Vite::asset('resources/images/logo-sm.png')}}" alt="Logo" class="logo" width="30px" height="44px">
+            <img src="{{Vite::asset('resources/images/logo-sm.png')}}" alt="Logo" class="logo" width="30" height="44">
             {{ config('app.name', 'Laravel') }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -21,7 +21,7 @@
 
                 @can('alumno')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('cuaderno.show')}}"><i class="fa-regular fa-notebook"></i> Cuaderno Equipo</a>
+                    <a class="nav-link" href="{{route('cuaderno.index')}}"><i class="fa-regular fa-notebook"></i> Cuaderno Equipo</a>
                 </li>
                 @endcan
 

@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('cuaderno_practicas', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('historico_id')->constrained('alumnos_historicos')->onDelete('cascade');
             $table->integer('semana');
-            $table->integer('estado')->default(1);
+            $table->integer('estado')->default(0);
             $table->string('observaciones')->nullable();
             $table->string('contenido')->nullable();
-            $table->primary(['historico_id', 'semana']);
             $table->timestamps();
         });
     }
