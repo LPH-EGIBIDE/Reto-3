@@ -19,6 +19,6 @@ class FacilitadorEmpresa extends Persona {
         return $this->belongsTo(Empresa::class, 'empresa_id');
     }
     public function alumnoHistorico(): HasMany {
-        return $this->hasMany(AlumnoHistorico::class);
+        return $this->hasMany(AlumnoHistorico::class, 'facilitador_empresa');
     }
 }

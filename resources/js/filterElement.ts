@@ -48,13 +48,25 @@ function generateTableRows(items: object[]): string{
             }
             if (n == Object.keys(item).length - 1) {
                 //View button cell
+                //Try to get a template button and clone it, if not create a new one
+                let template = document.getElementById('actionButtonTemplate') as HTMLTemplateElement;
                 let cell = document.createElement('td');
-                let button = document.createElement('a');
-                button.classList.add('btn', 'btn-primary');
-                button.innerHTML = '<i class="fa-solid fa-eye pe-2"></i>Ver';
-                button.href = item[key];
-                cell.appendChild(button);
-                row.appendChild(cell);
+                if (template) {
+                    let div = document.createElement('div');
+                    let button = template.content.cloneNode(true) as Node;
+                    div.appendChild(button);
+                    let link = div.querySelector('a') as HTMLAnchorElement;
+                    link.href = item[key];
+                    cell.appendChild(div);
+                    row.appendChild(cell);
+                } else {
+                    let button = document.createElement('a');
+                    button.classList.add('btn', 'btn-primary');
+                    button.innerHTML = '<i class="fa-solid fa-eye pe-2"></i>Ver';
+                    button.href = item[key];
+                    cell.appendChild(button);
+                    row.appendChild(cell);
+                }
                 continue;
             }
                 let cell = document.createElement('td');

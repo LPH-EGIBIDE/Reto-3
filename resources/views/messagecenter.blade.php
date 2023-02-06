@@ -26,31 +26,24 @@
                             Lista de conversaciones
                         </div>
                         <div class="card-body overflow-auto">
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
-                            <p>Prueba</p>
+                            <ul>
+                                @for($i = 0; $i < 10; $i++)
+                                    <li class="conversation-item">
+                                        <div class="conversation-item__content">
+                                            <div class="conversation-item__content__title">
+                                                <h5>Nombre Apellido</h5>
+                                            </div>
+                                            <div class="conversation-item__content__message">
+                                                <p>Ultimo mensaje</p>
+                                            </div>
+                                        </div>
+                                        <div class="conversation-item__date">
+                                            <p>12/12/2021</p>
+                                        </div>
+                                    </li>
+                                @endfor
 
+                            </ul>
                         </div>
                     </div>
                 </div>

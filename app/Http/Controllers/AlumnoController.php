@@ -215,4 +215,78 @@ class AlumnoController extends Controller
             'Content-Type' => 'application/json',
         ], JSON_PRETTY_PRINT);
     }
+
+
+
+
+    //Calificar Alumnos
+
+    public function calificarIndex(){
+        return view('facilitador_centro.alumnos.calificarindex');
+    }
+
+    public function filterCalificar(Request $request)
+    {
+
+        $request->validate([
+            'filtro' => 'string|nullable|max:255',
+            'page' => 'numeric|nullable'
+        ]);
+
+        $persona = auth()->user()->persona;
+        $tipo = $persona->tipo;
+
+        $page = $request->input('page', 1);
+        $perPage = 10;
+        $offset = ($page - 1) * $perPage;
+
+        $lastCurso = Curso::getActiveCurso();
+
+        $alumnos = Alumno::join('alumnos_historicos', 'alumnos.persona_id', '=', 'alumnos_historicos.alumno_id')
+            ->join('personas', 'alumnos.persona_id', '=', 'personas.id')
+            ->leftJoin('facilitadores_empresa', 'alumnos_historicos.facilitador_empresa', '=', 'facilitadores_empresa.persona_id')
+            ->leftJoin('empresas', 'facilitadores_empresa.empresa_id', '=', 'empresas.id')
+            ->leftJoin('calificaciones', 'alumnos_historicos.id', '=', 'calificaciones.historico_id')
+            ->where('alumnos_historicos.curso_id', '=', $lastCurso->id);
+
+        switch ($tipo){
+            case 'facilitador_centro':
+                $alumnos = $alumnos->where('alumnos_historicos.facilitador_centro', '=', $persona->id)
+                    ->where('calificaciones.calificaciones_teoricas', '=', null);
+                break;
+            case 'facilitador_empresa':
+                $alumnos = $alumnos->where('alumnos_historicos.facilitador_empresa', '=', $persona->id)
+                    ->where('calificaciones.calificaciones_practicas', '=', null);
+                break;
+        }
+
+        $alumnos = $alumnos->where(function($query) use ($request){
+            $query->whereRaw('CONCAT(personas.nombre, " ", personas.apellido) like "%'.$request->filtro.'%"')
+                ->orWhere('personas.dni', 'like', '%'.$request->filtro.'%');
+        })
+            ->select('personas.nombre', 'personas.apellido', 'personas.dni', 'empresas.nombre as empresa', 'personas.id as url');
+
+        $total = $alumnos->count();
+
+        $paginated = $alumnos->offset($offset)->limit($perPage)->get();
+
+        //Replace persona_id with the route to the show view without using foreach
+        array_map(function($alumno){
+            $alumno->url = route('alumno.show', $alumno->url, false);
+        }, $paginated->all());
+
+        $page = intval($page) > ceil($total / $perPage) ? ceil($total / $perPage) : $page;
+
+        return response([
+            'data' => $paginated,
+            'total' => $total,
+            'page' => $page,
+            'per_page' => $perPage,
+        ], 200, [
+            'Content-Type' => 'application/json',
+        ], JSON_PRETTY_PRINT);
+
+
+
+    }
 }
