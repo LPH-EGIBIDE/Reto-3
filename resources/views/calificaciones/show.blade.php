@@ -17,8 +17,8 @@
                             <div class="card-header d-flex align-items-center justify-content-between px-4">
                                 <span class="text-primary fw-bold fs-5">Notas cuaderno de seguimiento</span>
                             </div>
-                            <div class="card-body">
-                                <table class="table table-responsive">
+                            <div class="card-body table-responsive">
+                                <table class="table table-striped">
                                     <tr>
                                         <td class="fw-bold">Esfuerzo y regularidad</td>
                                         <td>
@@ -69,8 +69,8 @@
                             <div class="card-header d-flex align-items-center justify-content-between px-4">
                                 <span class="text-primary fw-bold fs-5">Notas empresa</span>
                             </div>
-                            <div class="card-body">
-                                <table class="table table-responsive">
+                            <div class="card-body table-responsive">
+                                <table class="table table-striped">
                                     <tr>
                                         <td class="fw-bold">Actitud y disposición para el trabajo</td>
                                         <td>
@@ -120,7 +120,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold">Capacidad de planificación y organización.</td>
+                                        <td class="fw-bold">Capacidad de planificación y organización</td>
                                         <td>
                                             <label id="organizacion">Nota</label>
                                         </td>
@@ -139,8 +139,7 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-evenly col-12">
-                    <label class="fw-bold text-decoration-underline fst-italic">Nota final:</label>
-                    <label class="fw-bold" id="media">Media</label>
+                    <label class="text-primary fw-bold text-decoration-underline">Nota final: </label>
                 </div>
             </div>
         </div>
