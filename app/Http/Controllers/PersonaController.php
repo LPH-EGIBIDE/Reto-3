@@ -88,4 +88,9 @@ class PersonaController extends Controller
     public function newPersonaEmail(Persona $persona, string $subject, \stdClass $data) {
         Mail::to($persona->user->email)->send(new NewUserMail($subject, $data));
     }
+
+    public function showProfile() {
+        $persona = auth()->user()->persona;
+        return view('profile.show', ['persona' => $persona]);
+    }
 }
