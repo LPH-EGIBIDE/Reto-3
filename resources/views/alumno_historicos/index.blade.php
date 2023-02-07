@@ -1,3 +1,13 @@
+@extends('layouts.app')
+
+@section('scripts')
+    @vite('resources/js/filterElement.ts')
+@endsection
+
+@section('navbar')
+    @include('navbar')
+@endsection
+
 <div class="container">
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
