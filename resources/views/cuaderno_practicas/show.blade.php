@@ -15,18 +15,16 @@
             <div class="card-header d-flex align-items-center justify-content-between">
                 <div class="container row-separation">
                     <div class="row">
-                        <h2 class="my-auto text-primary">Evaluar cuaderno de seguimiento</h2>
+                        <h2 class="my-auto text-primary">Cuaderno de seguimiento</h2>
                     </div>
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <label class="fw-bold text-decoration-underline ">Nombre alumno</label>
-                            <p class="fw-ligt">{{$persona->nombre}} {{$persona->apellido}}</p>
+                            <p class="text-muted">{{$persona->nombre}} {{$persona->apellido}}</p>
                         </div>
                         <div class="col-6">
-                            <div class="input-group ml-auto w-auto align-items-center gap-2">
-                                <form id="formWeek" action="{{route('cuaderno.evaluar.api.semana', [$persona->id], false)}}">
+                            <div class="input-group ml-auto w-auto">
+                                <form class="d-flex flex-row align-items-center gap-2" id="formWeek" action="{{route('cuaderno.api.semana')}}">
                                     <label for="semanaSelect" class="fw-bold">Semana:</label>
-
                                     <select name="semana" id="semanaSelect" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                         <option selected value="">Elige una semana</option>
                                         @foreach($weeks as $week)

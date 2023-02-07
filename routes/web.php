@@ -77,10 +77,12 @@ Route::middleware(['auth', '2fa'])->group(function () {
     Route::middleware(['can:is_coordinador'])->group(function () {
 
 
+        Route::get('/facilitadores-centro/create', [App\Http\Controllers\FacilitadorCentroController::class, 'create'])->name('facilitador-centro.create');
         Route::get('/facilitadores-centro/api/listado', [App\Http\Controllers\FacilitadorCentroController::class, 'listado'])->name('facilitador-centro.api.listado');
         Route::get('/facilitadores-centro/{id}', [App\Http\Controllers\FacilitadorCentroController::class, 'show'])->name('facilitador-centro.show')->whereNumber('id');
         Route::put('/facilitadores-centro/{id}', [App\Http\Controllers\FacilitadorCentroController::class, 'update'])->name('facilitador-centro.update')->whereNumber('id');
         Route::post('/facilitadores-centro', [App\Http\Controllers\FacilitadorCentroController::class, 'store'])->name('facilitador-centro.store');
+        Route::get('/facilitadores-centro', [App\Http\Controllers\FacilitadorCentroController::class, 'index'])->name('facilitador-centro.index');
 
         Route::get('/facilitadores-empresa/api/listado', [App\Http\Controllers\FacilitadorEmpresaController::class, 'listado'])->name('facilitador-empresa.api.listado');
         Route::get('/facilitadores-empresa/{id}', [App\Http\Controllers\FacilitadorEmpresaController::class, 'show'])->name('facilitador-empresa.show')->whereNumber('id');
