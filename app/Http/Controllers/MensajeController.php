@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use function Symfony\Component\Translation\t;
 
 class MensajeController extends Controller
 {
@@ -81,10 +82,13 @@ class MensajeController extends Controller
     public function chat($id, $page = 1)
     {
 
-        $limit = 30; //messages per page
-        $offset = ($page - 1) * $limit;
         $receiver = Persona::findOrFail($id);
-        $chat = Mensaje::where('sender_id', auth()->user()->persona->id)->where('receiver_id', $receiver->id)->orWhere('sender_id', $receiver->id)->where('receiver_id', auth()->user()->persona->id)->orderBy('created_at', 'desc')->offset($offset)->limit($limit)->get();
+        $chat = Mensaje::where('sender_id', auth()->user()->persona->id)->where('receiver_id', $receiver->id)->orWhere('sender_id', $receiver->id)->where('receiver_id', auth()->user()->persona->id)->orderBy('created_at', 'desc')->get();
+
+        Mensaje::where('sender_id', $receiver->id)
+            ->where('receiver_id', auth()->user()->persona->id)
+            ->where('leido', false)
+            ->update(['leido' => true]);
         //Separate messages by sender
         // Show only sender id , message and date
         $chat = $chat->map(function ($item, $key) {
@@ -119,6 +123,19 @@ class MensajeController extends Controller
         }
         $chatters = $sentMessagePersonas->merge($receivedMessagePersonas)->merge($availableChatters)->unique();
         $chatters = Persona::whereIn('id', $chatters)->get();
+        //Check if it has unread messages
+        $chatters = $chatters->map(function ($item, $key) {
+            $unreadMessages = Mensaje::where('sender_id', $item->id)
+                ->where('receiver_id', auth()->user()->persona->id)
+                ->where('leido', false)
+                ->count();
+            return [
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+                'apellido' => $item->apellido,
+                'unread_messages' => $unreadMessages,
+            ];
+        });
         return response(['success' => true, 'chatters' => $chatters], 200, [], JSON_NUMERIC_CHECK);
     }
 

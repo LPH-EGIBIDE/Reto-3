@@ -17,7 +17,9 @@ class Attachment extends Model
         'is_public'
     ];
 
-    public function persona(): BelongsTo {
+    public function persona(): BelongsTo
+    {
         return $this->belongsTo(Persona::class, 'persona_id');
     }
+
 }

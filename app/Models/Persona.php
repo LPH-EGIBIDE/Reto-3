@@ -24,6 +24,10 @@ class Persona extends Model {
     public function attachment(): HasMany {
         return $this->hasMany(Attachment::class);
     }
+    public function fotoPerfil(): BelongsTo {
+        return $this->belongsTo(Attachment::class, 'profile_pic_id');
+    }
+
     public function notificacion(): HasMany {
         return $this->hasMany(Notificacion::class);
     }

@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="row d-flex align-items-center justify-content-center" style="height: 100vh">
-        <div class="col-sm-6 mx-auto">
+        <div class="col-lg-6 mx-auto">
             <div class="errors mb-3">
                 @if($errors->any())
                     @foreach($errors->all() as $error)

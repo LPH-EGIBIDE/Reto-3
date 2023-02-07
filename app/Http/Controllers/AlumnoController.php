@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\NewUserMail;
 use App\Models\Alumno;
+use App\Models\Attachment;
 use App\Models\Curso;
 use App\Models\Persona;
 use App\Models\User;
@@ -128,7 +129,8 @@ class AlumnoController extends Controller
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
             'dni' => 'required|string|min:9|max:9',
-            'telefono' => 'required|string|max:255'
+            'telefono' => 'required|string|max:255',
+            'profile_image' => 'image|nullable|max:10240'
         ]);
 
         $alumno = Alumno::findOrFail($id);
@@ -139,6 +141,15 @@ class AlumnoController extends Controller
         $alumno->persona->apellido = $request->apellido;
         $alumno->persona->dni = $request->dni;
         $alumno->persona->telefono = $request->telefono;
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $attachment = (new AttachmentController())->store($file, 'profile_image');
+            if ($alumno->persona->profile_pic_id) {
+                $old_attachment = Attachment::findOrFail($alumno->persona->profile_pic_id);
+                $old_attachment->delete();
+            }
+            $alumno->persona->profile_pic_id = $attachment->id;
+        }
         $alumno->persona->save();
         session()->flash('message', 'Alumno actualizado correctamente');
         return view('alumno.show', ['alumno' => $alumno]);

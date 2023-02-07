@@ -1,2 +1,2 @@
 import './bootstrap';
-import './components/chatBubble';
+import './components/chatBubble.ts';

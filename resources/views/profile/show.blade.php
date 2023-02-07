@@ -8,7 +8,13 @@
         @include('alerts')
         <div class="card mb-3 col-12 col-lg-10">
             <div class="card-header d-flex align-items-center gap-2">
-                <img src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg" class="rounded-circle" alt="Imagen usuario" style="height: 100px">
+                @if($persona->profile_pic_id != null)
+                    <img class="img-fluid" id="imgProfile" src="{{route('attachment.show', $alumno->persona->profile_pic_id)}}" alt="Foto Default">
+                    <img src="{{route('attachment.show', $persona->profile_pic_id)}}" class="rounded-circle" alt="Imagen usuario" style="height: 100px">
+                @else
+                    <img src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg" class="rounded-circle" alt="Imagen usuario" style="height: 100px">
+                @endif
+
                 <span class="card-title text-primary m-0 fs-2 fw-bold">Ficha del perfil</span>
             </div>
             <div class="card-body">

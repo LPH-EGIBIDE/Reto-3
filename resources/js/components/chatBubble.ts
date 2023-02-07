@@ -8,6 +8,10 @@ class ChatBubble extends HTMLElement {
             this.appendChild(clone);
         }
     }
+    connectedCallback() {
+        this.position = this.position;
+        this.content = this.content;
+    }
 
     static get observedAttributes(): string[] {
         return ['position', "content"];
@@ -29,6 +33,7 @@ class ChatBubble extends HTMLElement {
         this.setAttribute('content', <string>value);
     }
 
+
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
         if (name === "content") {
             this.querySelector("span").textContent = newValue;
@@ -47,6 +52,7 @@ class ChatBubble extends HTMLElement {
             );
         }
     }
+
 }
 
 customElements.define('chat-bubble', ChatBubble);
