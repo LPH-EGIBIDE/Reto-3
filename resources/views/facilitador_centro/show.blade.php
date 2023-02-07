@@ -27,9 +27,7 @@
                 <div class="col-4 d-flex flex-column align-items-center justify-content-be m-0 me-4 p-3 gap-3">
                     <img class="img-fluid" src="https://img.freepik.com/free-icon/user_318-875902.jpg" alt="Foto Default">
                     <input type="file" id="profpic" class="d-none">
-                    @can('is_coordinador')
-                        <input type="button" class="btn btn-primary" value="Cambiar foto" onclick="document.getElementById('profpic').click();">
-                    @endcan
+                    <input type="button" class="btn btn-primary" value="Cambiar foto" onclick="document.getElementById('profpic').click();">
                 </div>
                 <div class="col-md-7 col-6">
                     <form action="{{route('facilitador-centro.update',$facilitadorCentro->persona_id)}}" id="editForm" method="post">
@@ -51,11 +49,9 @@
                             <label for="telefono" class="form-label">Teléfono</label>
                             <input name="telefono" disabled type="text" value="{{$facilitadorCentro->persona->telefono}}" class="form-control" id="telefono">
                         </div>
-                        @can('is_coordinador')
-                            <div class="d-flex justify-content-end col-12">
-                                <button type="submit" disabled class="btn btn-success p-2 px-3">Confirmar</button>
-                            </div>
-                        @endcan
+                        <div class="d-flex justify-content-end col-12">
+                            <button type="submit" disabled class="btn btn-success p-2 px-3">Confirmar</button>
+                        </div>
                     </form>
                 </div>
             </div>
