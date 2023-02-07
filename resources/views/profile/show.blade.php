@@ -61,10 +61,13 @@
                                 <div class="h5 text-primary fw-bold m-0">Seguridad</div>
                             </div>
                             <div class="card-body d-flex flex-column justify-content-center px-5">
-                                <form action="{{route('password.update')}}" class="form mb-4" id="changePassword">
+                                <form action="{{route('profile.update.password')}}" class="form mb-4" id="changePassword" method="post">
+                                    @csrf
+                                    @method('PUT')
                                     <p class="text-primary fw-bold mb-1">Cambiar contraseña</p>
-                                    <input type="text" id="actualPass" placeholder="Contraseña actual" class="form-control mb-3">
-                                    <input type="text" id="newPass" placeholder="Nueva contraseña" class="form-control mb-3">
+                                    <input type="password" name="actualPass" id="actualPass" placeholder="Contraseña actual" class="form-control mb-3">
+                                    <input type="password" name="newPass" id="newPass" placeholder="Nueva contraseña" class="form-control mb-3">
+                                    <input type="password" name="newPass_confirmation" id="newPass_confirmation" placeholder="Repetir nueva contraseña" class="form-control mb-3">
                                     <button type="submit" class="btn btn-primary fw-bold">Actualizar</button>
                                 </form>
                                 <div class="mb-2">

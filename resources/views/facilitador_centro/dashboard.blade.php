@@ -3,4 +3,3 @@
 @include('facilitador_centro.graphs');
 
 @include('alumno.index');
-

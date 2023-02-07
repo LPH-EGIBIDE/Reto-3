@@ -8,7 +8,7 @@
             <div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <table class="table table-responsive">
+                        <table class="table">
                             <thead class="text-primary">
                             <tr>
                                 <th class="border-dark">Datos del alumno</th>

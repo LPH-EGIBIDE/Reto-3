@@ -17,7 +17,7 @@
                     <input type="hidden" name="page" id="pageForm" value="1">
                     <div class="input-group ml-auto w-auto">
                         <div class="form-outline">
-                            <input type="search" id="form1" name="filter" class="form-control" placeholder="Buscar"/>
+                            <input type="search" id="form1" name="filtro" class="form-control" placeholder="Buscar"/>
                         </div>
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-search"></i>
@@ -40,7 +40,7 @@
                         <tr class="loading-skeleton">
                             <td><p>84563255H</p></td>
                             <td><p>Manolito</p></td>
-                            <td><p>Ingeniería xd/p></td>
+                            <td><p>Ingeniería xd</p></td>
                             <td><p>Acciones</p></td>
                         </tr>
                     @endfor

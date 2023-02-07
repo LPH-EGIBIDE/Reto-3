@@ -12,13 +12,16 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between p-3">
-                <h5 class="my-auto text-primary fs-4 d-none d-md-block">Lista de facilitadores de centro</h5>
-                <p class="my-auto fw-bold text-primary d-md-none">Cursos</p>
-                <form action="{{ route('cursos.api.listado') }}" method="get" id="filterForm">
+                <h5 class="my-auto text-primary fs-3">Cuadernos pendientes</h5>
+                <form action="{{ route('cuaderno.api.pending') }}" method="get" id="filterForm">
                     <input type="hidden" name="page" id="pageForm" value="1">
-                    <div class="input-group ml-auto w-auto d-flex flex-row">
+                    <div class="input-group ml-auto w-auto">
                         <div class="form-outline">
-                            <input type="search" id="form1" name="filtro" class="form-control" placeholder="Buscar"/>
+                            <select name="semana" class="form-control" placeholder="Semana">
+                                 @foreach($weeks as $semana)
+                                     <option value="{{ $semana[0] }}">{{ $semana[1] }}</option>
+                                 @endforeach
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-search"></i>
@@ -26,31 +29,34 @@
                     </div>
                 </form>
             </div>
-            <div class="card-body bg-light overflow-hidden">
-                <table class="table table-responsive">
+            <div class="card-body bg-light table-responsive">
+                <table class="table">
                     <thead class="text-primary">
                     <tr>
                         <th scope="col" class="border-dark">Nombre</th>
-                        <th scope="col" class="border-dark">Fecha de inicio</th>
-                        <th scope="col" class="border-dark">Fecha de fin</th>
+                        <th scope="col" class="border-dark">Apellido</th>
+                        <th scope="col" class="border-dark">DNI</th>
+                        <th scope="col" class="border-dark">Estado</th>
                         <th scope="col" class="border-dark">Acciones</th>
                     </tr>
                     </thead>
                     <tbody id="itemTable">
                     @for($i = 0; $i < 10; $i++)
                         <tr class="loading-skeleton">
-                            <td><p>84563255H</p></td>
-                            <td><p>Manolito</p></td>
-                            <td><p>Ingeniería xd/p></td>
-                            <td><p>Acciones</p></td>
+                            <td><p>Mireille</p></td>
+                            <td><p>Marvin</p></td>
+                            <td><p>12345678A/p></td>
+                            <td><p>Deckow, Runolfsson and Jaskolski</p></td>
+                            <td><p>hershel.heidenreich@example.net</p></td>
+                            <td><p>Hola mama</p></td>
                         </tr>
                     @endfor
                     </tbody>
                 </table>
-                <p id="noItems"  class="text-center d-none">No hay cursos que coincidan</p>
+                <p id="noItems"  class="text-center d-none">No hay alumnos que coincidan</p>
             </div>
             <div class="card-footer">
-                <nav aria-label="Page navigation example">
+                <nav>
                     <ul class="pagination justify-content-end my-auto">
                         <li class="page-item">
                             <a class="page-link" id="previousPage"  href="#" aria-label="Previous">

@@ -21,14 +21,14 @@ class CursoController extends Controller
     {
         $request->validate([
             'page' => 'nullable|integer',
-            'filter' => 'nullable|string|max:255',
+            'filtro' => 'nullable|string|max:255',
         ]);
 
         $page = $request->input('page', 1);
         $perPage = 10;
         $offset = ($page - 1) * $perPage;
 
-        $cursos = Curso::where('nombre', "like", "%".$request->filter."%")->offset($offset)->limit($perPage)->select( 'nombre', 'fecha_inicio', 'fecha_fin', "id as url");
+        $cursos = Curso::where('nombre', "like", "%".$request->filtro."%")->offset($offset)->limit($perPage)->select( 'nombre', 'fecha_inicio', 'fecha_fin', "id as url");
         $total = $cursos->count();
         $cursos = $cursos->get();
 
@@ -55,7 +55,7 @@ class CursoController extends Controller
      */
     public function create()
     {
-        //
+        return view('cursos.create');
     }
 
     /**
@@ -71,13 +71,17 @@ class CursoController extends Controller
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date',
         ]);
+        if ($request->fecha_inicio > $request->fecha_fin) {
+            return redirect()->route('curso.create')->withErrors(['La fecha de inicio no puede ser mayor a la fecha de fin']);
+        }
         $curso = new Curso();
         $curso->nombre = $request->nombre;
         $curso->fecha_inicio = $request->fecha_inicio;
         $curso->fecha_fin = $request->fecha_fin;
+        $curso->active = false;
         $curso->save();
-        session()->flash('success', 'Curso creado correctamente');
-        return redirect()->route('cursos.index');
+        session()->flash('message', 'Curso creado correctamente');
+        return redirect()->route('curso.index');
     }
 
     /**
@@ -119,6 +123,21 @@ class CursoController extends Controller
             'fecha_fin' => 'required|date',
             'active' => 'required|numeric',
         ]);
+
+        if ($request->fecha_inicio > $request->fecha_fin) {
+            return redirect()->back()->withErrors(['La fecha de inicio no puede ser mayor a la fecha de fin']);
+        }
+
+        $lastCurso = Curso::getActiveCurso();
+        if ($lastCurso->id == $id && $request->active == 0) {
+            return redirect()->back()->withErrors(['No se puede desactivar el curso actual']);
+        }
+
+        if ($request->active == 1) {
+            $lastCurso->active = 0;
+            $lastCurso->save();
+        }
+
         $curso = Curso::findOrFail($id);
         $curso->nombre = $request->nombre;
         $curso->fecha_inicio = $request->fecha_inicio;

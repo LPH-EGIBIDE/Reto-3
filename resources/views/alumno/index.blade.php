@@ -25,8 +25,8 @@
             </div>
             </form>
         </div>
-        <div class="card-body bg-light overflow-hidden">
-            <table class="table table-responsive">
+        <div class="card-body bg-light table-responsive">
+            <table class="table">
                 <thead class="text-primary">
                 <tr>
                     <th scope="col" class="border-dark">Nombre</th>
@@ -53,7 +53,7 @@
             <p id="noItems"  class="text-center d-none">No hay alumnos que coincidan</p>
         </div>
         <div class="card-footer">
-            <nav aria-label="Page navigation example">
+            <nav>
                 <ul class="pagination justify-content-end my-auto">
                     <li class="page-item">
                         <a class="page-link" id="previousPage"  href="#" aria-label="Previous">
