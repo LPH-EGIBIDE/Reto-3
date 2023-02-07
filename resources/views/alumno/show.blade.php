@@ -8,12 +8,10 @@
     @include('navbar')
 @endsection
 
-
 @section('content')
-<div class="container d-flex flex-column align-items-center justify-content-center gap-4">
-    @include('alerts')
-    <div class="row">
-        <div class="card col-12 p-0">
+    <div class="container d-flex flex-column align-items-center justify-content-center gap-2"> @include('alerts') <div class="row">
+        @include('alerts')
+        <div class="card col-12 col-lg-8 p-0">
             <div class="card-header d-flex align-items-center justify-content-between px-4">
                 <span class="text-primary fw-bold fs-3">Vista del alumno</span>
                 @can('is_coordinador')
@@ -34,9 +32,7 @@
                     @endcan
                 </div>
                 <div class="col-md-7 col-6">
-                    <form action="{{route('alumno.update',$alumno->persona_id)}}" id="editForm" method="post">
-                        @method('PUT')
-                        @csrf
+                    <form action="{{route('alumno.update',$alumno->persona_id)}}" id="editForm" method="post"> @method('PUT') @csrf
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
                             <input name="nombre" disabled type="text" value="{{$alumno->persona->nombre}}" class="form-control" id="nombre">
@@ -52,26 +48,13 @@
                         <div class="mb-4">
                             <label for="telefono" class="form-label">Teléfono</label>
                             <input name="telefono" disabled type="text" value="{{$alumno->persona->telefono}}" class="form-control" id="telefono">
-                        </div>
-                        @can('is_coordinador')
-                            <div class="d-flex justify-content-end col-12">
-                                <button type="submit" disabled class="btn btn-success p-2 px-3">Confirmar</button>
-                            </div>
-                        @endcan
+                        </div> @can('is_coordinador') <div class="d-flex justify-content-end col-12">
+                            <button type="submit" disabled class="btn btn-success p-2 px-3">Confirmar</button>
+                        </div> @endcan
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-
-    @can('is_coordinador')
-     @include('alumno_historicos.index')
-    @endcan
-
-</div>
-
-
-
-
+    </div> @can('is_coordinador') @include('alumno_historicos.index') @endcan </div>
 @endsection
 
