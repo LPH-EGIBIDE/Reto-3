@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Vite;
 use function Symfony\Component\Translation\t;
 
 class MensajeController extends Controller
@@ -129,10 +130,12 @@ class MensajeController extends Controller
                 ->where('receiver_id', auth()->user()->persona->id)
                 ->where('leido', false)
                 ->count();
+            $profilePicture = $item->profile_pic_id ? route('attachment.show.custom', [$item->profile_pic_id,32,32], false) : Vite::asset('resources/images/profile.jpg');
             return [
                 'id' => $item->id,
                 'nombre' => $item->nombre,
                 'apellido' => $item->apellido,
+                'profile_picture' => $profilePicture,
                 'unread_messages' => $unreadMessages,
             ];
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attachment;
 use App\Models\Empresa;
 use App\Models\FacilitadorEmpresa;
 use App\Models\Persona;
@@ -46,6 +47,7 @@ class FacilitadorEmpresaController extends Controller
             'telefono' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'id_empresa' => 'integer|nullable',
+            'profile_image' => 'image|nullable|max:10240'
         ]);
 
         // Crear persona
@@ -55,6 +57,11 @@ class FacilitadorEmpresaController extends Controller
         $persona->dni = $request->dni;
         $persona->telefono = $request->telefono;
         $persona->tipo = 'facilitador_empresa';
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $attachment = (new AttachmentController())->store($file, 'profile_image');
+            $persona->profile_pic_id = $attachment->id;
+        }
         $persona->save();
 
         // Crear facilitadorCentro
@@ -126,7 +133,8 @@ class FacilitadorEmpresaController extends Controller
             'apellido' => 'required|string|max:255',
             'dni' => 'required|string|min:9|max:9',
             'telefono' => 'required|string|max:255',
-            'id_empresa' => 'integer|nullable',
+            'id_empresa' => 'integer|required',
+            'profile_image' => 'image|nullable|max:10240'
         ]);
 
 
@@ -136,10 +144,17 @@ class FacilitadorEmpresaController extends Controller
         $facilitadorEmpresa->persona->dni = $request->dni;
         $facilitadorEmpresa->persona->telefono = $request->telefono;
         $empresa = Empresa::find($request->id_empresa);
-        if ($empresa) {
-            $facilitadorEmpresa->empresa_id = $request->id_empresa;
-        } else {
-            $facilitadorEmpresa->empresa_id = null;
+        if (!$empresa)
+            return redirect()->back()->withErrors(['id_empresa' => 'La empresa seleccionada no existe']);
+        $facilitadorEmpresa->empresa_id = $request->id_empresa;
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $attachment = (new AttachmentController())->store($file, 'profile_image');
+            if ($facilitadorEmpresa->persona->profile_pic_id) {
+                $old_attachment = Attachment::findOrFail($facilitadorEmpresa->persona->profile_pic_id);
+                $old_attachment->delete();
+            }
+            $facilitadorEmpresa->persona->profile_pic_id = $attachment->id;
         }
         $facilitadorEmpresa->persona->save();
         $empresas = Empresa::all();

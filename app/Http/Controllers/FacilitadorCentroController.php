@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attachment;
 use App\Models\FacilitadorCentro;
 use App\Models\FacilitadorEmpresa;
 use App\Models\Persona;
@@ -45,6 +46,7 @@ class FacilitadorCentroController extends Controller
             'dni' => 'required|string|min:9|max:9|unique:personas',
             'telefono' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'profile_image' => 'image|nullable|max:10240'
         ]);
 
         // Crear persona
@@ -54,6 +56,11 @@ class FacilitadorCentroController extends Controller
         $persona->dni = $request->dni;
         $persona->telefono = $request->telefono;
         $persona->tipo = 'facilitador_centro';
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $attachment = (new AttachmentController())->store($file, 'profile_image');
+            $persona->profile_pic_id = $attachment->id;
+        }
         $persona->save();
 
         // Crear facilitadorCentro
@@ -122,7 +129,8 @@ class FacilitadorCentroController extends Controller
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
             'dni' => 'required|string|min:9|max:9',
-            'telefono' => 'required|string|max:255'
+            'telefono' => 'required|string|max:255',
+            'profile_image' => 'image|nullable|max:10240'
         ]);
 
         $facilitadorCentro = FacilitadorCentro::findOrFail($id);
@@ -130,6 +138,15 @@ class FacilitadorCentroController extends Controller
         $facilitadorCentro->persona->apellido = $request->apellido;
         $facilitadorCentro->persona->dni = $request->dni;
         $facilitadorCentro->persona->telefono = $request->telefono;
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $attachment = (new AttachmentController())->store($file, 'profile_image');
+            if ($facilitadorCentro->persona->profile_pic_id) {
+                $old_attachment = Attachment::findOrFail($facilitadorCentro->persona->profile_pic_id);
+                $old_attachment->delete();
+            }
+            $facilitadorCentro->persona->profile_pic_id = $attachment->id;
+        }
         $facilitadorCentro->persona->save();
         session()->flash('message', 'Facilitador actualizado correctamente');
         return view('facilitador_centro.show', ['facilitadorCentro' => $facilitadorCentro]);
@@ -159,7 +176,7 @@ class FacilitadorCentroController extends Controller
 
         $facilitadoresCentro = FacilitadorCentro::join('personas', 'personas.id', '=', 'facilitadores_centro.persona_id')
             ->where('nombre', "like", "%".$request->filtro."%")
-            ->select( 'nombre', 'apellido', 'dni', "telefono", "id_empresa.nombre as empresa", "personas.id as url");
+            ->select( 'nombre', 'apellido', 'dni', "telefono", "personas.id as url");
         $total = $facilitadoresCentro->count();
         $facilitadoresCentro = $facilitadoresCentro->offset($offset)->limit($perPage)->get();
 

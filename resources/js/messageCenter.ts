@@ -12,7 +12,7 @@ class Chatter {
     }
 
     static fromJSON(json: object): Chatter {
-        return new Chatter(json['id'], json['nombre']+ " " + json['apellido'], "https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg", json['unread_messages']);
+        return new Chatter(json['id'], json['nombre']+ " " + json['apellido'], json['profile_picture'], json['unread_messages']);
     }
 
     static fromJSONList(json: object[]): Chatter[] {
@@ -132,6 +132,8 @@ function chatterTemplate(chatter: Chatter) {
     img.src = chatter.avatar;
     img.alt = chatter.name;
     img.classList.add('avatar');
+    img.classList.add('rounded-circle');
+    img.classList.add('me-3');
 
     let unread = document.createElement('span');
     unread.classList.add('badge');

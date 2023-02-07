@@ -47,7 +47,8 @@ class AlumnoController extends Controller
             'apellido' => 'required|string|max:255',
             'dni' => 'required|string|min:9|max:9|unique:personas',
             'telefono' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users'
+            'email' => 'required|string|email|max:255|unique:users',
+            'profile_image' => 'image|nullable|max:10240'
         ]);
 
         // Crear persona
@@ -57,6 +58,11 @@ class AlumnoController extends Controller
         $persona->dni = $request->dni;
         $persona->telefono = $request->telefono;
         $persona->tipo = 'alumno';
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $attachment = (new AttachmentController())->store($file, 'profile_image');
+            $persona->profile_pic_id = $attachment->id;
+        }
         $persona->save();
 
         // Crear alumno
