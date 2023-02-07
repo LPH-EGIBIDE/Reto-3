@@ -159,7 +159,7 @@ class FacilitadorCentroController extends Controller
 
         $facilitadoresCentro = FacilitadorCentro::join('personas', 'personas.id', '=', 'facilitadores_centro.persona_id')
             ->where('nombre', "like", "%".$request->filtro."%")
-            ->select( 'nombre', 'apellido', 'dni', "telefono", "personas.id as url");
+            ->select( 'nombre', 'apellido', 'dni', "telefono", "id_empresa.nombre as empresa", "personas.id as url");
         $total = $facilitadoresCentro->count();
         $facilitadoresCentro = $facilitadoresCentro->offset($offset)->limit($perPage)->get();
 

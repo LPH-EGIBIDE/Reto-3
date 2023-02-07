@@ -88,10 +88,12 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::post('/facilitadores-centro', [App\Http\Controllers\FacilitadorCentroController::class, 'store'])->name('facilitador-centro.store');
         Route::get('/facilitadores-centro', [App\Http\Controllers\FacilitadorCentroController::class, 'index'])->name('facilitador-centro.index');
 
+        Route::get('/facilitadores-empresa/create', [App\Http\Controllers\FacilitadorEmpresaController::class, 'create'])->name('facilitador-empresa.create');
         Route::get('/facilitadores-empresa/api/listado', [App\Http\Controllers\FacilitadorEmpresaController::class, 'listado'])->name('facilitador-empresa.api.listado');
         Route::get('/facilitadores-empresa/{id}', [App\Http\Controllers\FacilitadorEmpresaController::class, 'show'])->name('facilitador-empresa.show')->whereNumber('id');
         Route::put('/facilitadores-empresa/{id}', [App\Http\Controllers\FacilitadorEmpresaController::class, 'update'])->name('facilitador-empresa.update')->whereNumber('id');
         Route::post('/facilitadores-empresa', [App\Http\Controllers\FacilitadorEmpresaController::class, 'store'])->name('facilitador-empresa.store');
+        Route::get('/facilitadores-empresa', [App\Http\Controllers\FacilitadorEmpresaController::class, 'index'])->name('facilitador-empresa.index');
 
         Route::get('/cursos/create', [App\Http\Controllers\CursoController::class, 'create'])->name('curso.create');
         Route::get('/cursos/api/listado', [App\Http\Controllers\CursoController::class, 'listado'])->name('cursos.api.listado');

@@ -14,7 +14,7 @@
             <div class="card-header d-flex align-items-center justify-content-between p-3">
                 <h5 class="my-auto text-primary fs-4 d-none d-lg-block">Lista de facilitadores de centro</h5>
                 <p class="my-auto fw-bold text-primary d-lg-none">Fac. de centro</p>
-                <form action="{{ route('facilitador-centro.api.listado') }}" method="get" id="filterForm">
+                <form action="{{route('facilitador-centro.api.listado')}}" method="get" id="filterForm">
                     <input type="hidden" name="page" id="pageForm" value="1">
                     <div class="input-group ml-auto w-auto d-flex flex-row">
                         <div class="form-outline">
@@ -52,7 +52,7 @@
                 <p id="noItems"  class="text-center d-none">No hay facilitadores que coincidan</p>
             </div>
             <div class="card-footer">
-                <nav aria-label="Page navigation example">
+                <nav>
                     <ul class="pagination justify-content-end my-auto">
                         <li class="page-item">
                             <a class="page-link" id="previousPage"  href="#" aria-label="Previous">
