@@ -32,6 +32,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
 
     Route::get('/profile', [App\Http\Controllers\PersonaController::class, 'showProfile'])->name('profile.show');
     Route::put('/profile', [App\Http\Controllers\PersonaController::class, 'updateProfile'])->name('profile.update');
+    Route::put('/profile/password', [App\Http\Controllers\PersonaController::class, 'changePassword'])->name('profile.update.password');
 
 
 //Rutas de los facilitadores de centro
@@ -48,6 +49,8 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/cuaderno/{user_id}', [App\Http\Controllers\CuadernoPracticasController::class, 'index'])->name('cuaderno.evaluar.index')->whereNumber('user_id');
         Route::put('/cuaderno/{user_id}', [App\Http\Controllers\CuadernoPracticasController::class, 'evaluar'])->name('cuaderno.evaluar')->whereNumber('user_id');
         Route::get('/cuaderno/{user_id}/api/semana', [App\Http\Controllers\CuadernoPracticasController::class, 'show'])->name('cuaderno.evaluar.api.semana')->whereNumber('user_id');
+        Route::get('/cuaderno/pendiente', [App\Http\Controllers\CuadernoPracticasController::class, 'pendingIndex'])->name('cuaderno.pending');
+        Route::get('/cuaderno/api/pendiente', [App\Http\Controllers\CuadernoPracticasController::class, 'pending'])->name('cuaderno.api.pending');
     });
 
 
@@ -84,13 +87,14 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::put('/facilitadores-empresa/{id}', [App\Http\Controllers\FacilitadorEmpresaController::class, 'update'])->name('facilitador-empresa.update')->whereNumber('id');
         Route::post('/facilitadores-empresa', [App\Http\Controllers\FacilitadorEmpresaController::class, 'store'])->name('facilitador-empresa.store');
 
-
+        Route::get('/cursos/create', [App\Http\Controllers\CursoController::class, 'create'])->name('curso.create');
         Route::get('/cursos/api/listado', [App\Http\Controllers\CursoController::class, 'listado'])->name('cursos.api.listado');
         Route::get('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'show'])->name('curso.show')->whereNumber('id');
         Route::put('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'update'])->name('curso.update')->whereNumber('id');
         Route::post('/cursos', [App\Http\Controllers\CursoController::class, 'store'])->name('curso.store');
         Route::get('/cursos', [App\Http\Controllers\CursoController::class, 'index'])->name('curso.index');
 
+        Route::get('/grados/create', [App\Http\Controllers\GradoController::class, 'create'])->name('grado.create');
         Route::get('/grados/api/listado', [App\Http\Controllers\GradoController::class, 'listado'])->name('grado.api.listado');
         Route::get('/grados/{id}', [App\Http\Controllers\GradoController::class, 'show'])->name('grado.show')->whereNumber('id');
         Route::put('/grados/{id}', [App\Http\Controllers\GradoController::class, 'update'])->name('grado.update')->whereNumber('id');
@@ -102,6 +106,8 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::put('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'update'])->name('alumno.update')->whereNumber('id');
 
         Route::get('/familias/api/listado', [App\Http\Controllers\FamiliaController::class, 'listado'])->name('familia.api.listado');
+        Route::get('/familias/create', [App\Http\Controllers\FamiliaController::class, 'create'])->name('familia.create');
+        Route::delete('/familias/{id}', [App\Http\Controllers\FamiliaController::class, 'destroy'])->name('familia.destroy')->whereNumber('id');
         Route::get('/familias', [App\Http\Controllers\FamiliaController::class, 'index'])->name('familia.index');
         Route::get('/familias/{id}', [App\Http\Controllers\FamiliaController::class, 'show'])->name('familia.show')->whereNumber('id');
         Route::put('/familias/{id}', [App\Http\Controllers\FamiliaController::class, 'update'])->name('familia.update')->whereNumber('id');

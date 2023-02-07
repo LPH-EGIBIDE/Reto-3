@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Alumno;
 use App\Models\CuadernoPracticas;
+use App\Models\Curso;
 use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class CuadernoPracticasController extends Controller
 {
@@ -13,6 +17,7 @@ class CuadernoPracticasController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function index($user_id = null)
     {
@@ -23,14 +28,13 @@ class CuadernoPracticasController extends Controller
             $persona = $alumno->persona;
             \Gate::allows('can_view_alumno', $alumno);
         }
-        $historico = $persona->informacion->alumnoHistorico->last();
-        $curso = $historico->curso;
+        $curso = Curso::getActiveCurso();
         if ($curso == null)
             return redirect()->route('home')->withErrors(['No se ha encontrado un curso activo']);
         //Generate weeks array based on the start and end date of the course
         $weeks = [];
-        $start = new \DateTime($curso->fecha_inicio);
-        $end = new \DateTime($curso->fecha_fin);
+        $start = new DateTime($curso->fecha_inicio);
+        $end = new DateTime($curso->fecha_fin);
 
         $interval = new \DateInterval('P1W');
         $daterange = new \DatePeriod($start, $interval ,$end);
@@ -73,12 +77,12 @@ class CuadernoPracticasController extends Controller
         $week = $request->semana;
         $user = auth()->user();
         $historico = $user->persona->informacion->alumnoHistorico->last();
-        $curso = $historico->curso;
+        $curso = Curso::getActiveCurso();
         if ($curso == null)
             return redirect()->route('home')->withErrors(['No se ha encontrado un curso activo']);
         //Calculate the number of weeks based on the start and end date of the course
-        $start = new \DateTime($curso->fecha_inicio);
-        $end = new \DateTime($curso->fecha_fin);
+        $start = new DateTime($curso->fecha_inicio);
+        $end = new DateTime($curso->fecha_fin);
 
         $interval = new \DateInterval('P1W');
         $daterange = new \DatePeriod($start, $interval ,$end);
@@ -120,12 +124,12 @@ class CuadernoPracticasController extends Controller
             \Gate::allows('can_view_alumno', $alumno);
         }
         $historico = $persona->informacion->alumnoHistorico->last();
-        $curso = $historico->curso;
+        $curso = Curso::getActiveCurso();
         if ($curso == null)
             return redirect()->route('home')->withErrors(['No se ha encontrado un curso activo']);
         //Calculate the number of weeks based on the start and end date of the course
-        $start = new \DateTime($curso->fecha_inicio);
-        $end = new \DateTime($curso->fecha_fin);
+        $start = new DateTime($curso->fecha_inicio);
+        $end = new DateTime($curso->fecha_fin);
 
         $interval = new \DateInterval('P1W');
         $daterange = new \DatePeriod($start, $interval ,$end);
@@ -252,6 +256,91 @@ class CuadernoPracticasController extends Controller
         return redirect()->back();
 
 
+    }
+
+    public function pending(Request $request)
+    {
+        $request->validate([
+            'semana' => 'nullable|integer|min:1',
+            'page' => 'nullable|integer',
+        ]);
+
+        $curso = Curso::getActiveCurso();
+        if ($curso == null)
+            return redirect()->route('home')->withErrors(['No se ha encontrado un curso activo']);
+        //Generate weeks array based on the start and end date of the course
+        $weeks = [];
+        $start = new DateTime($curso->fecha_inicio);
+        $end = new DateTime($curso->fecha_fin);
+
+        $interval = new \DateInterval('P1W');
+        $daterange = new \DatePeriod($start, $interval ,$end);
+        $week = 1;
+        foreach($daterange as $date){
+            //Check if week start day is greater than today
+            if($date->format("Y-m-d") > date("Y-m-d"))
+                break;
+            $week++;
+        }
+
+        $semana = min($request->semana, $week) ?? 1;
+        $page = $request->input('page', 1);
+        $perPage = 10;
+        $offset = ($page - 1) * $perPage;
+
+        $user = auth()->user();
+
+        $pending = Alumno::join('alumnos_historicos', 'alumnos_historicos.alumno_id', '=', 'alumnos.persona_id')
+            ->join('personas', 'personas.id', '=', 'alumnos.persona_id')
+            ->leftJoin('cuaderno_practicas', function ($join) use ($semana) {
+                $join->on('cuaderno_practicas.historico_id', '=', 'alumnos_historicos.id')
+                    ->on('cuaderno_practicas.semana', '=', DB::raw($semana));
+            })
+            ->where('alumnos_historicos.facilitador_centro', '=', $user->persona->id)
+            ->whereRaw('IFNULL(cuaderno_practicas.estado, 0) < 2')
+            ->select(  'personas.nombre', 'personas.apellido', 'personas.dni', 'cuaderno_practicas.estado', 'alumnos.persona_id as url');
+
+        $total = $pending->count();
+        $paginated = $pending->offset($offset)->limit($perPage)->orderBy('cuaderno_practicas.estado', 'desc')->get();
+
+        array_map(function($alumno){
+            $estados = ['Pendiente', 'Enviado', 'Evaluado'];
+            $alumno->url = route('cuaderno.evaluar', $alumno->url, false);
+            $alumno->estado = $estados[$alumno->estado] ?? $estados[0];
+        }, $paginated->all());
+
+        $page = intval($page) > ceil($total / $perPage) ? ceil($total / $perPage) : $page;
+        return response([
+            'data' => $paginated,
+            'total' => $total,
+            'page' => $page,
+            'per_page' => $perPage,
+        ], 200, [
+            'Content-Type' => 'application/json',
+        ], JSON_PRETTY_PRINT);
+    }
+
+    public function pendingIndex()
+    {
+        $curso = Curso::getActiveCurso();
+        if ($curso == null)
+            return redirect()->route('home')->withErrors(['No se ha encontrado un curso activo']);
+        //Generate weeks array based on the start and end date of the course
+        $weeks = [];
+        $start = new DateTime($curso->fecha_inicio);
+        $end = new DateTime($curso->fecha_fin);
+
+        $interval = new \DateInterval('P1W');
+        $daterange = new \DatePeriod($start, $interval ,$end);
+        $week = 1;
+        foreach($daterange as $date){
+            //Check if week start day is greater than today
+            if($date->format("Y-m-d") > date("Y-m-d"))
+                break;
+            $weeks[] = [$week, "Semana {$week} - ".$date->format("Y-m-d")];
+            $week++;
+        }
+        return view('cuaderno_practicas.index', compact('weeks'));
     }
 
 

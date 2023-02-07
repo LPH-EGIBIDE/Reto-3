@@ -93,4 +93,22 @@ class PersonaController extends Controller
         $persona = auth()->user()->persona;
         return view('profile.show', ['persona' => $persona]);
     }
+
+    public function changePassword(Request $request) {
+        $request->validate([
+            'actualPass' => 'required',
+            'newPass' => 'required|confirmed|min:8',
+        ]);
+        $user = auth()->user();
+        if (!\Hash::check($request->actualPass, $user->password)) {
+            return redirect()->back()->withErrors(['actualPass' => 'La contraseña actual no es correcta']);
+        }
+        $user->password = \Hash::make($request->newPass);
+        $user->save();
+        //TODO: Enviar correo de cambio de contraseña
+
+        session()->flash('status', 'Contraseña cambiada correctamente. Inicie sesión de nuevo para aplicar los cambios.');
+        auth()->logout();
+        return redirect()->route('login');
+    }
 }

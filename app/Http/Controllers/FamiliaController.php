@@ -54,7 +54,7 @@ class FamiliaController extends Controller
      */
     public function create()
     {
-        //
+        return view('familias.create');
     }
 
     /**
@@ -65,7 +65,14 @@ class FamiliaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+        ]);
+        $familia = new Familia();
+        $familia->nombre = $request->nombre;
+        $familia->save();
+        session()->flash('message', 'Familia creada correctamente');
+        return redirect()->route('familia.show', $familia->id);
     }
 
     /**
@@ -116,8 +123,12 @@ class FamiliaController extends Controller
      * @param  \App\Models\Familia  $familia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Familia $familia)
+    public function destroy($id)
     {
-        //
+        $familia = Familia::findOrFail($id);
+        $familia->delete();
+        session()->flash('message', 'Familia eliminada correctamente');
+        return redirect()->route('familia.index');
+
     }
 }

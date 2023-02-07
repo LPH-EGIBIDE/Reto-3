@@ -13,12 +13,20 @@
 <div class="container d-flex align-items-center justify-content-center">
     <div class="card col-12 col-lg-8 p-0">
         <div class="card-header d-flex align-items-center justify-content-between px-4">
-            <span class="text-primary fw-bold fs-3">Familias</span>
+            <span class="text-primary fw-bold fs-3">Ver familia</span>
             <div class="d-flex gap-3">
                 <button type="button" id="editButton" class="btn btn-primary p-2 px-3">
                     <span class="d-none d-md-block">Editar</span>
                     <i class="fa-solid fa-pencil d-block d-md-none"></i>
                 </button>
+                <form action="{{ route('familia.destroy', ["id" => $familia->id]) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" id="deleteButton" class="btn btn-danger p-2 px-3">
+                        <span class="d-none d-md-block">Borrar</span>
+                        <i class="fa-solid fa-cross d-block d-md-none"></i>
+                    </button>
+                </form>
             </div>
         </div>
         <div class="card-body d-flex flex-row justify-content-around gap-2">

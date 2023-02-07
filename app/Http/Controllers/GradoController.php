@@ -61,7 +61,9 @@ class GradoController extends Controller
      */
     public function create()
     {
-        //
+        $familias = Familia::all();
+        $facilitadores = FacilitadorCentro::all();
+        return view('grados.create', compact('familias', 'facilitadores'));
     }
 
     /**
@@ -74,22 +76,24 @@ class GradoController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'familia' => 'required|numeric|nullable',
-            'coordinador' => 'required|numeric|nullable',
+            'familia' => 'integer|nullable',
+            'coordinador' => 'integer|nullable',
         ]);
         $grado = new Grado();
         $grado->nombre = $request->nombre;
-        $grado->familia = $request->familia;
+        $grado->familia_id = empty($request->familia) ? null : $request->familia;
+        $request->coordinador = empty($request->coordinador) ? null : $request->coordinador;
+
         if ($request->coordinador) {
             $coordinador = Persona::findOrFail($request->coordinador);
             if ($coordinador->tipo != 'facilitador_centro') {
-                return redirect()->route('grados.index')->withErrors('El coordinador debe ser un facilitador del centro');
+                return redirect()->route('grado.index')->withErrors('El coordinador debe ser un facilitador del centro');
             }
-            $grado->coordinador = $coordinador->id;
+            $grado->coordinador_id = $coordinador->id;
         }
         $grado->save();
         session()->flash('success', 'Grado creado correctamente');
-        return redirect()->route('grados.index');
+        return redirect()->route('grado.index');
     }
 
     /**
