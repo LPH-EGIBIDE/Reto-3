@@ -74,6 +74,7 @@ class AttachmentController extends Controller
             $image->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
             });
+            $image->fit($width, $height);
             $file = $image->encode();
         }
         return response($file, 200)->header('Content-Type', $attachment->file_type);
