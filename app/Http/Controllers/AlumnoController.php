@@ -235,6 +235,36 @@ class AlumnoController extends Controller
 
 
 
+    public function search(Request $request){
+        $request->validate([
+            'filtro' => 'string|nullable|max:255'
+        ]);
+        if (strlen($request->filtro) < 3) {
+            return response([
+                'data' => [],
+            ], 200, [
+                'Content-Type' => 'application/json',
+            ], JSON_PRETTY_PRINT);
+        }
+
+        $alumnos = Persona::where('tipo', '=', 'alumno')
+            ->where(function($query) use ($request){
+                $query->whereRaw('CONCAT(nombre, " ", apellido) like "%'.$request->filtro.'%"')
+                    ->orWhere('dni', 'like', '%'.$request->filtro.'%');
+            })
+            ->select('id', 'nombre', 'apellido')->get();
+
+        array_map(function($alumno){
+            $alumno->nombre = $alumno->nombre . ' ' . $alumno->apellido;
+            unset($alumno->apellido);
+        }, $alumnos->all());
+
+        return response([
+            'data' => $alumnos,
+        ], 200, [
+            'Content-Type' => 'application/json',
+        ], JSON_PRETTY_PRINT);
+    }
 
     //Calificar Alumnos
 
@@ -247,8 +277,11 @@ class AlumnoController extends Controller
 
         $request->validate([
             'filtro' => 'string|nullable|max:255',
+            'all' => 'boolean|nullable',
             'page' => 'numeric|nullable'
         ]);
+
+        $request->all = empty($request->all) ? false : $request->all;
 
         $persona = auth()->user()->persona;
         $tipo = $persona->tipo;
@@ -265,17 +298,18 @@ class AlumnoController extends Controller
             ->leftJoin('empresas', 'facilitadores_empresa.empresa_id', '=', 'empresas.id')
             ->leftJoin('calificaciones', 'alumnos_historicos.id', '=', 'calificaciones.historico_id')
             ->where('alumnos_historicos.curso_id', '=', $lastCurso->id);
-
-        switch ($tipo){
-            case 'facilitador_centro':
-                $alumnos = $alumnos->where('alumnos_historicos.facilitador_centro', '=', $persona->id)
-                    ->where('calificaciones.calificaciones_teoricas', '=', null);
-                break;
-            case 'facilitador_empresa':
-                $alumnos = $alumnos->where('alumnos_historicos.facilitador_empresa', '=', $persona->id)
-                    ->where('calificaciones.calificaciones_practicas', '=', null);
-                break;
-        }
+                switch ($tipo){
+                    case 'facilitador_centro':
+                        $alumnos = $alumnos->where('alumnos_historicos.facilitador_centro', '=', $persona->id);
+                        if(!$request->all)
+                            $alumnos = $alumnos->where('calificaciones.calificaciones_teoricas', '=', null);
+                        break;
+                    case 'facilitador_empresa':
+                        $alumnos = $alumnos->where('alumnos_historicos.facilitador_empresa', '=', $persona->id);
+                        if(!$request->all)
+                            $alumnos = $alumnos->where('calificaciones.calificaciones_practicas', '=', null);
+                        break;
+                }
 
         $alumnos = $alumnos->where(function($query) use ($request){
             $query->whereRaw('CONCAT(personas.nombre, " ", personas.apellido) like "%'.$request->filtro.'%"')

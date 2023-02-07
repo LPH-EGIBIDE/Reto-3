@@ -12,7 +12,8 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between p-3">
-                <h5 class="my-auto text-primary fs-3">Alumnos pendientes de calificar</h5>
+                <h5 class="my-auto d-none d-md-block text-primary fs-3">Alumnos pendientes de calificar</h5>
+                <p class="my-auto d-block d-md-none text-primary">Alumnos a calificar</p>
                 <form action="{{ route('alumno.api.calificar') }}" method="get" id="filterForm">
                     <input type="hidden" name="page" id="pageForm" value="1">
                     <div class="input-group ml-auto w-auto">
@@ -23,6 +24,8 @@
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
+                    <label class="form-check-label me-2" for="cbAll">Mostrar ya calificados:</label>
+                    <input type="checkbox" id="cbAll" name="all" value="1" class="form-check-input ms-auto" />
                 </form>
             </div>
             <template id="actionButtonTemplate">

@@ -30,7 +30,7 @@
                     @method('PUT') @csrf
                  <div class="col-4 d-flex flex-column align-items-center justify-content-be m-0 me-4 p-3 gap-3">
                      @if($alumno->persona->profile_pic_id != null)
-                    <img class="img-fluid rounded-circle" id="imgProfile" src="{{route('attachment.show.custom',[$alumno->persona->profile_pic_id, 300,300])}}" alt="Foto Default">
+                    <img class="img-fluid rounded-circle" id="imgProfile" src="{{route('attachment.show.custom',[$alumno->persona->profile_pic_id, 512,512])}}" alt="Foto Default">
                     @else
                     <img class="img-fluid rounded-circle" id="imgProfile" src="https://img.freepik.com/free-icon/user_318-875902.jpg" alt="Foto Default">
                     @endif

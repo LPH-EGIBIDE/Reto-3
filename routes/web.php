@@ -112,6 +112,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/alumnos/create', [App\Http\Controllers\AlumnoController::class, 'create'])->name('alumno.create');
         Route::post('/alumnos', [App\Http\Controllers\AlumnoController::class, 'store'])->name('alumno.store');
         Route::put('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'update'])->name('alumno.update')->whereNumber('id');
+        Route::get('/alumnos/search', [App\Http\Controllers\AlumnoController::class, 'search'])->name('alumno.search');
 
         Route::get('/familias/api/listado', [App\Http\Controllers\FamiliaController::class, 'listado'])->name('familia.api.listado');
         Route::get('/familias/create', [App\Http\Controllers\FamiliaController::class, 'create'])->name('familia.create');
