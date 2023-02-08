@@ -1,3 +1,4 @@
+
 <div class="container d-flex flex-column justify-content-evenly">
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center gap-2">
@@ -56,43 +57,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="card mb-4">
-        <div class="card-header d-flex align-items-center gap-2">
-            <h5 class="my-auto text-primary fs-3">Alumnos coordinador</h5>
-        </div>
-        <div class="card-body bg-light table-responsive">
-            <table class="table">
-                <thead class="text-primary">
-                <tr>
-                    <th scope="col" class="border-dark">Nombre</th>
-                    <th scope="col" class="border-dark">Apellido</th>
-                    <th scope="col" class="border-dark">DNI</th>
-                    <th scope="col" class="border-dark">Empresa</th>
-                    <th scope="col" class="border-dark">Correo</th>
-                    <th scope="col" class="border-dark">Acciones</th>
-                </tr>
-                </thead>
-                <tbody id="itemTable">
-                @for($i = 0; $i < 5; $i++)
-                    <tr class="loading-skeleton">
-                        <td><p>Mireille</p></td>
-                        <td><p>Marvin</p></td>
-                        <td><p>12345678A/p></td>
-                        <td><p>Deckow, Runolfsson and Jaskolski</p></td>
-                        <td><p>hershel.heidenreich@example.net</p></td>
-                        <td><p>Hola mama</p></td>
-                    </tr>
-                @endfor
-                </tbody>
-            </table>
-            <p id="noItems"  class="text-center d-none">No tiene alumnos a su cargo</p>
-        </div>
-        <div class="card-footer d-flex justify-content-end">
-            <a href="{{route('alumno.index')}}">
-                <button class="btn btn-success">Ver todos</button>
-            </a>
         </div>
     </div>
 </div>

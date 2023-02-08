@@ -2,16 +2,12 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between p-3">
             <h5 class="my-auto text-primary fs-3">Lista de alumnos</h5>
+            @can('is_coordinador')
+            <form action="{{ route('alumno.api.listado.coordinador') }}" method="get" id="filterForm">
+            @else
             <form action="{{ route('alumno.api.listado') }}" method="get" id="filterForm">
+            @endcan
                 <input type="hidden" name="page" id="pageForm" value="1">
-            <div class="input-group ml-auto w-auto">
-                <div class="form-outline">
-                    <input type="search" id="form1" name="filtro" class="form-control" placeholder="Buscar"/>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
             </form>
         </div>
         <div class="card-body bg-light table-responsive">
@@ -39,15 +35,21 @@
                     @endfor
                 </tbody>
             </table>
-            <p id="noItems"  class="text-center d-none">No hay alumnos que coincidan</p>
+            <p id="noItems"  class="text-center d-none">No hay alumnos que mostrar</p>
         </div>
         <div class="card-footer">
          <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end my-auto">
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        @can('is_coordinador')
+                            <a class="page-link" href="{{route('alumno.index.coordinador')}}">
+                                Ver mas...
+                            </a>
+                        @else
+                        <a class="page-link" href="{{route('alumno.index')}}">
                             Ver mas...
                         </a>
+                        @endcan
                     </li>
                 </ul>
             </nav>

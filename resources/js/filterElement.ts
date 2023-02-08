@@ -1,13 +1,17 @@
 //Gets a form called filterForm and a table called itemTable and makes a query to the action endpoint with the form data
 //and then replaces the table with the new data.
 //TypeScript
-
+let paginationActive = true;
 function filterElement(filterForm: HTMLFormElement, itemTable: HTMLTableSectionElement) {
     let formData = new FormData(filterForm);
     let url = filterForm.action;
     let xhr = new XMLHttpRequest();
-    let pageInput = document.getElementById('page') as HTMLLinkElement;
-    let pageHidden = document.getElementById('pageForm') as HTMLInputElement;
+    let pageInput: HTMLLinkElement;
+    let pageHidden: HTMLInputElement;
+    if (paginationActive) {
+        pageInput = document.getElementById('page') as HTMLLinkElement;
+        pageHidden = document.getElementById('pageForm') as HTMLInputElement;
+    }
     const queryString = new URLSearchParams((<string[][] | Record<string, string> | string | URLSearchParams>formData));
     url += '?' + queryString.toString();
     xhr.open('GET', url, true);
@@ -15,8 +19,10 @@ function filterElement(filterForm: HTMLFormElement, itemTable: HTMLTableSectionE
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             let data = JSON.parse(xhr.responseText);
-            pageInput.innerText = data.page.toString();
-            pageHidden.value = pageInput.innerText;
+            if (paginationActive) {
+                pageInput.innerText = data.page.toString();
+                pageHidden.value = pageInput.innerText;
+            }
             if (data.page <= Math.ceil(data.total / data.per_page)) {
                 if (data.data.length > 0) {
                     itemTable.innerHTML = generateTableRows(data.data);
@@ -34,11 +40,13 @@ function filterElement(filterForm: HTMLFormElement, itemTable: HTMLTableSectionE
 
 function generateTableRows(items: object[]): string{
     let tableRows = '';
-    for (let i = 0; i < items.length; i++) {
+    let totalItems = paginationActive ? items.length : 4;
+    for (let i = 0; i < totalItems; i++) {
         let item = items[i];
         let row = document.createElement('tr');
         row.classList.add('align-middle');
-        for (let n = 0; n < Object.keys(item).length; n++) {
+
+        for (let n = 0; n < Object.keys(item).length ; n++) {
             let key = Object.keys(item)[n];
             if (n === 0) {
                 let cell = document.createElement('th');
@@ -81,10 +89,17 @@ function generateTableRows(items: object[]): string{
 function initFilterElement() {
     let filterForm = document.getElementById('filterForm') as HTMLFormElement;
     let itemTable = document.getElementById('itemTable') as HTMLTableSectionElement;
-    let nextButton = document.getElementById('nextPage') as HTMLLinkElement;
-    let previousButton = document.getElementById('previousPage') as HTMLLinkElement;
-    nextButton.addEventListener('click', nextPage);
-    previousButton.addEventListener('click', previousPage);
+
+    try{
+        let nextButton = document.getElementById('nextPage') as HTMLLinkElement;
+        let previousButton = document.getElementById('previousPage') as HTMLLinkElement;
+        nextButton.addEventListener('click', nextPage);
+        previousButton.addEventListener('click', previousPage);
+    } catch (e) {
+        console.log("No pagination buttons found");
+        paginationActive = false;
+    }
+
     //On form element change keyup or change
     filterForm.addEventListener('change', function () {
         onFilterChange(filterForm, itemTable);

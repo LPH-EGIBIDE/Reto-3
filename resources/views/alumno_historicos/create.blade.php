@@ -19,7 +19,9 @@
                         @csrf
                         <div class="row mb-2">
                             <div class="col-6">
+
                                 <label for="filtro" class="form-label">Alumno</label>
+                                <input readonly type="text" class="form-control" list="alumnoList" id="alumnoInputText" style="display: none;"  autocomplete="off">
                                 <input name="alumno_id" class="form-control" list="alumnoList" id="filtro" placeholder="Buscar" autocomplete="off">
                                 <datalist id="alumnoList"></datalist>
                             </div>

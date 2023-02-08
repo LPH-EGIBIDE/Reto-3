@@ -1,17 +1,9 @@
-@extends('layouts.app')
+
 
 @section('scripts')
     @vite('resources/js/filterElement.ts')
 @endsection
 
-@section('navbar')
-    @include('navbar')
-@endsection
+@include('facilitador_centro.coordinador.graphs');
 
-@section('content')
-
-    @include('facilitador_centro.coordinador.graphs');
-
-    @include('alumno.smallList');
-
-@endsection
+@include('alumno.smallList');

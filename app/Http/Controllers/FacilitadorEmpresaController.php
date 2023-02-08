@@ -59,7 +59,7 @@ class FacilitadorEmpresaController extends Controller
         $persona->tipo = 'facilitador_empresa';
         if ($request->hasFile('profile_image')) {
             $file = $request->file('profile_image');
-            $attachment = (new AttachmentController())->store($file, 'profile_image');
+            $attachment = (new AttachmentController())->store($file, true);
             $persona->profile_pic_id = $attachment->id;
         }
         $persona->save();
@@ -149,7 +149,7 @@ class FacilitadorEmpresaController extends Controller
         $facilitadorEmpresa->empresa_id = $request->id_empresa;
         if ($request->hasFile('profile_image')) {
             $file = $request->file('profile_image');
-            $attachment = (new AttachmentController())->store($file, 'profile_image');
+            $attachment = (new AttachmentController())->store($file, true);
             if ($facilitadorEmpresa->persona->profile_pic_id) {
                 $old_attachment = Attachment::findOrFail($facilitadorEmpresa->persona->profile_pic_id);
                 $old_attachment->delete();

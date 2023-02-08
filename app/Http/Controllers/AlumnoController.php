@@ -63,7 +63,7 @@ class AlumnoController extends Controller
         $persona->tipo = 'alumno';
         if ($request->hasFile('profile_image')) {
             $file = $request->file('profile_image');
-            $attachment = (new AttachmentController())->store($file, 'profile_image');
+            $attachment = (new AttachmentController())->store($file, true);
             $persona->profile_pic_id = $attachment->id;
         }
         $persona->save();
@@ -158,7 +158,7 @@ class AlumnoController extends Controller
         $alumno->persona->telefono = $request->telefono;
         if ($request->hasFile('profile_image')) {
             $file = $request->file('profile_image');
-            $attachment = (new AttachmentController())->store($file, 'profile_image');
+            $attachment = (new AttachmentController())->store($file, true);
             if ($alumno->persona->profile_pic_id) {
                 $old_attachment = Attachment::findOrFail($alumno->persona->profile_pic_id);
                 $old_attachment->delete();
