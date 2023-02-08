@@ -60,9 +60,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
 
 //Rutas de los facilitadores de empresa
     Route::middleware(['can:facilitador_empresa'])->group(function () {
-        Route::get('/facilitador-empresa', function () {
-            return "Protected routes for facilitador_empresa";
-        });
+
     });
 
 //Rutas de los alumnos
@@ -79,7 +77,6 @@ Route::middleware(['auth', '2fa'])->group(function () {
 
 //Rutas de los coordinadores
     Route::middleware(['can:is_coordinador'])->group(function () {
-
 
         Route::get('/facilitadores-centro/create', [App\Http\Controllers\FacilitadorCentroController::class, 'create'])->name('facilitador-centro.create');
         Route::get('/facilitadores-centro/api/listado', [App\Http\Controllers\FacilitadorCentroController::class, 'listado'])->name('facilitador-centro.api.listado');
@@ -146,6 +143,9 @@ Route::middleware(['auth', '2fa'])->group(function () {
         //Rutas de vista de alumnos
         Route::get('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'show'])->name('alumno.show')->whereNumber('id');
         Route::get('/alumnos/calificar', [App\Http\Controllers\AlumnoController::class, 'calificarIndex'])->name('alumno.calificar.index');
+        Route::get('/alumnos/calificaciones/{id}', [App\Http\Controllers\CalificacionController::class, 'show'])->name('alumno.calificar.index')->whereNumber('id');
+        Route::get('/alumnos/calificar/{id}', [App\Http\Controllers\CalificacionController::class, 'edit'])->name('alumno.calificar')->whereNumber('id');
+        Route::post('/alumnos/calificar/{id}', [App\Http\Controllers\CalificacionController::class, 'store'])->name('alumno.calificar')->whereNumber('id');
         Route::get('/alumnos/api/calificar', [App\Http\Controllers\AlumnoController::class, 'filterCalificar'])->name('alumno.api.calificar');
         //Rutas de vista de cursos
         Route::get('/cursos/{id}', [App\Http\Controllers\CursoController::class, 'show'])->name('curso.show')->whereNumber('id');

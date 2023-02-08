@@ -10,6 +10,7 @@ class Calificacion extends Model {
     use HasFactory;
 
     protected $table = 'calificaciones';
+    protected $primaryKey = 'historico_id';
     protected $fillable = [
         'calificaciones_practicas',
         'calificaciones_teoricas'
