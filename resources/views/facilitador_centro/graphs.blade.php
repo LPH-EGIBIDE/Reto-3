@@ -1,4 +1,4 @@
-<div class="container d-flex justify-content-center graphs-card">
+<div class="container d-flex justify-content-center w-100">
     <div class="card ">
       <div class="card-body bg-light">
         <p>GRAFICO 1</p>
@@ -6,7 +6,7 @@
            <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 10%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
            </div>
     </div>
-        
+
       </div>
   </div>
   <div class="card">
@@ -16,7 +16,7 @@
            <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
            </div>
     </div>
-       
+
       </div>
   </div>
 </div>
