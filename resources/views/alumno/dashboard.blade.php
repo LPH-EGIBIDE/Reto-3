@@ -35,10 +35,10 @@
                                         <li class="list-group-item">Email: {{$persona->user->email}}</li>
                                         <li class="list-group-item">Grado: {{$persona->informacion->alumnoHistorico->last()->grado->nombre}}</li>
                                         <li class="list-group-item">Curso: {{$persona->informacion->alumnoHistorico->last()->curso->nombre}}</li>
-                                        @if(empty($persona->informacion->alumnoHistorico->last()->empresa))
+                                        @if(empty($persona->informacion->alumnoHistorico->last()->facilitadorEmpresa))
                                             <li class="list-group-item">Dual: No</li>
                                         @else
-                                            <li class="list-group-item">Empresa: {{$persona->informacion->alumnoHistorico->last()->empresa->nombre}}</li>
+                                            <li class="list-group-item">Empresa: {{$persona->informacion->alumnoHistorico->last()->facilitadorEmpresa->empresa->nombre}}</li>
                                         @endif
                                     </ul>
                                 </td>

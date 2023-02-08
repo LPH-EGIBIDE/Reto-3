@@ -59,3 +59,10 @@ $color_2: #999;
     cursor: pointer;
     padding: 0;
 }
+
+#chattersList li {
+    &:hover {
+        cursor: pointer;
+        background: #f5f5f5;
+    }
+}

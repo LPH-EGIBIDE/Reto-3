@@ -3,6 +3,9 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h3 class="text-primary my-auto">Lista históricos</h3>
+            <a href="{{ route('alumnohistorico.create') }}" class="btn btn-primary me-1 me-lg-3">
+                <i class="fas fa-plus me-1"></i>Crear
+            </a>
         </div>
         <div class="card-body bg-light table-responsive">
             <table class="table text-center">
