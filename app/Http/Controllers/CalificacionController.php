@@ -163,6 +163,7 @@ class CalificacionController extends Controller
             'calificaciones_practicas' => $calificaciones_practicas,
             'calificaciones_teoricas' => $calificaciones_teoricas,
             'calificacion_total' => $calificacion_final,
+            'nombre_calificaciones' => ['Insuficiente', 'Suficiente', 'Bien', 'Notable', 'Sobresaliente', 'Sin calificar'],
             ]);
     }
 

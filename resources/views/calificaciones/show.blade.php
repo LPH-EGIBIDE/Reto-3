@@ -23,48 +23,48 @@
                                         <td class="fw-bold">Esfuerzo y regularidad</td>
                                         <td>
                                             <label
-                                                id="esfuerzo">{{$calificaciones_teoricas['seguimiento'] ?? "Sin datos"}}</label>
+                                                id="esfuerzo">{{$nombre_calificaciones[$calificaciones_teoricas['seguimiento'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Orden, estructura y presentación</td>
                                         <td>
                                             <label
-                                                id="orden">{{$calificaciones_teoricas['orden'] ?? "Sin datos"}}</label>
+                                                id="orden">{{$nombre_calificaciones[$calificaciones_teoricas['orden'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Contenido</td>
                                         <td>
                                             <label
-                                                id="contenido">{{$calificaciones_teoricas['contenido'] ?? "Sin datos"}}</label>
+                                                id="contenido">{{$nombre_calificaciones[$calificaciones_teoricas['contenido'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Terminología y notación</td>
                                         <td>
                                             <label
-                                                id="notacion">{{$calificaciones_teoricas['terminologia'] ?? "Sin datos"}}</label>
+                                                id="notacion">{{$nombre_calificaciones[$calificaciones_teoricas['terminologia'] ?? 5]}}</label>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Calidad en el trabajo</td>
                                         <td>
                                             <label
-                                                id="calidadTrabajo">{{$calificaciones_teoricas['calidad'] ?? "Sin datos"}}</label>
+                                                id="calidadTrabajo">{{$nombre_calificaciones[$calificaciones_teoricas['calidad'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Relaciona conceptos</td>
                                         <td>
                                             <label
-                                                id="relacionar">{{$calificaciones_teoricas['conceptos'] ?? "Sin datos"}}</label>
+                                                id="relacionar">{{$nombre_calificaciones[$calificaciones_teoricas['conceptos'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Reflexión sobre el aprendizaje</td>
                                         <td>
                                             <label
-                                                id="reflexion">{{$calificaciones_teoricas['reflexion'] ?? "Sin datos"}}</label>
+                                                id="reflexion">{{$nombre_calificaciones[$calificaciones_teoricas['reflexion'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                 </table>
@@ -82,61 +82,61 @@
                                         <td class="fw-bold">Actitud y disposición para el trabajo</td>
                                         <td>
                                             <label
-                                                id="actitud">{{$calificaciones_practicas['actitud'] ?? "Sin datos"}}</label>
+                                                id="actitud">{{$nombre_calificaciones[$calificaciones_practicas['actitud'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Puntualidad</td>
                                         <td>
-                                            <label id="puntual">{{$calificaciones_practicas['puntualidad'] ?? "Sin datos"}}</label>
+                                            <label id="puntual">{{$nombre_calificaciones[$calificaciones_practicas['puntualidad'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Responsabilidad</td>
                                         <td>
-                                            <label id="responsabilidad">{{$calificaciones_practicas['responsabilidad'] ?? "Sin datos"}}</label>
+                                            <label id="responsabilidad">{{$nombre_calificaciones[$calificaciones_practicas['responsabilidad'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Capacidad de resolución de problemas</td>
                                         <td>
-                                            <label id="resolucion">{{$calificaciones_practicas['capacidad_resolucion'] ?? "Sin datos"}}</label>
+                                            <label id="resolucion">{{$nombre_calificaciones[$calificaciones_practicas['capacidad_resolucion'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Calidad en el trabajo</td>
                                         <td>
-                                            <label id="calidad">{{$calificaciones_practicas['calidad_trabajo'] ?? "Sin datos"}}</label>
+                                            <label id="calidad">{{$nombre_calificaciones[$calificaciones_practicas['calidad_trabajo'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Implicación e integración en el equipo</td>
                                         <td>
-                                            <label id="instegracion">{{$calificaciones_practicas['implicación'] ?? "Sin datos"}}</label>
+                                            <label id="instegracion">{{$nombre_calificaciones[$calificaciones_practicas['implicación'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Toma de decisiones</td>
                                         <td>
-                                            <label id="decisiones">{{$calificaciones_practicas['decisiones'] ?? "Sin datos"}}</label>
+                                            <label id="decisiones">{{$nombre_calificaciones[$calificaciones_practicas['decisiones'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Capacidad de comunicación oral y escrita</td>
                                         <td>
-                                            <label id="escrita">{{$calificaciones_practicas['capacidad_oral'] ?? "Sin datos"}}</label>
+                                            <label id="escrita">{{$nombre_calificaciones[$calificaciones_practicas['capacidad_oral'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Capacidad de planificación y organización</td>
                                         <td>
-                                            <label id="organizacion">{{$calificaciones_practicas['capacidad_planificacion'] ?? "Sin datos"}}</label>
+                                            <label id="organizacion">{{$nombre_calificaciones[$calificaciones_practicas['capacidad_planificacion'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Capacidad de aprendizaje y asimilación</td>
                                         <td>
-                                            <label id="asimilacion">{{$calificaciones_practicas['capacidad_aprendizaje'] ?? "Sin datos"}}</label>
+                                            <label id="asimilacion">{{$nombre_calificaciones[$calificaciones_practicas['capacidad_aprendizaje'] ?? 5]}}</label>
                                         </td>
                                     </tr>
                                 </table>
