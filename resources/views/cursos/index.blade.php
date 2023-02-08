@@ -14,17 +14,22 @@
             <div class="card-header d-flex align-items-center justify-content-between p-3">
                 <h5 class="my-auto text-primary fs-4 d-none d-md-block">Lista de cursos</h5>
                 <p class="my-auto fw-bold text-primary d-md-none">Cursos</p>
-                <form action="{{ route('cursos.api.listado') }}" method="get" id="filterForm">
-                    <input type="hidden" name="page" id="pageForm" value="1">
-                    <div class="input-group ml-auto w-auto d-flex flex-row">
-                        <div class="form-outline">
-                            <input type="search" id="form1" name="filtro" class="form-control" placeholder="Buscar"/>
+                <div class="d-flex">
+                    <a href="{{ route('curso.create') }}" class="btn btn-primary me-1 me-lg-3">
+                        <i class="fas fa-plus me-1"></i>Crear
+                    </a>
+                    <form action="{{ route('cursos.api.listado') }}" method="get" id="filterForm">
+                        <input type="hidden" name="page" id="pageForm" value="1">
+                        <div class="input-group ml-auto w-auto d-flex flex-row">
+                            <div class="form-outline">
+                                <input type="search" id="form1" name="filtro" class="form-control" placeholder="Buscar"/>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
             <div class="card-body bg-light overflow-hidden">
                 <table class="table table-responsive">

@@ -16,10 +16,20 @@
         <div class="card-header d-flex align-items-center justify-content-between p-3">
 
             @if($coordinador_view)
-                <h5 class="my-auto text-primary fs-3">Alumnos coordinador</h5>
+                <h5 class="my-auto text-primary fs-4 d-none d-lg-block">Alumnos coordinador</h5>
+                <p class="my-auto fw-bold text-primary d-lg-none">Alumnos coord.</p>
+                <div class="d-flex">
+                    <a href="{{ route('grado.create') }}" class="btn btn-primary me-1 me-lg-3">
+                        <i class="fas fa-plus me-1"></i>Crear
+                    </a>
                 <form action="{{ route('alumno.api.listado.coordinador') }}" method="get" id="filterForm">
             @else
-                <h5 class="my-auto text-primary fs-3">Lista de alumnos</h5>
+                <h5 class="my-auto text-primary fs-4 d-none d-lg-block">Lista de alumnos</h5>
+                <p class="my-auto fw-bold text-primary d-lg-none">Mis alumnos</p>
+                <div class="d-flex">
+                <a href="{{ route('grado.create') }}" class="btn btn-primary me-1 me-lg-3">
+                    <i class="fas fa-plus me-1"></i>Crear
+                </a>
                 <form action="{{ route('alumno.api.listado') }}" method="get" id="filterForm">
             @endif
                 <input type="hidden" name="page" id="pageForm" value="1">
@@ -32,6 +42,7 @@
                 </button>
             </div>
             </form>
+          </div>
         </div>
         <div class="card-body bg-light table-responsive">
             <table class="table">

@@ -13,8 +13,12 @@
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between p-3">
                 <h5 class="my-auto text-primary fs-4 d-none d-lg-block">Lista de facilitadores de empresa</h5>
-                <p class="my-auto fw-bold text-primary d-lg-none">Fac. de empresa</p>
-                <form action="{{route('facilitador-empresa.api.listado')}}" method="get" id="filterForm">
+                <p class="my-auto fw-bold text-primary d-lg-none">Fac. empresa</p>
+                <div class="d-flex">
+                    <a href="{{ route('facilitador-empresa.create') }}" class="btn btn-primary me-1 me-lg-3">
+                        <i class="fas fa-plus me-1"></i>Crear
+                    </a>
+                    <form action="{{route('facilitador-empresa.api.listado')}}" method="get" id="filterForm">
                     <input type="hidden" name="page" id="pageForm" value="1">
                     <div class="input-group ml-auto w-auto d-flex flex-row">
                         <div class="form-outline">
@@ -25,6 +29,7 @@
                         </button>
                     </div>
                 </form>
+                </div>
             </div>
             <div class="card-body bg-light">
                 <table class="table">

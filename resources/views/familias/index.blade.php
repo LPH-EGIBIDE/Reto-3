@@ -13,8 +13,13 @@
         @include('alerts')
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between p-3">
-                <h5 class="my-auto text-primary fs-3">Lista de familias</h5>
-                <form action="{{ route('familia.api.listado') }}" method="get" id="filterForm">
+                <h5 class="my-auto text-primary fs-4 d-none d-lg-block">Lista de familias</h5>
+                <p class="my-auto fw-bold text-primary d-lg-none">Familias</p>
+                <div class="d-flex">
+                    <a href="{{ route('familia.create') }}" class="btn btn-primary me-1 me-lg-3">
+                        <i class="fas fa-plus me-1"></i>Crear
+                    </a>
+                    <form action="{{ route('familia.api.listado') }}" method="get" id="filterForm">
                     <input type="hidden" name="page" id="pageForm" value="1">
                     <div class="input-group ml-auto w-auto">
                         <div class="form-outline">
@@ -25,6 +30,7 @@
                         </button>
                     </div>
                 </form>
+                </div>
             </div>
             <div class="card-body bg-light overflow-hidden">
                 <table class="table table-responsive">
