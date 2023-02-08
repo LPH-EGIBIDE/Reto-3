@@ -27,11 +27,13 @@
                     </li>
                 @endcan
 
-
                 @can('alumno')
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('cuaderno.index')}}"><i class="fa-regular fa-notebook pe-2"></i>Cuaderno Equipo</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('alumno.calificaciones')}}"><i class="fa-regular fa-user-graduate pe-2"></i>Calificaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('cuaderno.index')}}"><i class="fa-regular fa-notebook pe-2"></i>Cuaderno Equipo</a>
+                    </li>
                 @endcan
 
                 @can('facilitador_empresa')

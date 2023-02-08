@@ -134,6 +134,10 @@ class CalificacionController extends Controller
         session()->flash('message', 'Calificaciones practicas guardadas correctamente');
     }
 
+    public function showAlumno() {
+        return $this->show(auth()->user()->persona_id);
+    }
+
     /**
      * Display the specified resource.
      *

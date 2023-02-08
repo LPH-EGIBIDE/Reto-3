@@ -72,7 +72,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/alumno', function () {
             return "Protected routes for alumno";
         });
-        Route::get('/calificaciones', [App\Http\Controllers\CalificacionController::class, 'show'])->name('alumno.calificaciones');
+        Route::get('/calificaciones', [App\Http\Controllers\CalificacionController::class, 'showAlumno'])->name('alumno.calificaciones');
         Route::get('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'index'])->name('cuaderno.index');
         Route::put('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'update'])->name('cuaderno.update');
         Route::get('/cuaderno/api/semana', [App\Http\Controllers\CuadernoPracticasController::class, 'show'])->name('cuaderno.api.semana');
