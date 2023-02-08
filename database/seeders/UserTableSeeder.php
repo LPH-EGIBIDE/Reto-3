@@ -29,7 +29,7 @@ class UserTableSeeder extends Seeder
 
         foreach ($personas as $persona) {
             \App\Models\User::factory()->create([
-                'password' => bcrypt('12345Abcde'),
+                'password' => bcrypt('admin'),
                 'persona_id' => $persona->id,
                 'email_verified_at' => now()
             ]);
@@ -68,8 +68,8 @@ class UserTableSeeder extends Seeder
 
 
                 $user = \App\Models\User::factory()->create([
-                    'email' => 'damian.romero@ikasle.egibide.org',
-                    'password' => bcrypt('lphadmin12345Abcde'),
+                    'email' => 'alex.cortes@ikasle.egibide.org',
+                    'password' => bcrypt('admin'),
                     'persona_id' => $admin->id,
                     'email_verified_at' => now()
                 ]);
