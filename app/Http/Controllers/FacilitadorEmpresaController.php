@@ -190,7 +190,9 @@ class FacilitadorEmpresaController extends Controller
             ->where('personas.nombre', "like", "%".$request->filtro."%")
             ->select( 'personas.nombre', 'apellido', 'dni', "personas.telefono", "empresas.nombre as empresa" , "personas.id as url");
         $total = $facilitadoresEmpresa->count();
-        $facilitadoresEmpresa = $facilitadoresEmpresa->offset($offset)->limit($perPage)->get();
+        $facilitadoresEmpresa = $facilitadoresEmpresa->offset($offset)->limit($perPage)
+            ->orderBy('personas.nombre', 'asc')
+            ->get();
 
         $facilitadoresEmpresa->map(function($facilitadorEmpresa){
             $facilitadorEmpresa->url = route('facilitador-empresa.show', $facilitadorEmpresa->url, false);

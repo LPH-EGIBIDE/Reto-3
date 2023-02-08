@@ -28,7 +28,9 @@ class CursoController extends Controller
         $perPage = 10;
         $offset = ($page - 1) * $perPage;
 
-        $cursos = Curso::where('nombre', "like", "%".$request->filtro."%")->offset($offset)->limit($perPage)->select( 'nombre', 'fecha_inicio', 'fecha_fin', "id as url");
+        $cursos = Curso::where('nombre', "like", "%".$request->filtro."%")->offset($offset)->limit($perPage)
+            ->select( 'nombre', 'fecha_inicio', 'fecha_fin', "id as url")
+            ->orderBy('nombre', 'asc');
         $total = $cursos->count();
         $cursos = $cursos->get();
 

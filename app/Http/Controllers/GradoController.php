@@ -35,7 +35,9 @@ class GradoController extends Controller
             ->leftJoin('familias', 'familias.id', '=', 'grados.familia_id')
             ->leftJoin('personas', 'personas.id', '=', 'grados.coordinador_id');
         $total = $grados->count();
-        $grados = $grados->offset($offset)->limit($perPage)->select( 'grados.nombre as nombre', 'familias.nombre as familia', 'personas.nombre as coordinador', 'grados.id as url')->get();
+        $grados = $grados->offset($offset)->limit($perPage)->select( 'grados.nombre as nombre', 'familias.nombre as familia', 'personas.nombre as coordinador', 'grados.id as url')
+            ->orderBy('grados.nombre', 'asc')
+            ->get();
 
         $grados->map(function($grado){
             $grado->url = route('grado.show', $grado->url, false);

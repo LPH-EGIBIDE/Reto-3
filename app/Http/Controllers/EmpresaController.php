@@ -33,6 +33,7 @@ class EmpresaController extends Controller
         $total = $empresas->count();
         $empresas = $empresas->offset($offset)->limit($perPage)
             ->select( 'cif', 'nombre', 'area', 'id as url')
+            ->orderBy('nombre', 'asc')
             ->get();
 
         $empresas->map(function($empresa){

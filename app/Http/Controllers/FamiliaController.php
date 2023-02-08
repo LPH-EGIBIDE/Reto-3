@@ -30,7 +30,9 @@ class FamiliaController extends Controller
 
         $familias = Familia::where('nombre', 'like', '%'.$request->filtro.'%');
         $total = $familias->count();
-        $familias = $familias->offset($offset)->limit($perPage)->select('nombre', 'id as url')->get();
+        $familias = $familias->offset($offset)->limit($perPage)->select('nombre', 'id as url')
+            ->orderBy('nombre', 'asc')
+            ->get();
 
         $familias->map(function($familia){
             $familia->url = route('familia.show', $familia->url, false);

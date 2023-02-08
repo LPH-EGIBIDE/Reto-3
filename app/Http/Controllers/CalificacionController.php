@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CalificacionesMail;
 use App\Models\Alumno;
 use App\Models\AlumnoHistorico;
 use App\Models\Calificacion;
 use App\Models\Curso;
+use App\Models\Notificacion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CalificacionController extends Controller
 {
@@ -58,6 +61,12 @@ class CalificacionController extends Controller
                 $this->storeFacilitadorEmpresa($calificacion, $alumno, $request);
                 break;
         }
+        if (!empty($calificacion->calificaciones_practicas) && !empty($calificacion->calificaciones_teoricas)){
+            Mail::to($alumno->persona->user->email)->send(new CalificacionesMail("Calificaciones publicadas", $alumno->persona));
+            $notificacion = new Notificacion();
+
+        }
+
         return redirect()->route('alumno.calificar.index', ['id' => $alumno->persona_id]);
     }
 

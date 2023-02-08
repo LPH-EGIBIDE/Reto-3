@@ -178,7 +178,9 @@ class FacilitadorCentroController extends Controller
             ->where('nombre', "like", "%".$request->filtro."%")
             ->select( 'nombre', 'apellido', 'dni', "telefono", "personas.id as url");
         $total = $facilitadoresCentro->count();
-        $facilitadoresCentro = $facilitadoresCentro->offset($offset)->limit($perPage)->get();
+        $facilitadoresCentro = $facilitadoresCentro->offset($offset)->limit($perPage)
+            ->orderBy('personas.nombre', 'asc')
+            ->get();
 
         $facilitadoresCentro->map(function($facilitadorCentro){
             $facilitadorCentro->url = route('facilitador-centro.show', $facilitadorCentro->url, false);

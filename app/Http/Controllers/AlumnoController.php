@@ -237,6 +237,7 @@ class AlumnoController extends Controller
         $total = $alumnos->count();
         $paginated = $alumnos->offset($offset)->limit($perPage)
             ->select('personas.nombre', 'personas.apellido', 'personas.dni', 'empresas.nombre as empresa', 'users.email', 'personas.id as url')
+            ->orderBy('personas.nombre', 'asc')
             ->get();
         //Replace persona_id with the route to the show view without using foreach
 
@@ -273,7 +274,7 @@ class AlumnoController extends Controller
                 $query->whereRaw('CONCAT(nombre, " ", apellido) like "%'.$request->filtro.'%"')
                     ->orWhere('dni', 'like', '%'.$request->filtro.'%');
             })
-            ->select('id', 'nombre', 'apellido')->get();
+            ->select('id', 'nombre', 'apellido')->orderBy('nombre')->get();
 
         array_map(function($alumno){
             $alumno->nombre = $alumno->nombre . ' ' . $alumno->apellido;
@@ -342,7 +343,8 @@ class AlumnoController extends Controller
             $query->whereRaw('CONCAT(personas.nombre, " ", personas.apellido) like "%'.$request->filtro.'%"')
                 ->orWhere('personas.dni', 'like', '%'.$request->filtro.'%');
         })
-            ->select('personas.nombre', 'personas.apellido', 'personas.dni', 'empresas.nombre as empresa', 'personas.id as url');
+            ->select('personas.nombre', 'personas.apellido', 'personas.dni', 'empresas.nombre as empresa', 'personas.id as url')
+            ->orderBy('personas.nombre', 'asc');
 
         $total = $alumnos->count();
 
