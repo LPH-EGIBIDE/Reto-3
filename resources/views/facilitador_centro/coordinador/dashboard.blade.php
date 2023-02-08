@@ -1,5 +1,17 @@
-<h1>TODO: Dashboard coordinador</h1>
+@extends('layouts.app')
 
-@include('facilitador_centro.coordinador.graphs');
+@section('scripts')
+    @vite('resources/js/filterElement.ts')
+@endsection
 
-@include('alumno.index');
+@section('navbar')
+    @include('navbar')
+@endsection
+
+@section('content')
+
+    @include('facilitador_centro.coordinador.graphs');
+
+    @include('alumno.smallList');
+
+@endsection

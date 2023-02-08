@@ -1,3 +1,11 @@
+
+@extends('layouts.app')
+
+@section('navbar')
+    @include('navbar')
+@endsection
+
+@section('content')
 <div class="container">
     <div class="card mb-3">
         <div class="card-header d-flex align-items-center gap-2">
@@ -77,3 +85,6 @@
         </div>
     </div>
 </div>
+@endsection
+
+

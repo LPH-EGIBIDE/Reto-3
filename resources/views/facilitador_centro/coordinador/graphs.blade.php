@@ -1,4 +1,4 @@
-<div class="container d-flex justify-content-center ">
+<div class="container d-flex justify-content-center graphs-card">
     <div class="card card-facilitador">
       <div class="card-body bg-light">
         <p>GRAFICO 1</p>
