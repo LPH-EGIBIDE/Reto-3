@@ -26,7 +26,7 @@ class GradoSeeder extends Seeder
         $familia->nombre = 'Informática';
         $familia->save();
 
-        $adminUser = User::where('email', 'alex.cortes@ikasle.egibide.org')->first();
+        $adminUser = User::where('email', 'damian.romero@ikasle.egibide.org')->first();
         $admin = $adminUser->persona;
 
         $grado = new Grado();
