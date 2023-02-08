@@ -28,7 +28,7 @@
                         <td><p><span class="badge text-bg-{{$estados[$alumnoHistorico->estado]}}">{{ucfirst($alumnoHistorico->estado)}}</span></p></td>
                         @if($alumnoHistorico->curso == \App\Models\Curso::getActiveCurso())
                             <td class="d-flex flex-row align-items-center justify-content-center">
-                                <a href="#" class="btn btn-primary d-flex ">
+                                <a href="{{route('alumnohistorico.update', ["id" => $alumnoHistorico->id])}}" class="btn btn-primary d-flex ">
                                     <i class="fa-solid fa-pencil me-1"></i>
                                     <span class="d-none d-lg-block">Editar</span>
                                 </a>

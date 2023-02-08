@@ -1,11 +1,14 @@
 function fillDataset(data: object[]) {
     let dataset = document.getElementById('alumnoList') as HTMLDataListElement;
+    dataset.innerHTML = '';
     for (let item of data) {
         let option = document.createElement('option');
         option.value = item['id'];
         option.innerText = item['nombre'];
-        dataset.appendChild(option);
+        dataset.appendChild(option)
     }
+
+
 }
 
 function getAlumnos(filtro:string) {
@@ -19,7 +22,7 @@ function getAlumnos(filtro:string) {
 
 function init() {
     let input = document.getElementById('filtro') as HTMLInputElement;
-    input.addEventListener('keyup', function () {
+    input.addEventListener('keypress', function () {
         getAlumnos(input.value);
     });
 }

@@ -37,7 +37,7 @@
                                 <label for="facilitador_centro" class="form-label">Facilitador centro</label>
                                 <select name="facilitador_centro" class="form-select" aria-label="facilitador_centro">
                                     @foreach($listaFacilitadoresCentro as $facilitadorCentro)
-                                        <option value="{{$facilitadorCentro->persona_id}}">{{$facilitadorCentro->persona->nombre}}</option>
+                                        <option value="{{$facilitadorCentro->persona_id}}">{{$facilitadorCentro->persona->nombre}} {{$facilitadorCentro->persona->apellido}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -45,7 +45,7 @@
                                 <label for="facilitador_empresa" class="form-label">Facilitador empresa</label>
                                 <select name="facilitador_empresa" class="form-select" aria-label="facilitador_empresa">
                                     @foreach($listaFacilitadoresEmpresa as $facilitadorEmpresa)
-                                        <option value="{{$facilitadorEmpresa->persona_id}}">{{$facilitadorEmpresa->persona->nombre}}</option>
+                                        <option value="{{$facilitadorEmpresa->persona_id}}">{{$facilitadorEmpresa->persona->nombre}} {{$facilitadorEmpresa->persona->apellido}}</option>
                                     @endforeach
                                 </select>
                             </div>

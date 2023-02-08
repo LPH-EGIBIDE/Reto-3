@@ -27,9 +27,9 @@ class AlumnoHistoricoController extends Controller
      */
     public function create()
     {
-        $listaGrados = Grado::all();
-        $listaFacilitadoresCentro = FacilitadorCentro::all();
-        $listaFacilitadoresEmpresa = FacilitadorEmpresa::all();
+        $listaGrados = Grado::all()->sortBy('nombre');
+        $listaFacilitadoresCentro = FacilitadorCentro::all()->sortBy('persona.nombre');
+        $listaFacilitadoresEmpresa = FacilitadorEmpresa::all()->sortBy('persona.nombre');
 
         return view('alumno_historicos.create', compact(
             'listaGrados',
@@ -76,7 +76,13 @@ class AlumnoHistoricoController extends Controller
     public function show(int $id)
     {
         $alumnoHistorico = AlumnoHistorico::findOrFail($id);
-        return view('cursos.show', compact('alumnoHistorico'));
+        $listaGrados = Grado::all()->sortBy('nombre');
+        $listaFacilitadoresCentro = FacilitadorCentro::all()->sortBy('persona.nombre');
+        $listaFacilitadoresEmpresa = FacilitadorEmpresa::all()->sortBy('persona.nombre');
+        return view('alumno_historicos.update', compact('alumnoHistorico',
+            'listaGrados',
+            'listaFacilitadoresCentro',
+            'listaFacilitadoresEmpresa'));
     }
 
     /**
@@ -116,7 +122,14 @@ class AlumnoHistoricoController extends Controller
         $alumnoHistorico->save();
         //Set flash data with success message
         session()->flash('success', 'El alumno histórico se ha actualizado correctamente');
-        return redirect()->route('alumno.show', $alumnoHistorico->id);
+
+        $listaGrados = Grado::all()->sortBy('nombre');
+        $listaFacilitadoresCentro = FacilitadorCentro::all()->sortBy('persona.nombre');
+        $listaFacilitadoresEmpresa = FacilitadorEmpresa::all()->sortBy('persona.nombre');
+        return redirect()->route('alumno.show', compact(
+            'listaGrados',
+            'listaFacilitadoresCentro',
+            'listaFacilitadoresEmpresa'));
     }
 
     /**
