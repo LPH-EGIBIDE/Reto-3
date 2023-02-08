@@ -62,7 +62,7 @@
                         <textarea disabled class="form-control"  id="textAreaProblemas" rows="10" ></textarea>
                     </div>
                     <hr>
-                    <nav aria-label="Page navigation example" class="form-footer evaCSFormFooter">
+                    <nav aria-label="Page navigation example" class="form-footer d-flex justify-content-end">
                         <button type="submit" class="btn btn-success">Evaluar</button>
                     </nav>
                 </form>

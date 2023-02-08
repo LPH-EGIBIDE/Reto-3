@@ -1,16 +1,10 @@
-
-//Estilos para el formulario de cuaderno de practicas
-.ceForm, .evaCS> textarea{
+.evaCS> textarea{
     resize:none;
 }
-
 //Notificaciones
-
 $color_1: #333;
 $color_2: #999;
-.h-100vh {
-    height: 100vh !important;
-}
+
 .top-text-block {
     display: block;
     padding: 3px 20px;
@@ -20,6 +14,7 @@ $color_2: #999;
     white-space: inherit !important;
     border-bottom: 1px solid #f4f4f4;
     position: relative;
+    text-decoration: none;
     &:hover {
         &:before {
             content: '';
@@ -31,11 +26,16 @@ $color_2: #999;
             position: absolute;
         }
     }
-    .top-text-light {
+    .top-text-light, top-text-description {
         color: $color_2;
         font-size: 0.8em;
     }
 }
+
+.btn-noti {
+    color: $danger;
+}
+
 .top-text-block.unread {
     background: #ffc;
 }
@@ -52,25 +52,10 @@ $color_2: #999;
     width: 70vw !important;
     max-width: 400px;
 }
-.card-facilitador {
-    width: 100%;
-}
 
-//Estilos para el formulario de historico
-.form-historico > .row {
-    margin: 0.5rem
-}
-
-//Estilos para el formulario de cuaderno de practicas show
-.row-separation .row{
-    margin: 1rem;
-}
-  
-.evaCSFormFooter {
-    display: flex;
-    justify-content: end;
-}
-
-.graphs-card .card{
-    width: 100%;
+.dropdown-navbar {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
 }

@@ -13,11 +13,11 @@
         @include('alerts')
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
-                <div class="container row-separation">
-                    <div class="row">
+                <div class="container">
+                    <div class="row m-3">
                         <h2 class="my-auto text-primary">Cuaderno de seguimiento</h2>
                     </div>
-                    <div class="row align-items-center">
+                    <div class="row m-3 align-items-center">
                         <div class="col-6">
                             <p class="text-muted">{{$persona->nombre}} {{$persona->apellido}}</p>
                         </div>
@@ -62,7 +62,7 @@
                         <textarea class="form-control" id="textAreaProblemas" name="contenido_problemas" rows="10" ></textarea>
                     </div>
                     <hr>
-                    <nav aria-label="Page navigation example" class="form-footer evaCSFormFooter">
+                    <nav aria-label="Page navigation example" class="form-footer d-flex justify-content-end">
                         <button type="submit" class="btn btn-success">Guardar</button>
                     </nav>
                 </form>

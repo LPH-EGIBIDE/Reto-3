@@ -15,9 +15,9 @@
             </div>
             <div class="card-body">
                 <div class="container ">
-                    <form class="form-historico" action="{{route('alumnohistorico.store')}}" method="post">
+                    <form action="{{route('alumnohistorico.store')}}" method="post">
                         @csrf
-                        <div class="row mb-2">
+                        <div class="row m-2">
                             <div class="col-6">
                                 <label for="filtro" class="form-label">Alumno</label>
                                 <input name="alumno_id" class="form-control" list="alumnoList" id="filtro" placeholder="Buscar" autocomplete="off">
@@ -32,7 +32,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                        <div class="row m-2">
                             <div class="col-6">
                                 <label for="facilitador_centro" class="form-label">Facilitador centro</label>
                                 <select name="facilitador_centro" class="form-select" aria-label="facilitador_centro">
@@ -50,7 +50,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        <div class="row m-2 mb-3">
                             <div class="col-6">
                                 <label for="estado" class="form-label">Estado</label>
                                 <select name="estado" class="form-select" aria-label="estado">
