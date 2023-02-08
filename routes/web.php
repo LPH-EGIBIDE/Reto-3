@@ -151,7 +151,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
         //Rutas de vista de alumnos
         Route::get('/alumnos/{id}', [App\Http\Controllers\AlumnoController::class, 'show'])->name('alumno.show')->whereNumber('id');
         Route::get('/alumnos/calificar', [App\Http\Controllers\AlumnoController::class, 'calificarIndex'])->name('alumno.calificar.index');
-        Route::get('/alumnos/calificaciones/{id}', [App\Http\Controllers\CalificacionController::class, 'show'])->name('alumno.calificar.index')->whereNumber('id');
+        Route::get('/alumnos/calificaciones/{id}', [App\Http\Controllers\CalificacionController::class, 'show'])->name('alumno.calificar.show')->whereNumber('id');
         Route::get('/alumnos/calificar/{id}', [App\Http\Controllers\CalificacionController::class, 'edit'])->name('alumno.calificar')->whereNumber('id');
         Route::post('/alumnos/calificar/{id}', [App\Http\Controllers\CalificacionController::class, 'store'])->name('alumno.calificar')->whereNumber('id');
         Route::get('/alumnos/api/calificar', [App\Http\Controllers\AlumnoController::class, 'filterCalificar'])->name('alumno.api.calificar');

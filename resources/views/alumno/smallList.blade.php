@@ -43,11 +43,11 @@
                     <li class="page-item">
                         @can('is_coordinador')
                             <a class="page-link" href="{{route('alumno.index.coordinador')}}">
-                                Ver mas...
+                                Ver más...
                             </a>
                         @else
                         <a class="page-link" href="{{route('alumno.index')}}">
-                            Ver mas...
+                            Ver más...
                         </a>
                         @endcan
                     </li>

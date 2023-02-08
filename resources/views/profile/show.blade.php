@@ -49,9 +49,6 @@
                                                 @can('facilitador_empresa')
                                                     <li class="list-group-item">Empresa: {{$persona->informacion->alumnoHistorico->last()->facilitadorEmpresa->empresa->nombre}}</li>
                                                 @endcan
-                                                @can('is_coordinador')
-                                                    <li class="list-group-item">Grado: {{$persona->informacion->alumnoHistorico->last()->grado->nombre}}</li>
-                                                @endcan
                                             </ul>
                                         </td>
                                     </tr>

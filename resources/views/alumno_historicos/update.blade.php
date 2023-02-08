@@ -50,7 +50,8 @@
                                         <select name="estado" class="form-select" aria-label="estado">
                                             <option selected value="cursando">Cursando</option>
                                             <option value="finalizado">Finalizado</option>
-                                            <option value="repetido">Repetido</option>
+                                            <option value="suspendido">Suspendido</option>
+                                            <option value="abandonado">Abandonado</option>
                                         </select>
                                     </div>
                                 </div>
