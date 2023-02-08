@@ -1,7 +1,7 @@
 <div class="container d-flex justify-content-center w-100">
     <div class="card w-100">
     </div>
-      <div class="card" style=" height:30vh; width:80vw;" >
+      <div class="card" style=" height:30vh; width:50vw;" >
           <canvas id="chart_1"></canvas>
           <script>
             let ctx = document.getElementById('chart_1').getContext('2d');
