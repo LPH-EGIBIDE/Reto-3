@@ -124,4 +124,3 @@ function previousPage() {
 }
 
 window.addEventListener('load', initFilterElement);
-

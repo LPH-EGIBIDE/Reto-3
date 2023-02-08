@@ -30,7 +30,6 @@ class AlumnoHistorico extends Model {
     public function facilitadorEmpresa(): BelongsTo {
         return $this->belongsTo(FacilitadorEmpresa::class, 'facilitador_empresa');
     }
-
     public function cuadernosPracticas(): HasMany {
         return $this->hasMany(CuadernoPracticas::class, 'historico_id');
     }

@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumno;
 use App\Models\AlumnoHistorico;
+use App\Models\Curso;
+use App\Models\FacilitadorCentro;
+use App\Models\FacilitadorEmpresa;
+use App\Models\Grado;
 use Illuminate\Http\Request;
 
 class AlumnoHistoricoController extends Controller
@@ -12,15 +17,6 @@ class AlumnoHistoricoController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-
-        if ($user->persona->tipo === 'alumno') {
-            $alumno = $user->persona->alumno;
-            $historico = $alumno->historico;
-            return view('alumno.historico', compact('historico'));
-        } else {
-            return redirect()->route('home');
-        }
 
     }
 
@@ -31,7 +27,14 @@ class AlumnoHistoricoController extends Controller
      */
     public function create()
     {
-        return view('alumno_historicos.create');
+        $listaGrados = Grado::all();
+        $listaFacilitadoresCentro = FacilitadorCentro::all();
+        $listaFacilitadoresEmpresa = FacilitadorEmpresa::all();
+
+        return view('alumno_historicos.create', compact(
+            'listaGrados',
+            'listaFacilitadoresCentro',
+            'listaFacilitadoresEmpresa'));
     }
 
     /**
@@ -42,7 +45,26 @@ class AlumnoHistoricoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'alumno_id' => 'required|int',
+            'grado_id' => 'required|int',
+            'facilitador_centro' => 'required|int',
+            'facilitador_empresa' => 'required|int',
+            'estado' => 'required|string',
+        ]);
+
+        // Crear alumnoHistorico
+        $alumnoHistorico = new AlumnoHistorico();
+        $alumnoHistorico->alumno_id = $request->alumno_id;
+        $alumnoHistorico->curso_id = Curso::getActiveCurso()->id;
+        $alumnoHistorico->grado_id = $request->grado_id;
+        $alumnoHistorico->facilitador_centro = $request->facilitador_centro;
+        $alumnoHistorico->facilitador_empresa = $request->facilitador_empresa;
+        $alumnoHistorico->estado = $request->estado;
+        $alumnoHistorico->save();
+
+        session()->flash('message', 'Alumno histórico creado correctamente');
+        return redirect()->route('alumno.show', $alumnoHistorico->alumno_id);
     }
 
     /**
@@ -51,9 +73,10 @@ class AlumnoHistoricoController extends Controller
      * @param  \App\Models\AlumnoHistorico  $alumnoHistorico
      * @return \Illuminate\Http\Response
      */
-    public function show(AlumnoHistorico $alumnoHistorico)
+    public function show(int $id)
     {
-        //
+        $alumnoHistorico = AlumnoHistorico::findOrFail($id);
+        return view('cursos.show', compact('alumnoHistorico'));
     }
 
     /**
@@ -74,9 +97,26 @@ class AlumnoHistoricoController extends Controller
      * @param  \App\Models\AlumnoHistorico  $alumnoHistorico
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AlumnoHistorico $alumnoHistorico)
+    public function update(Request $request, int $id)
     {
-        //
+        $request->validate([
+            'alumno_id' => 'required|int|max:255',
+            'grado_id' => 'required|int',
+            'facilitador_centro' => 'required|int',
+            'facilitador_empresa' => 'required|int',
+            'estado' => 'required|string',
+        ]);
+
+        $alumnoHistorico = AlumnoHistorico::findOrFail($id);
+        $alumnoHistorico->alumno_id = $request->alumno_id;
+        $alumnoHistorico->grado_id = $request->grado_id;
+        $alumnoHistorico->facilitador_centro = $request->facilitador_centro;
+        $alumnoHistorico->facilitador_empresa = $request->facilitador_empresa;
+        $alumnoHistorico->estado = $request->estado;
+        $alumnoHistorico->save();
+        //Set flash data with success message
+        session()->flash('success', 'El alumno histórico se ha actualizado correctamente');
+        return redirect()->route('alumno.show', $alumnoHistorico->id);
     }
 
     /**
