@@ -19,7 +19,7 @@
                 <h5 class="my-auto text-primary fs-4 d-none d-lg-block">Alumnos coordinador</h5>
                 <p class="my-auto fw-bold text-primary d-lg-none">Alumnos coord.</p>
                 <div class="d-flex">
-                    <a href="{{ route('grado.create') }}" class="btn btn-primary me-1 me-lg-3">
+                    <a href="{{ route('alumno.create') }}" class="btn btn-primary me-1 me-lg-3">
                         <i class="fas fa-plus me-1"></i>Crear
                     </a>
                 <form action="{{ route('alumno.api.listado.coordinador') }}" method="get" id="filterForm">

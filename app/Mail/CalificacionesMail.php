@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Alumno;
 use App\Models\Persona;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

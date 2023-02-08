@@ -37,7 +37,7 @@ class UserNotification {
 
     public createNotification(): string {
         return `<li class="d-flex justify-content-between noti-element">
-                            <a href="#" class="top-text-block">
+                            <a href="${this.url}" class="top-text-block">
                                 <div class="top-text-heading">
                                     <b>${this.title}</b>
                                 </div>

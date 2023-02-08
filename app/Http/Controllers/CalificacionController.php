@@ -62,7 +62,7 @@ class CalificacionController extends Controller
                 break;
         }
         if (!empty($calificacion->calificaciones_practicas) && !empty($calificacion->calificaciones_teoricas)){
-            Mail::to($alumno->persona->user->email)->send(new CalificacionesMail("Calificaciones publicadas", $alumno->persona));
+            Mail::to($alumno->persona->user->email)->send(new CalificacionesMail("Calificaciones publicadas", $alumno));
             $notificacion = new Notificacion();
             $notificacion->persona_id = $alumno->persona_id;
             $notificacion->titulo = "Calificaciones";
@@ -72,7 +72,7 @@ class CalificacionController extends Controller
             $notificacion->save();
         }
 
-        return redirect()->route('alumno.calificar.index', ['id' => $alumno->persona_id]);
+        return redirect()->route('alumno.calificar.show', ['id' => $alumno->persona_id]);
     }
 
     private function storeFacilitadorCentro(Calificacion $calificacion, Alumno $alumno, Request $request){
@@ -155,28 +155,10 @@ class CalificacionController extends Controller
         $calificaciones_teoricas = json_decode($calificacion->calificaciones_teoricas, true) ?? [];
         //Check if there are fields empty on the array
         $can_make_average = true;
-        $calificaciones_practicas = array_map(function ($calificacion) use (&$can_make_average) {
-            if ($calificacion == null) {
-                $can_make_average = false;
-            }
-            return $calificacion;
-        }, $calificaciones_practicas);
-        $calificaciones_teoricas = array_map(function ($calificacion) use (&$can_make_average) {
-            if ($calificacion == null) {
-                $can_make_average = false;
-            }
-            return $calificacion;
-        }, $calificaciones_teoricas);
 
-        if ($can_make_average) {
             $calificacion_practica = $this->calculateAverage($calificaciones_practicas);
             $calificacion_teorica = $this->calculateAverage($calificaciones_teoricas);
             $calificacion_final = ($calificacion_practica + $calificacion_teorica) / 2;
-        } else {
-            $calificacion_practica = null;
-            $calificacion_teorica = null;
-            $calificacion_final = null;
-        }
 
         return view('calificaciones.show', [
             'persona' => $alumno->persona,
@@ -193,7 +175,11 @@ class CalificacionController extends Controller
         foreach ($calificaciones as $key => $calificacion){
             $calificacion_sum += $calificaciones_values[$calificacion];
         }
-        return $calificacion_sum / count($calificaciones);
+        try {
+            return $calificacion_sum / count($calificaciones);
+        } catch (\DivisionByZeroError $e) {
+            return 0;
+        }
     }
 
     /**

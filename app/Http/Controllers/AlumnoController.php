@@ -353,7 +353,7 @@ class AlumnoController extends Controller
 
         //Replace persona_id with the route to the show view without using foreach
         array_map(function($alumno){
-            $alumno->url = route('alumno.calificar.index', $alumno->url, false);
+            $alumno->url = route('alumno.calificar.show', $alumno->url, false);
         }, $paginated->all());
 
         $page = intval($page) > ceil($total / $perPage) ? ceil($total / $perPage) : $page;
