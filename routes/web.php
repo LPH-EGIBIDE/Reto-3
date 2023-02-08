@@ -133,6 +133,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/alumnohistorico/create', [App\Http\Controllers\AlumnoHistoricoController::class, 'create'])->name('alumnohistorico.create');
         Route::get('/alumnohistorico/{id}', [App\Http\Controllers\AlumnoHistoricoController::class, 'show'])->name('alumnohistorico.show')->whereNumber('id');
         Route::put('/alumnohistorico/{id}', [App\Http\Controllers\AlumnoHistoricoController::class, 'update'])->name('alumnohistorico.update')->whereNumber('id');
+        Route::post('/alumnohistorico', [App\Http\Controllers\AlumnoHistoricoController::class, 'store'])->name('alumnohistorico.store');
     });
 
 //Rutas de cualquier tipo de facilitador

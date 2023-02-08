@@ -12,7 +12,7 @@
     <div class="container ">
         @include('alerts')
         <div class="row d-flex flex-row justify-content-around gap-2">
-        <div class="card col-12 col-lg-8 p-0">
+        <div class="card col-12 col-lg-8 p-0 mb-4">
             <div class="card-header d-flex align-items-center justify-content-between px-4">
                 <span class="text-primary fw-bold fs-3">Vista del alumno</span>
                 @can('is_coordinador')
@@ -40,7 +40,6 @@
                     @endcan
                 </div>
                  <div class="col-md-7 col-6">
-
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
                             <input name="nombre" disabled type="text" value="{{$alumno->persona->nombre}}" class="form-control" id="nombre">
@@ -59,7 +58,6 @@
                         </div> @can('is_coordinador') <div class="d-flex justify-content-end col-12">
                             <button type="submit" disabled class="btn btn-success p-2 px-3">Confirmar</button>
                         </div> @endcan
-
                 </div>
                 </div>
                 </form>

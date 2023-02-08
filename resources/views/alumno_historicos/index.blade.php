@@ -5,7 +5,7 @@
             <h3 class="text-primary my-auto">Lista históricos</h3>
         </div>
         <div class="card-body bg-light table-responsive">
-            <table class="table">
+            <table class="table text-center">
                 <thead class="text-primary">
                 <tr>
                     <th scope="col" class="border-dark">Curso</th>
@@ -18,39 +18,29 @@
                 </tr>
                 </thead>
                 <tbody id="itemTable">
-                @for($i = 0; $i < 10; $i++)
-                    <tr class="loading-skeleton">
-                        <td><p>22/23</p></td>
-                        <td><p>1º Ingeniería Informática</p></td>
-                        <td><p>Manu Guerrero</p></td>
-                        <td><p>Lia Sikora</p></td>
-                        <td><p>Harbour Corporation</p></td>
-                        <td><p>Cursando</p></td>
-                        <td><p>Acción</p></td>
+                @foreach($alumno->alumnoHistorico as $alumnoHistorico)
+                    <tr>
+                        <td><p>{{$alumnoHistorico->curso->nombre}}</p></td>
+                        <td><p>{{$alumnoHistorico->grado->nombre}}</p></td>
+                        <td><p>{{$alumnoHistorico->facilitadorCentro->persona->nombre}}</p></td>
+                        <td><p>{{$alumnoHistorico->facilitadorEmpresa->persona->nombre}}</p></td>
+                        <td><p>{{$alumnoHistorico->facilitadorEmpresa->empresa->nombre}}</p></td>
+                        <td><p>{{$alumnoHistorico->estado}}</p></td>
+                        @if($alumnoHistorico->curso == \App\Models\Curso::getActiveCurso())
+                            <td class="d-flex flex-row align-items-center justify-content-center">
+                                <a href="#" class="btn btn-primary btn-sm ">
+                                    <i class="fa-solid fa-pencil me-1"></i>
+                                    <span class="d-none d-lg-block">Editar</span>
+                                </a>
+                            </td>
+                        @endif
                     </tr>
-                @endfor
+                @endforeach
                 </tbody>
             </table>
-            <p id="noItems"  class="text-center d-none">No hay alumnos que coincidan</p>
-        </div>
-        <div class="card-footer">
-            <nav>
-                <ul class="pagination justify-content-end my-auto">
-                    <li class="page-item">
-                        <a class="page-link" id="previousPage" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link disabled" disabled id="page" href="#">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" id="nextPage" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            @if(empty($alumno->alumnoHistorico))
+                <p id="noItems" class="text-center">No hay históricos</p>
+            @endif
         </div>
     </div>
 </div>
