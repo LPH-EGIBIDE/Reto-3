@@ -14,7 +14,40 @@ class CursoController extends Controller
      */
     public function index()
     {
-        //
+        return view('cursos.index');
+    }
+
+    public function listado(Request $request)
+    {
+        $request->validate([
+            'page' => 'nullable|integer',
+            'filtro' => 'nullable|string|max:255',
+        ]);
+
+        $page = $request->input('page', 1);
+        $perPage = 10;
+        $offset = ($page - 1) * $perPage;
+
+        $cursos = Curso::where('nombre', "like", "%".$request->filtro."%")->offset($offset)->limit($perPage)
+            ->select( 'nombre', 'fecha_inicio', 'fecha_fin', "id as url")
+            ->orderBy('nombre', 'asc');
+        $total = $cursos->count();
+        $cursos = $cursos->get();
+
+        $cursos->map(function($curso){
+            $curso->url = route('curso.show', $curso->url, false);
+        });
+
+        $page = intval($page) > ceil($total / $perPage) ? ceil($total / $perPage) : $page;
+
+        return response([
+            'data' => $cursos,
+            'total' => $total,
+            'page' => $page,
+            'per_page' => $perPage,
+        ], 200, [
+            'Content-Type' => 'application/json',
+        ], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -24,7 +57,7 @@ class CursoController extends Controller
      */
     public function create()
     {
-        //
+        return view('cursos.create');
     }
 
     /**
@@ -35,7 +68,22 @@ class CursoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date',
+        ]);
+        if ($request->fecha_inicio > $request->fecha_fin) {
+            return redirect()->route('curso.create')->withErrors(['La fecha de inicio no puede ser mayor a la fecha de fin']);
+        }
+        $curso = new Curso();
+        $curso->nombre = $request->nombre;
+        $curso->fecha_inicio = $request->fecha_inicio;
+        $curso->fecha_fin = $request->fecha_fin;
+        $curso->active = false;
+        $curso->save();
+        session()->flash('message', 'Curso creado correctamente');
+        return redirect()->route('curso.index');
     }
 
     /**
@@ -44,9 +92,11 @@ class CursoController extends Controller
      * @param  \App\Models\Curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function show(Curso $curso)
+    public function show($id)
     {
-        //
+        $curso = Curso::findOrFail($id);
+        return view('cursos.show', compact('curso'));
+
     }
 
     /**
@@ -67,9 +117,38 @@ class CursoController extends Controller
      * @param  \App\Models\Curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Curso $curso)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date',
+            'active' => 'required|numeric',
+        ]);
+
+        if ($request->fecha_inicio > $request->fecha_fin) {
+            return redirect()->back()->withErrors(['La fecha de inicio no puede ser mayor a la fecha de fin']);
+        }
+
+        $lastCurso = Curso::getActiveCurso();
+        if ($lastCurso->id == $id && $request->active == 0) {
+            return redirect()->back()->withErrors(['No se puede desactivar el curso actual']);
+        }
+
+        if ($request->active == 1) {
+            $lastCurso->active = 0;
+            $lastCurso->save();
+        }
+
+        $curso = Curso::findOrFail($id);
+        $curso->nombre = $request->nombre;
+        $curso->fecha_inicio = $request->fecha_inicio;
+        $curso->fecha_fin = $request->fecha_fin;
+        $curso->active = $request->active;
+        $curso->save();
+        //Set flash data with success message
+        session()->flash('success', 'El curso fue actualizado correctamente');
+        return redirect()->route('curso.show', $curso->id);
     }
 
     /**
@@ -78,8 +157,13 @@ class CursoController extends Controller
      * @param  \App\Models\Curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Curso $curso)
+    public function destroy($id)
     {
         //
+        $curso = Curso::findOrFail($id);
+        $curso->delete();
+        //Set flash data with success message
+        session()->flash('success', 'El curso fue eliminado correctamente');
+        return redirect()->route('cursos.index');
     }
 }

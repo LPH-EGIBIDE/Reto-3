@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="row d-flex align-items-center justify-content-center" style="height: 100vh">
-        <div class="col-sm-6 mx-auto">
+        <div class="col-lg-6 mx-auto">
             <div class="errors mb-3">
                 @if($errors->any())
                     @foreach($errors->all() as $error)
@@ -13,9 +13,16 @@
                         </div>
                     @endforeach
                 @endif
+                    @if (session('status'))
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <strong>Exito!</strong> {{ session('status') }}
+                        </div>
+                    @endif
+
             </div>
             <div class="text-center mb-5">
-                <img class="logo" src="{{asset('images/logo.png')}}" alt="Logo egibide" srcset="/img/logo.png 2x">
+                <img class="logo" src="{{Vite::asset('resources/images/logo.png')}}" alt="Logo" >
             </div>
             <div class="card">
                 <div class="card-header">Recuperar contraseña</div>

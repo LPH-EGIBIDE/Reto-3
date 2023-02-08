@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumno;
 use App\Models\AlumnoHistorico;
+use App\Models\Curso;
+use App\Models\FacilitadorCentro;
+use App\Models\FacilitadorEmpresa;
+use App\Models\Grado;
 use Illuminate\Http\Request;
 
 class AlumnoHistoricoController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -24,7 +27,14 @@ class AlumnoHistoricoController extends Controller
      */
     public function create()
     {
-        //
+        $listaGrados = Grado::all()->sortBy('nombre');
+        $listaFacilitadoresCentro = FacilitadorCentro::all()->sortBy('persona.nombre');
+        $listaFacilitadoresEmpresa = FacilitadorEmpresa::all()->sortBy('persona.nombre');
+
+        return view('alumno_historicos.create', compact(
+            'listaGrados',
+            'listaFacilitadoresCentro',
+            'listaFacilitadoresEmpresa'));
     }
 
     /**
@@ -35,7 +45,26 @@ class AlumnoHistoricoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'alumno_id' => 'required|int',
+            'grado_id' => 'required|int',
+            'facilitador_centro' => 'required|int',
+            'facilitador_empresa' => 'required|int',
+            'estado' => 'required|string',
+        ]);
+
+        // Crear alumnoHistorico
+        $alumnoHistorico = new AlumnoHistorico();
+        $alumnoHistorico->alumno_id = $request->alumno_id;
+        $alumnoHistorico->curso_id = Curso::getActiveCurso()->id;
+        $alumnoHistorico->grado_id = $request->grado_id;
+        $alumnoHistorico->facilitador_centro = $request->facilitador_centro;
+        $alumnoHistorico->facilitador_empresa = $request->facilitador_empresa;
+        $alumnoHistorico->estado = $request->estado;
+        $alumnoHistorico->save();
+
+        session()->flash('message', 'Alumno histórico creado correctamente');
+        return redirect()->route('alumno.show', $alumnoHistorico->alumno_id);
     }
 
     /**
@@ -44,9 +73,16 @@ class AlumnoHistoricoController extends Controller
      * @param  \App\Models\AlumnoHistorico  $alumnoHistorico
      * @return \Illuminate\Http\Response
      */
-    public function show(AlumnoHistorico $alumnoHistorico)
+    public function show(int $id)
     {
-        //
+        $alumnoHistorico = AlumnoHistorico::findOrFail($id);
+        $listaGrados = Grado::all()->sortBy('nombre');
+        $listaFacilitadoresCentro = FacilitadorCentro::all()->sortBy('persona.nombre');
+        $listaFacilitadoresEmpresa = FacilitadorEmpresa::all()->sortBy('persona.nombre');
+        return view('alumno_historicos.update', compact('alumnoHistorico',
+            'listaGrados',
+            'listaFacilitadoresCentro',
+            'listaFacilitadoresEmpresa'));
     }
 
     /**
@@ -67,9 +103,26 @@ class AlumnoHistoricoController extends Controller
      * @param  \App\Models\AlumnoHistorico  $alumnoHistorico
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AlumnoHistorico $alumnoHistorico)
+    public function update(Request $request, int $id)
     {
-        //
+        $request->validate([
+            'facilitador_centro' => 'required|int',
+            'facilitador_empresa' => 'required|int',
+            'estado' => 'required|string',
+        ]);
+
+        $alumnoHistorico = AlumnoHistorico::findOrFail($id);
+        $alumnoHistorico->facilitador_centro = $request->facilitador_centro;
+        $alumnoHistorico->facilitador_empresa = $request->facilitador_empresa;
+        $alumnoHistorico->estado = $request->estado;
+        $alumnoHistorico->save();
+        //Set flash data with success message
+        session()->flash('success', 'El alumno histórico se ha actualizado correctamente');
+
+        $listaGrados = Grado::all()->sortBy('nombre');
+        $listaFacilitadoresCentro = FacilitadorCentro::all()->sortBy('persona.nombre');
+        $listaFacilitadoresEmpresa = FacilitadorEmpresa::all()->sortBy('persona.nombre');
+        return redirect()->route('alumno.show', $alumnoHistorico->alumno_id);
     }
 
     /**

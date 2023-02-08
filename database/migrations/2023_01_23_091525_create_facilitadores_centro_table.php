@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('facilitadores_centro', function (Blueprint $table) {
             $table->foreignId('persona_id')->constrained('personas')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

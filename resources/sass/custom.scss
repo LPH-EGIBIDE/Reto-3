@@ -1,0 +1,68 @@
+.evaCS> textarea{
+    resize:none;
+}
+//Notificaciones
+$color_1: #333;
+$color_2: #999;
+
+.top-text-block {
+    display: block;
+    padding: 3px 20px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: $color_1;
+    white-space: inherit !important;
+    border-bottom: 1px solid #f4f4f4;
+    position: relative;
+    text-decoration: none;
+    &:hover {
+        &:before {
+            content: '';
+            width: 4px;
+            background: #f05a1a;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+        }
+    }
+    .top-text-light, top-text-description {
+        color: $color_2;
+        font-size: 0.8em;
+    }
+}
+
+.btn-noti {
+    color: $danger;
+}
+
+.top-text-block.unread {
+    background: #ffc;
+}
+.top-head-dropdown {
+    li {
+        &:last-child {
+            .top-text-block {
+                border-bottom: 0;
+            }
+        }
+    }
+}
+.notifications {
+    width: 70vw !important;
+    max-width: 400px;
+}
+
+.dropdown-navbar {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#chattersList li {
+    &:hover {
+        cursor: pointer;
+        background: #f5f5f5;
+    }
+}
