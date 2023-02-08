@@ -58,7 +58,7 @@ class CalificacionController extends Controller
                 $this->storeFacilitadorEmpresa($calificacion, $alumno, $request);
                 break;
         }
-        return redirect()->route('alumno.calificar.index', ['id' => $alumno->id]);
+        return redirect()->route('alumno.calificar.index', ['id' => $alumno->persona_id]);
     }
 
     private function storeFacilitadorCentro(Calificacion $calificacion, Alumno $alumno, Request $request){
@@ -84,6 +84,7 @@ class CalificacionController extends Controller
         $calificacion->calificaciones_teoricas = json_encode($calificaciones);
         $calificacion->calificaciones_practicas ??= json_encode([]);
         $calificacion->save();
+        session()->flash('message', 'Calificaciones teoricas guardadas correctamente');
 
     }
 
@@ -114,8 +115,9 @@ class CalificacionController extends Controller
         ];
 
         $calificacion->calificaciones_practicas = json_encode($calificaciones);
-        $calificacion->calificaciones_practicas ??= json_encode([]);
+        $calificacion->calificaciones_teoricas ??= json_encode([]);
         $calificacion->save();
+        session()->flash('message', 'Calificaciones practicas guardadas correctamente');
     }
 
     /**
@@ -162,17 +164,18 @@ class CalificacionController extends Controller
             'persona' => $alumno->persona,
             'calificaciones_practicas' => $calificaciones_practicas,
             'calificaciones_teoricas' => $calificaciones_teoricas,
-            'calificacion_total' => $calificacion_final,
+            'calificacion_total' => round($calificacion_final, 2),
             'nombre_calificaciones' => ['Insuficiente', 'Suficiente', 'Bien', 'Notable', 'Sobresaliente', 'Sin calificar'],
             ]);
     }
 
     private function calculateAverage($calificaciones){
         $calificacion_sum = 0;
-        $calificaciones_values = [2,4,6,8,10];
+        $calificaciones_values = [2,5,6,8,10];
         foreach ($calificaciones as $key => $calificacion){
-
+            $calificacion_sum += $calificaciones_values[$calificacion];
         }
+        return $calificacion_sum / count($calificaciones);
     }
 
     /**
@@ -193,12 +196,12 @@ class CalificacionController extends Controller
 
                 return view('facilitador_centro.calificar', [
                     'persona' => $alumno->persona,
-                    'calificacion' => $calificacion->calificaciones_teoricas ?? [],
+                    'calificacion' => json_decode($calificacion->calificaciones_teoricas, true) ?? [],
                 ]);
             case 'facilitador_empresa':
                 return view('facilitador_empresa.calificar', [
                     'persona' => $alumno->persona,
-                    'calificacion' => $calificacion->calificaciones_practicas ?? [],
+                    'calificacion' => json_decode($calificacion->calificaciones_practicas, true) ?? [],
                 ]);
         }
     }

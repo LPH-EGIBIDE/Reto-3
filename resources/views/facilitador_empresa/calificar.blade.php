@@ -4,7 +4,9 @@
 @endsection
 
 @section('content')
-    <div class="container d-flex flex-row align-items-center justify-content-center">
+    <div class="container ">
+        @include('alerts')
+        <div class="row d-flex flex-row align-items-center justify-content-center">
         <div class="card col-12 col-lg-8 p-0">
             <div class="card-header text-primary my-auto">
                 <h3>Evaluación de trabajo en empresa</h3>
@@ -127,7 +129,7 @@
                                 <tr>
                                     <td>Capacidad de planificación y organización.</td>
                                     <td>
-                                        <select class="form-select form-select-sm w-auto ms-auto" name="calificacion_8">
+                                        <select class="form-select form-select-sm w-auto ms-auto" name="calificacion_9">
                                             <option @if(($calificacion['capacidad_planificacion'] ?? -1) == -1) selected @endif value="-1">Seleccionar</option>
                                             <option @if(($calificacion['capacidad_planificacion'] ?? -1) == 0) selected @endif value="0">Insuficiente</option>
                                             <option @if(($calificacion['capacidad_planificacion'] ?? -1) == 1) selected @endif value="1">Suficiente</option>
@@ -158,5 +160,6 @@
                 </div>
             </form>
         </div>
+    </div>
     </div>
 @endsection

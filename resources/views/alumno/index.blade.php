@@ -14,8 +14,14 @@
 <div class="container">
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between p-3">
-            <h5 class="my-auto text-primary fs-3">Lista de alumnos</h5>
-            <form action="{{ route('alumno.api.listado') }}" method="get" id="filterForm">
+
+            @if($coordinador_view)
+                <h5 class="my-auto text-primary fs-3">Alumnos coordinador</h5>
+                <form action="{{ route('alumno.api.listado.coordinador') }}" method="get" id="filterForm">
+            @else
+                <h5 class="my-auto text-primary fs-3">Lista de alumnos</h5>
+                <form action="{{ route('alumno.api.listado') }}" method="get" id="filterForm">
+            @endif
                 <input type="hidden" name="page" id="pageForm" value="1">
             <div class="input-group ml-auto w-auto">
                 <div class="form-outline">

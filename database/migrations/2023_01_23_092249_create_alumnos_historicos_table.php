@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('facilitador_centro')->references('id')->on('personas')->onDelete('set null');
             $table->bigInteger('facilitador_empresa', false, true)->nullable();
             $table->foreign('facilitador_empresa')->references('id')->on('personas')->onDelete('set null');
-            $table->enum('estado', ['cursando', 'finalizado', 'repetido']);
+            $table->enum('estado', ['cursando', 'finalizado', 'suspendido', 'abandonado']);
             $table->timestamps();
         });
     }

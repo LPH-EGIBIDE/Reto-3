@@ -21,7 +21,12 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        return view('alumno.index');
+        return view('alumno.index', ['coordinador_view' => false]);
+    }
+
+    public function indexCoordinador()
+    {
+        return view('alumno.index', ['coordinador_view' => true]);
     }
 
     /**
@@ -106,7 +111,13 @@ class AlumnoController extends Controller
         if (Gate::denies('can_view_alumno', [$alumno])) {
             abort(403);
         }
-        return view('alumno.show', ['alumno' => $alumno]);
+        $estados = [
+            "cursando"=> "success",
+            "suspendido"=> "danger",
+            "finalizado"=> "secondary",
+            "abandonado"=> "warning",
+        ];
+        return view('alumno.show', ['alumno' => $alumno, "estados" => $estados]);
     }
 
     /**
@@ -177,14 +188,19 @@ class AlumnoController extends Controller
         return redirect()->route('alumnos.index');
     }
 
+    public function filterCoordinador(Request $request){
+        return $this->filterAlumnos($request, true);
+    }
 
-    public function filterAlumnos(Request $request){
+    public function filterAlumnos(Request $request, $all_grado = false){
         $request->validate([
             'grado' => 'numeric',
             'empresa' => 'string|max:255',
             'filtro' => 'string|nullable|max:255',
             'page' => 'numeric|nullable'
         ]);
+
+        $user = auth()->user();
 
 
         //Check if grado is empty and set it to %
@@ -198,23 +214,30 @@ class AlumnoController extends Controller
         $offset = ($page - 1) * $perPage;
 
         $lastCurso = Curso::getActiveCurso();
-        $alumnos = DB::table('alumnos')
-            ->leftJoin('alumnos_historicos', 'alumnos.persona_id', '=', 'alumnos_historicos.alumno_id')
+        $alumnos = Alumno::
+            leftJoin('alumnos_historicos', 'alumnos.persona_id', '=', 'alumnos_historicos.alumno_id')
             ->join('personas', 'alumnos.persona_id', '=', 'personas.id')
             ->join('users', 'alumnos.persona_id', '=', 'users.persona_id')
             ->leftJoin('facilitadores_empresa', 'alumnos_historicos.facilitador_empresa', '=', 'facilitadores_empresa.persona_id')
             ->leftJoin('empresas', 'facilitadores_empresa.empresa_id', '=', 'empresas.id')
             ->where('alumnos_historicos.curso_id', '=', $lastCurso->id)
-            ->where('alumnos_historicos.grado_id', 'like', $request->grado)
             ->where(function($query) use ($request){
                 $query->whereRaw('CONCAT(personas.nombre, " ", personas.apellido) like "%'.$request->filtro.'%"')
                     ->orWhere('personas.dni', 'like', '%'.$request->filtro.'%');
             })
-            ->where('empresas.id', 'like', $request->empresa)
-            ->select('personas.nombre', 'personas.apellido', 'personas.dni', 'empresas.nombre as empresa', 'users.email', 'personas.id as url');
+            ->where('empresas.id', 'like', $request->empresa);
+        if ($all_grado) {
+            $alumnos = $alumnos->where('alumnos_historicos.grado_id', 'like', $request->grado)
+                ->whereIn('grado_id', $user->persona->informacion->grado->pluck('id')->all());
+        } else {
+            $alumnos = $alumnos->where('alumnos_historicos.grado_id', 'like', $request->grado)
+                ->where('alumnos_historicos.facilitador_centro', '=', $user->persona_id);
+        }
 
         $total = $alumnos->count();
-        $paginated = $alumnos->offset($offset)->limit($perPage)->get();
+        $paginated = $alumnos->offset($offset)->limit($perPage)
+            ->select('personas.nombre', 'personas.apellido', 'personas.dni', 'empresas.nombre as empresa', 'users.email', 'personas.id as url')
+            ->get();
         //Replace persona_id with the route to the show view without using foreach
 
         array_map(function($alumno){
@@ -300,12 +323,18 @@ class AlumnoController extends Controller
                     case 'facilitador_centro':
                         $alumnos = $alumnos->where('alumnos_historicos.facilitador_centro', '=', $persona->id);
                         if(!$request->all)
-                            $alumnos = $alumnos->where('calificaciones.calificaciones_teoricas', '=', null);
+                            $alumnos = $alumnos->where(function ($query){
+                                $query->where('calificaciones.calificaciones_teoricas', '=', null)
+                                    ->orWhereRaw('json_length(calificaciones.calificaciones_teoricas) = 0');
+                            });
                         break;
                     case 'facilitador_empresa':
                         $alumnos = $alumnos->where('alumnos_historicos.facilitador_empresa', '=', $persona->id);
                         if(!$request->all)
-                            $alumnos = $alumnos->where('calificaciones.calificaciones_practicas', '=', null);
+                            $alumnos = $alumnos->where(function ($query){
+                                $query->where('calificaciones.calificaciones_practicas', '=', null)
+                                    ->orWhereRaw('json_length(calificaciones.calificaciones_practicas) = 0');
+                            });
                         break;
                 }
 
@@ -321,7 +350,7 @@ class AlumnoController extends Controller
 
         //Replace persona_id with the route to the show view without using foreach
         array_map(function($alumno){
-            $alumno->url = route('alumno.show', $alumno->url, false);
+            $alumno->url = route('alumno.calificar.index', $alumno->url, false);
         }, $paginated->all());
 
         $page = intval($page) > ceil($total / $perPage) ? ceil($total / $perPage) : $page;

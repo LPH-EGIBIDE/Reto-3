@@ -11,8 +11,8 @@
 @section('content')
     <div class="container">
         @include('alerts')
-        <div class="row align-items-center justify-content-center">
-            <div class="card col-12 col-lg-8 p-0">
+        <div class="row align-items-center justify-content-center mb-2">
+            <div class="card col-12 col-lg-8 p-0 mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between px-4">
                     <span class="text-primary fw-bold fs-4">Vista de facilitador del centro</span>
                     @can('is_coordinador')
@@ -62,6 +62,7 @@
                 </div>
                 </form>
             </div>
+            @include('facilitador_centro.grados')
         </div>
     </div>
 @endsection

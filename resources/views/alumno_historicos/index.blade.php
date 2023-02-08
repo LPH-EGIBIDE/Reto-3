@@ -1,5 +1,5 @@
 
-<div class="container">
+
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h3 class="text-primary my-auto">Lista históricos</h3>
@@ -22,13 +22,13 @@
                     <tr>
                         <td><p>{{$alumnoHistorico->curso->nombre}}</p></td>
                         <td><p>{{$alumnoHistorico->grado->nombre}}</p></td>
-                        <td><p>{{$alumnoHistorico->facilitadorCentro->persona->nombre}}</p></td>
-                        <td><p>{{$alumnoHistorico->facilitadorEmpresa->persona->nombre}}</p></td>
+                        <td><p>{{$alumnoHistorico->facilitadorCentro->persona->nombre}} {{$alumnoHistorico->facilitadorCentro->persona->apellido}}</p></td>
+                        <td><p>{{$alumnoHistorico->facilitadorEmpresa->persona->nombre}} {{$alumnoHistorico->facilitadorEmpresa->persona->apellido}}</p></td>
                         <td><p>{{$alumnoHistorico->facilitadorEmpresa->empresa->nombre}}</p></td>
-                        <td><p>{{$alumnoHistorico->estado}}</p></td>
+                        <td><p><span class="badge text-bg-{{$estados[$alumnoHistorico->estado]}}">{{ucfirst($alumnoHistorico->estado)}}</span></p></td>
                         @if($alumnoHistorico->curso == \App\Models\Curso::getActiveCurso())
                             <td class="d-flex flex-row align-items-center justify-content-center">
-                                <a href="#" class="btn btn-primary btn-sm ">
+                                <a href="#" class="btn btn-primary d-flex ">
                                     <i class="fa-solid fa-pencil me-1"></i>
                                     <span class="d-none d-lg-block">Editar</span>
                                 </a>
@@ -43,4 +43,4 @@
             @endif
         </div>
     </div>
-</div>
+

@@ -59,7 +59,7 @@
                     <hr>
                     <div class="form-outline">
                         <label class="form-label fw-bold text-decoration-underline" for="textAreaProblemas">Identificación de problemas o dificultades y acciones de mejora a poner en marcha</label>
-                        <textarea disabled class="form-control"  id="textAreaProblemas" rows="10" placeholder="@for($i = 0; $i < 90; $i++) FALTA DE PONER PLACEHOLDER!!  @endfor"></textarea>
+                        <textarea disabled class="form-control"  id="textAreaProblemas" rows="10" ></textarea>
                     </div>
                     <hr>
                     <nav aria-label="Page navigation example" class="form-footer evaCSFormFooter">
