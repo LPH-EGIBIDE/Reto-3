@@ -36,6 +36,10 @@ Route::middleware(['auth', '2fa'])->group(function () {
     Route::get('/attachments/{id}', [App\Http\Controllers\AttachmentController::class, 'show'])->name('attachment.show')->whereNumber('id');
     Route::get('/attachments/{id}/{width}/{height}', [App\Http\Controllers\AttachmentController::class, 'show'])->name('attachment.show.custom')->whereNumber('id')->whereNumber('width')->whereNumber('height');
 
+    Route::get('/notificaciones', [App\Http\Controllers\NotificacionController::class, 'index'])->name('notificaciones.index');
+    Route::get('/notificaciones/dismiss/{id}', [App\Http\Controllers\NotificacionController::class, 'destroy'])->name('notificaciones.destroy')->whereNumber('id');
+
+
 
 //Rutas de los facilitadores de centro
 
@@ -68,6 +72,7 @@ Route::middleware(['auth', '2fa'])->group(function () {
         Route::get('/alumno', function () {
             return "Protected routes for alumno";
         });
+        Route::get('/calificaciones', [App\Http\Controllers\CalificacionController::class, 'show'])->name('alumno.calificaciones');
         Route::get('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'index'])->name('cuaderno.index');
         Route::put('/cuaderno', [App\Http\Controllers\CuadernoPracticasController::class, 'update'])->name('cuaderno.update');
         Route::get('/cuaderno/api/semana', [App\Http\Controllers\CuadernoPracticasController::class, 'show'])->name('cuaderno.api.semana');

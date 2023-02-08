@@ -20,7 +20,7 @@ class CalificacionController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -64,7 +64,12 @@ class CalificacionController extends Controller
         if (!empty($calificacion->calificaciones_practicas) && !empty($calificacion->calificaciones_teoricas)){
             Mail::to($alumno->persona->user->email)->send(new CalificacionesMail("Calificaciones publicadas", $alumno->persona));
             $notificacion = new Notificacion();
-
+            $notificacion->persona_id = $alumno->persona_id;
+            $notificacion->titulo = "Calificaciones";
+            $notificacion->descripcion = "Tus calificaciones han sido publicadas";
+            $notificacion->tipo = 1;
+            $notificacion->url = route('alumno.calificaciones');
+            $notificacion->save();
         }
 
         return redirect()->route('alumno.calificar.index', ['id' => $alumno->persona_id]);

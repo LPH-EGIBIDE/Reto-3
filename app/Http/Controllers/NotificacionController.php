@@ -14,7 +14,16 @@ class NotificacionController extends Controller
      */
     public function index()
     {
-        //
+        $notificaciones = Notificacion::where('persona_id', auth()->user()->id)
+            ->where('leido', false)
+            ->orderBy('created_at', 'desc')
+            ->select('id', 'titulo', 'descripcion', 'tipo', 'url', 'created_at')
+            ->get();
+        return response([
+            'data' => $notificaciones,
+        ], 200, [
+            'Content-Type' => 'application/json',
+        ], JSON_PRETTY_PRINT);
     }
 
     /**
@@ -78,8 +87,15 @@ class NotificacionController extends Controller
      * @param  \App\Models\Notificacion  $notificacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Notificacion $notificacion)
+    public function destroy($id)
     {
-        //
+        $notificacion = Notificacion::findOrFail($id);
+        if ($notificacion->persona_id == auth()->user()->persona->id) {
+            $notificacion->leido = 1;
+            $notificacion->save();
+            return ['success' => true];
+        }
+        return ['success' => false];
+
     }
 }
