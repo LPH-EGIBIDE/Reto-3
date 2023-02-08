@@ -106,16 +106,12 @@ class AlumnoHistoricoController extends Controller
     public function update(Request $request, int $id)
     {
         $request->validate([
-            'alumno_id' => 'required|int|max:255',
-            'grado_id' => 'required|int',
             'facilitador_centro' => 'required|int',
             'facilitador_empresa' => 'required|int',
             'estado' => 'required|string',
         ]);
 
         $alumnoHistorico = AlumnoHistorico::findOrFail($id);
-        $alumnoHistorico->alumno_id = $request->alumno_id;
-        $alumnoHistorico->grado_id = $request->grado_id;
         $alumnoHistorico->facilitador_centro = $request->facilitador_centro;
         $alumnoHistorico->facilitador_empresa = $request->facilitador_empresa;
         $alumnoHistorico->estado = $request->estado;
@@ -126,10 +122,7 @@ class AlumnoHistoricoController extends Controller
         $listaGrados = Grado::all()->sortBy('nombre');
         $listaFacilitadoresCentro = FacilitadorCentro::all()->sortBy('persona.nombre');
         $listaFacilitadoresEmpresa = FacilitadorEmpresa::all()->sortBy('persona.nombre');
-        return redirect()->route('alumno.show', compact(
-            'listaGrados',
-            'listaFacilitadoresCentro',
-            'listaFacilitadoresEmpresa'));
+        return redirect()->route('alumno.show', $alumnoHistorico->alumno_id);
     }
 
     /**
