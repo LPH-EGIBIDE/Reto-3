@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder
 
 
         //Create 5 facilitadores_centro and link them to a user
-        $alumnos = Persona::factory()->count(25)->alumno()->create();
+        $alumnos = Persona::factory()->count(500)->alumno()->create();
         $facilitador_centro = Persona::factory()->count(25)->facilitadorCentro()->create();
         $facilitador_empresa = Persona::factory()->count(25)->facilitadorEmpresa()->create();
 
@@ -29,7 +29,7 @@ class UserTableSeeder extends Seeder
 
         foreach ($personas as $persona) {
             \App\Models\User::factory()->create([
-                'password' => bcrypt('admin'),
+                'password' => bcrypt('12345Abcde'),
                 'persona_id' => $persona->id,
                 'email_verified_at' => now()
             ]);
@@ -68,8 +68,8 @@ class UserTableSeeder extends Seeder
 
 
                 $user = \App\Models\User::factory()->create([
-                    'email' => 'alex.cortes@ikasle.egibide.org',
-                    'password' => bcrypt('admin'),
+                    'email' => 'damian.romero@ikasle.egibide.org',
+                    'password' => bcrypt('lphadmin12345Abcde'),
                     'persona_id' => $admin->id,
                     'email_verified_at' => now()
                 ]);
