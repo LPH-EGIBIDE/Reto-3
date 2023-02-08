@@ -47,6 +47,7 @@ class CalificacionController extends Controller
             abort(404);
 
         $calificacion = Calificacion::findOrNew($historico->id);
+        $calificacion->historico_id ??= $historico->id;
 
 
         switch (auth()->user()->persona->tipo){
@@ -80,7 +81,8 @@ class CalificacionController extends Controller
             'reflexion' => $request->calificacion_7,
         ];
 
-        $calificacion->calificaciones_teoricas = $calificaciones;
+        $calificacion->calificaciones_teoricas = json_encode($calificaciones);
+        $calificacion->calificaciones_practicas ??= json_encode([]);
         $calificacion->save();
 
     }
@@ -111,7 +113,8 @@ class CalificacionController extends Controller
             'capacidad_aprendizaje' => $request->calificacion_10,
         ];
 
-        $calificacion->calificaciones_practicas = $calificaciones;
+        $calificacion->calificaciones_practicas = json_encode($calificaciones);
+        $calificacion->calificaciones_practicas ??= json_encode([]);
         $calificacion->save();
     }
 
@@ -127,8 +130,9 @@ class CalificacionController extends Controller
         $curso = Curso::getActiveCurso();
         $historico = $alumno->alumnoHistorico->where('curso_id', $curso->id)->first();
         $calificacion = Calificacion::findOrNew($historico->id);
-        $calificaciones_practicas = $calificacion->calificaciones_practicas ?? [];
-        $calificaciones_teoricas = $calificacion->calificaciones_teoricas ?? [];
+        $calificacion->historico_id ??= $historico->id;
+        $calificaciones_practicas = json_decode($calificacion->calificaciones_practicas, true) ?? [];
+        $calificaciones_teoricas = json_decode($calificacion->calificaciones_teoricas, true) ?? [];
         //Check if there are fields empty on the array
         $can_make_average = true;
         $calificaciones_practicas = array_map(function ($calificacion) use (&$can_make_average) {
@@ -181,6 +185,8 @@ class CalificacionController extends Controller
         $curso = Curso::getActiveCurso();
         $historico = $alumno->alumnoHistorico->where('curso_id', $curso->id)->first();
         $calificacion = Calificacion::findOrNew($historico->id);
+        $calificacion->historico_id ??= $historico->id;
+
         switch (auth()->user()->persona->tipo){
             case 'facilitador_centro':
 
